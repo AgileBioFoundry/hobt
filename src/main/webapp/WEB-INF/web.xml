@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+    <description>Host OnBoarding Tool</description>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Context</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <display-name>ice</display-name>
+
+    <listener>
+        <listener-class>org.abf.hobt.servlet.HobtServletContextListener</listener-class>
+    </listener>
+
+    <!-- jersey rest service -->
+    <servlet>
+        <servlet-name>Jersey REST Servlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>org.abf.hobt.service.rest</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.scanning.recursive</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>org.abf.hobt.HobtApplication</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey REST Servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.htm</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/</location>
+    </error-page>
+
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+</web-app>
