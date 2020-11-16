@@ -83,11 +83,6 @@
             <artifactId>undertow-servlet</artifactId>
             <version>1.4.18.Final</version>
         </dependency>
-        <dependency>
-            <groupId>com.owlike</groupId>
-            <artifactId>genson</artifactId>
-            <version>1.6</version>
-        </dependency>
     </dependencies>
     <build>
         <outputDirectory>target</outputDirectory>

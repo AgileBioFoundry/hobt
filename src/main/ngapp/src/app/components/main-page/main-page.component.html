@@ -1,0 +1,52 @@
+<app-header></app-header>
+
+<div class="container-fluid pt-2 pb-4" style="background-color: #F4F4F4">
+
+    <div class="pull-right">
+        <button class="btn" (click)="gridMode = true"><i class="fa fa-fw fa-th"></i></button>
+        <button class="btn" (click)="gridMode = false"><i class="fa fa-fw fa-bars"></i></button>
+    </div>
+
+    <br>
+
+    <table class="table  table-bordered  table-hover table-responsive-lg bg-white" *ngIf="!gridMode">
+        <thead>
+        <tr class="text-uppercase" style="font-size: 12px">
+            <th>Host</th>
+            <th>Taxonomy</th>
+            <th>Tier</th>
+            <th>Updated</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let host of hosts">
+            <td class="text-primary">{{host.name}}</td>
+            <td>{{host.taxonomy}}</td>
+            <td><span style="font-size: 14px" class="p-2 pr-3 pl-3 badge" [ngClass]="{'badge-secondary': host.tier === 1,
+                    'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier }}</span>
+            </td>
+            <td>Jan 14, 2021, 11:34 PM</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="row mt-3" *ngIf="gridMode">
+        <div class="card ml-4 mb-4  border-0 shadow-sm" style="width: 28rem;" *ngFor="let host of hosts">
+            <div class="card-body pb-1">
+                <h5 class="card-title">{{host.name}}
+                    <span style="font-size: 14px" class="p-2 float-right badge" [ngClass]="{'badge-secondary': host.tier === 1,
+                    'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier }}</span>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{host.taxonomy}}</h6>
+                <p class="card-text pt-3 border-top">
+                    <b class="text-primary">34</b> publications<br>
+                    <b class="text-primary">71</b> data points<br>
+                    <b class="text-primary">12</b> associated entries<br>
+                </p>
+
+                <p class="small float-left text-muted">Last update: Jan 14, 2021, 11:34 PM</p>
+                <a routerLink="/host/3" class="card-link float-right small">details &raquo;</a>
+            </div>
+        </div>
+    </div>
+</div>
