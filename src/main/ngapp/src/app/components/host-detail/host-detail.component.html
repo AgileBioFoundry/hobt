@@ -1,1 +1,119 @@
 <app-header></app-header>
+
+<div class="pt-5 pl-5 pb-5 border-bottom d-flex justify-content-start" style="background-color: #F6F6F7">
+    <div>
+        <h2>Rhodosporidium toruloides</h2>
+        <div class="lead text-muted font-italic mt-n2">Basidiomycota</div>
+    </div>
+
+    <div>
+        <span class="badge badge-danger">Tier 1</span>
+    </div>
+
+<!--    <div class="card border-0 shadow-sm ml-5" style="width: 24rem">-->
+<!--        <div class="card-body">-->
+<!--            Pacific Northwest National Lab<br>-->
+<!--            <strong>Lawrence Berkeley National Lab</strong><br>-->
+<!--            Sandia National Lab-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
+
+<div class="d-flex justify-content-around text-white pt-1 text-uppercase font-80 border-bottom"
+     style="background-color: #0074B3">
+    <div class="sub-menu-selected">Attributes</div>
+    <div class="sub-menu"><i class="fa fa-newspaper-o font-12"></i> &nbsp;
+        Publications
+    </div>
+    <div class="sub-menu">Parts</div>
+    <div class="sub-menu">Protocols</div>
+    <div class="sub-menu">Tier Progress</div>
+</div>
+
+<div class="container-fluid font-90 pt-3">
+    <div class="row">
+        <div class="col-11">
+            <div class="card-group pt-1 pb-2">
+                <div class="card bg-light">
+                    <div class="card-body p-2">
+                        <strong class="card-title font-weight-bold font-90">Cultivation / Phenotype</strong>
+                    </div>
+                </div>
+                <div class="card bg-light">
+                    <div class="card-body p-2">
+                        <strong class="card-title font-weight-bold font-90">Genome Editing</strong>
+                    </div>
+                </div>
+                <div class="card bg-light">
+                    <div class="card-body p-2">
+                        <strong class="card-title font-weight-bold font-90">Expression</strong>
+                    </div>
+                </div>
+                <div class="card bg-light">
+                    <div class="card-body p-2">
+                        <strong class="card-title font-weight-bold font-90">Omics</strong>
+                    </div>
+                </div>
+                <div class="card bg-light">
+                    <div class="card-body p-2">
+                        <strong class="card-title font-weight-bold font-90">Libraries</strong>
+                    </div>
+                </div>
+                <div class="card bg-light">
+                    <div class="card-body p-2">
+                        <strong class="card-title font-weight-bold font-90">Models</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-group mb-4" *ngFor="let tier of tiers">
+                <div class="card p-0">
+                    <app-criteria [tierCriteriaList]="tier.cultivation"></app-criteria>
+                </div>
+
+                <div class="card">
+                    <app-criteria [tierCriteriaList]="tier.genome"></app-criteria>
+                </div>
+
+                <div class="card">
+                    <app-criteria [tierCriteriaList]="tier.expression"></app-criteria>
+                </div>
+
+                <div class="card">
+                    <app-criteria [tierCriteriaList]="tier.omics"></app-criteria>
+                </div>
+
+                <div class="card">
+                    <app-criteria [tierCriteriaList]="tier.libraries"></app-criteria>
+                </div>
+
+                <div class="card">
+                    <app-criteria [tierCriteriaList]="tier.models"></app-criteria>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-1">
+            <ul class="list-group" style="border-radius: 0">
+                <li class="list-group-item list-group-item-success mt-1 rounded-right" (click)="addRemoveTier(tier1)"
+                    style="border:0; border-right: 3px solid red">Tier 1
+                </li>
+                <li class="list-group-item mt-3 bg-light rounded-right" (click)="addRemoveTier(tier2)"
+                    style="border:0; border-right: 3px solid purple">Tier 2
+                </li>
+                <li class="list-group-item mt-3 bg-light rounded-right" (click)="addRemoveTier(tier3)"
+                    style="border:0; border-right: 3px solid blue">Tier 3
+                </li>
+                <li class="list-group-item mt-3 bg-light rounded-right" (click)="addRemoveTier(tier4)"
+                    style="border:0; border-right: 3px solid orange">Tier 4
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+

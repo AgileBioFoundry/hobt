@@ -3,8 +3,12 @@
 <div class="container-fluid pt-2 pb-4" style="background-color: #F4F4F4">
 
     <div class="pull-right">
-        <button class="btn" (click)="gridMode = true"><i class="fa fa-fw fa-th"></i></button>
-        <button class="btn" (click)="gridMode = false"><i class="fa fa-fw fa-bars"></i></button>
+        <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': gridMode}" (click)="gridMode = true"><i
+            class="fa fa-th"></i>
+        </button>
+        <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': !gridMode}" (click)="gridMode = false"><i
+            class="fa fa-bars"></i>
+        </button>
     </div>
 
     <br>
@@ -37,11 +41,12 @@
                     <span style="font-size: 14px" class="p-2 float-right badge" [ngClass]="{'badge-secondary': host.tier === 1,
                     'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier }}</span>
                 </h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{host.taxonomy}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted font-italic">{{host.taxonomy}}</h6>
                 <p class="card-text pt-3 border-top">
                     <b class="text-primary">34</b> publications<br>
                     <b class="text-primary">71</b> data points<br>
                     <b class="text-primary">12</b> associated entries<br>
+                    <b class="text-primary">5</b> protocols<br>
                 </p>
 
                 <p class="small float-left text-muted">Last update: Jan 14, 2021, 11:34 PM</p>

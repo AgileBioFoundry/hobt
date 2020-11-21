@@ -1,0 +1,42 @@
+<div class="card-body p-1">
+    <ul class="list-group list-group-flush" *ngIf="tierCriteriaList.length">
+        <li class="list-group-item p-0" [ngClass]="{'list-group-item-success': option.available}"
+            *ngFor="let option of tierCriteriaList">
+
+            <div class="d-flex justify-content-between pt-3 pb-3 pl-2">
+                {{option.label}}
+                <!--                <button class="btn btn-outline-primary mr-2" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Toggle dropdown</button>-->
+                <!--                <div ngbDropdownMenu aria-labelledby="dropdownManual">-->
+                <!--                    <button ngbDropdownItem>Action - 1</button>-->
+                <!--                    <button ngbDropdownItem>Another Action</button>-->
+                <!--                    <button ngbDropdownItem>Something else is here</button>-->
+                <!--                </div>-->
+
+                <span>
+                    <i class="fa fa-fw fa-angle-down"></i>
+                    <div ngbDropdownMenu aria-labelledby="dropdownManual">-->
+                                            <button ngbDropdownItem>Action - 1</button>
+                                            <button ngbDropdownItem>Another Action</button>
+                                            <button ngbDropdownItem>Something else is here</button>
+                                        </div>
+                </span>
+            </div>
+
+            <!--                <ngb-progressbar type="warning" textType="dark" [value]="75" [showValue]="true"></ngb-progressbar>-->
+            <div class="progress" style="border-right: 1px solid white; border-left: 1px solid white; height: 5px">
+                <div class="progress-bar " role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                     aria-valuemax="100"></div>
+            </div>
+
+
+            <!--            <i class="fa fa-fw  font-12" (click)="setTierOptionAvailability(option)"-->
+            <!--               [ngClass]="{'fa-check-circle opacity-hover': !option.available, 'fa-check': option.available}"></i>-->
+        </li>
+    </ul>
+
+    <ul class="list-group list-group-flush" *ngIf="!tierCriteriaList.length">
+        <li class="list-group-item">&nbsp;</li>
+    </ul>
+</div>
+
+

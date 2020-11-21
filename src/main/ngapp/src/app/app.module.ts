@@ -10,6 +10,8 @@ import {HostDetailComponent} from './components/host-detail/host-detail.componen
 import {MainPageComponent} from './components/main-page/main-page.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
+import { CriteriaComponent } from './components/host-detail/criteria/criteria.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
         HeaderComponent,
         FooterComponent,
         HostDetailComponent,
-        MainPageComponent
+        MainPageComponent,
+        CriteriaComponent
     ],
     imports: [
         BrowserModule,
@@ -26,7 +29,8 @@ import {HttpClientModule} from "@angular/common/http";
         NgbModule,
         HttpClientModule,
         BrowserModule,
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
