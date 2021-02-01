@@ -3,6 +3,22 @@
 <div class="container-fluid pt-2 pb-4" style="background-color: #F4F4F4">
 
     <div class="pull-right">
+        <div>
+            <small ngbDropdown>
+                <span class="text-muted">Sort by:</span>&nbsp;
+                <span ngbDropdownToggle class="cursor-pointer">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-up': params.asc, 'fa-long-arrow-down': !params.asc}"></i>
+                    <span *ngIf="params.sort == 'updated'"> Last Updated</span>
+                    <span *ngIf="params.sort == 'organism'"> Organism</span>
+                     <ul ngbDropdownMenu class="dropdown-menu p-1">
+                         <li ngbDropdownItem class="small pl-2" (click)="sort('name')">Name</li>
+                         <li ngbDropdownItem class="small pl-2" (click)="sort('organism')">Organism</li>
+                         <li ngbDropdownItem class="small pl-2" (click)="sort('id')">Last Update</li>
+                     </ul>
+                </span>
+            </small>
+        </div>
+
         <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': gridMode}" (click)="gridMode = true"><i
             class="fa fa-th"></i>
         </button>
@@ -45,7 +61,8 @@
                 <p class="card-text pt-3 border-top">
                     <b class="text-primary">34</b> publications<br>
                     <b class="text-primary">71</b> data points<br>
-                    <b class="text-primary">12</b> associated entries<br>
+                    <b class="text-primary">12</b> associated parts<br>
+                    <b class="text-primary">6</b> experiments<br>
                     <b class="text-primary">5</b> protocols<br>
                 </p>
 
@@ -55,3 +72,6 @@
         </div>
     </div>
 </div>
+
+
+<app-footer></app-footer>

@@ -8,11 +8,15 @@ import {Component, OnInit} from '@angular/core';
 export class MainPageComponent implements OnInit {
 
     gridMode: boolean = true;
+    params = { asc: false, sort: "updated" };
 
     constructor() {
     }
 
     ngOnInit(): void {
+    }
+
+    sort(type: string): void {
     }
 
     hosts = [
