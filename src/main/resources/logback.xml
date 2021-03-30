@@ -3,7 +3,7 @@
     <property name="LOG_PATH" value="/tmp"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${LOG_PATH}/diva.log</file>
+        <file>${LOG_PATH}/hobt.log</file>
 
         <encoder>
             <pattern>%date %level %logger{10} %msg%n</pattern>

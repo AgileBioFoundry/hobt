@@ -1,6 +1,6 @@
-package org.abf.hobt.lib.account;
+package org.abf.hobt.account;
 
-import org.abf.hobt.lib.common.Log;
+import org.abf.hobt.common.logging.Logger;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -26,7 +26,7 @@ public class AccountUtils {
             byte[] hash = f.generateSecret(spec).getEncoded();
             return bytesToHex(hash);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            Log.error(e);
+            Logger.error(e);
             return null;
         }
     }

@@ -1,4 +1,4 @@
-package org.abf.hobt.lib.account;
+package org.abf.hobt.account;
 
 /**
  * Data transfer object for user account

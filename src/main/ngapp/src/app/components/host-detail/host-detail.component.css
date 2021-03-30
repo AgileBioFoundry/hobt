@@ -11,3 +11,34 @@
     border-bottom: 4px solid white;
     padding: 8px;
 }
+
+.nav-tabs .nav-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-bottom: 3px solid darkblue;
+    /*border-color: #dee2e6 #dee2e6 #fff;*/
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.nav-link {
+    display: block;
+    padding: 1rem 1.2rem;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-tabs .nav-link:hover {
+    border-bottom: 3px solid slategray;
+}

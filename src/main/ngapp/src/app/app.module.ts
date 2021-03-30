@@ -11,7 +11,8 @@ import {MainPageComponent} from './components/main-page/main-page.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { CriteriaComponent } from './components/host-detail/criteria/criteria.component';
+import {CriteriaComponent} from './components/host-detail/criteria/criteria.component';
+import {HostDetailResolver} from "./components/host-detail/host-detail.resolver";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,7 @@ import { CriteriaComponent } from './components/host-detail/criteria/criteria.co
         AppRoutingModule,
         FormsModule
     ],
-    providers: [],
+    providers: [HostDetailResolver],
     bootstrap: [AppComponent]
 })
 export class AppModule {

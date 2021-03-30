@@ -1,6 +1,6 @@
 <div class="card-body p-1">
-    <ul class="list-group list-group-flush" *ngIf="tierCriteriaList.length">
-        <li class="list-group-item p-0" [ngClass]="{'list-group-item-success': option.available}"
+    <ul class="list-groupModel list-groupModel-flush" *ngIf="tierCriteriaList.length">
+        <li class="list-groupModel-item p-0" [ngClass]="{'list-groupModel-item-success': option.available}"
             *ngFor="let option of tierCriteriaList">
 
             <div class="d-flex justify-content-between pt-2 pb-2 pl-2">
@@ -30,8 +30,8 @@
         </li>
     </ul>
 
-    <ul class="list-group list-group-flush" *ngIf="!tierCriteriaList.length">
-        <li class="list-group-item">&nbsp;</li>
+    <ul class="list-groupModel list-groupModel-flush" *ngIf="!tierCriteriaList.length">
+        <li class="list-groupModel-item">&nbsp;</li>
     </ul>
 </div>
 

@@ -1,4 +1,4 @@
-package org.abf.hobt.lib.account;
+package org.abf.hobt.account;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

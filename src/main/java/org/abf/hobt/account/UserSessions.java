@@ -1,4 +1,4 @@
-package org.abf.hobt.lib.account;
+package org.abf.hobt.account;
 
 import java.util.HashSet;
 import java.util.Map;

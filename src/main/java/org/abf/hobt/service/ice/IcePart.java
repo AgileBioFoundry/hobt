@@ -1,7 +1,7 @@
 package org.abf.hobt.service.ice;
 
-import org.abf.hobt.lib.IceApiClient;
-import org.abf.hobt.lib.common.Log;
+import org.abf.hobt.IceApiClient;
+import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.service.ice.entry.EntryType;
 import org.abf.hobt.service.ice.search.SearchQuery;
 import org.abf.hobt.service.ice.search.SearchResults;
@@ -31,7 +31,7 @@ public class IcePart {
         query.setEntryTypes(Collections.singletonList(EntryType.STRAIN));
         query.setQueryString(term);
         SearchResults results = this.client.post("/rest/search", query, SearchResults.class);
-        Log.info(results.getResultCount() + "");
+        Logger.info(results.getResultCount() + "");
     }
 }
 

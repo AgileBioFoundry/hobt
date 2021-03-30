@@ -1,6 +1,6 @@
 package org.abf.hobt.service.rest;
 
-import org.abf.hobt.lib.common.Log;
+import org.abf.hobt.common.logging.Logger;
 
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.core.Response;
@@ -43,6 +43,6 @@ public class RestResource {
     protected void log(String userId, String message) {
         if (userId == null)
             userId = "Unknown";
-        Log.info(userId + ": " + message);
+        Logger.info(userId + ": " + message);
     }
 }

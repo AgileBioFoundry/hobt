@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     }
 
     loginUser(): void {
-        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const options: NgbModalOptions = { backdrop: 'static', keyboard: false };
         const modalRef = this.modalService.open(LoginComponent, options);
         // modalRef.componentInstance.design = Object.assign({}, this.design);
         modalRef.result.then(() => {
@@ -25,5 +25,9 @@ export class HeaderComponent implements OnInit {
         }, () => {
             // console.log('delete modal cancel');
         });
+    }
+
+    goHome(): void {
+        this.router.navigate(['/']);
     }
 }

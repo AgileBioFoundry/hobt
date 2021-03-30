@@ -1,124 +1,372 @@
 <app-header></app-header>
 
-<div class="pt-5 pl-5 pb-5 border-bottom d-flex justify-content-start" style="background-color: #F6F6F7">
-    <div>
-        <h2>Rhodosporidium toruloides</h2>
-        <div class="lead font-italic mt-n2" style="color: #777575">Basidiomycota</div>
-    </div>
-
-    <!--    <div>-->
-    <!--        <span class="badge badge-danger">Tier 1</span>-->
-    <!--    </div>-->
-
-    <!--    <div class="card border-0 shadow-sm ml-5" style="width: 24rem">-->
-    <!--        <div class="card-body">-->
-    <!--            Pacific Northwest National Lab<br>-->
-    <!--            <strong>Lawrence Berkeley National Lab</strong><br>-->
-    <!--            Sandia National Lab-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-</div>
-
-<div class="d-flex justify-content-around text-white pt-1 text-uppercase font-80 border-bottom"
-     style="background-color: #0074B3">
-    <div class="sub-menu-selected">Attributes</div>
-    <div class="sub-menu"><i class="fa fa-newspaper-o font-12"></i> &nbsp;
-        Publications
-    </div>
-    <div class="sub-menu">Parts</div>
-    <div class="sub-menu">Protocols</div>
-    <div class="sub-menu">Experiments</div>
-    <div class="sub-menu">Tier Progress</div>
-</div>
-
-<div class="container-fluid font-90 pt-3">
-    <div class="row">
-        <div class="col-11">
-            <div class="card-group pt-1 pb-2">
-                <div class="card bg-light">
-                    <div class="card-body p-2">
-                        <strong class="card-title font-weight-bold font-90">Cultivation / Phenotype</strong>
-                    </div>
-                </div>
-                <div class="card bg-light">
-                    <div class="card-body p-2">
-                        <strong class="card-title font-weight-bold font-90">Genome Editing</strong>
-                    </div>
-                </div>
-                <div class="card bg-light">
-                    <div class="card-body p-2">
-                        <strong class="card-title font-weight-bold font-90">Expression</strong>
-                    </div>
-                </div>
-                <div class="card bg-light">
-                    <div class="card-body p-2">
-                        <strong class="card-title font-weight-bold font-90">Omics</strong>
-                    </div>
-                </div>
-                <div class="card bg-light">
-                    <div class="card-body p-2">
-                        <strong class="card-title font-weight-bold font-90">Libraries</strong>
-                    </div>
-                </div>
-                <div class="card bg-light">
-                    <div class="card-body p-2">
-                        <strong class="card-title font-weight-bold font-90">Models</strong>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-group mb-4" *ngFor="let tier of tiers">
-                <div class="card p-0">
-                    <app-criteria [tierCriteriaList]="tier.cultivation"></app-criteria>
-                </div>
-
-                <div class="card">
-                    <app-criteria [tierCriteriaList]="tier.genome"></app-criteria>
-                </div>
-
-                <div class="card">
-                    <app-criteria [tierCriteriaList]="tier.expression"></app-criteria>
-                </div>
-
-                <div class="card">
-                    <app-criteria [tierCriteriaList]="tier.omics"></app-criteria>
-                </div>
-
-                <div class="card">
-                    <app-criteria [tierCriteriaList]="tier.libraries"></app-criteria>
-                </div>
-
-                <div class="card">
-                    <app-criteria [tierCriteriaList]="tier.models"></app-criteria>
-                </div>
-            </div>
-
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                <label class="custom-control-label" for="customSwitch1">Tier Completed</label>
-            </div>
+<div class="pt-5 pl-5 pb-5 border-bottom" style="background-color: #F6F6F7">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h2>{{host.name}}</h2>
+            <div class="lead font-italic mt-n2" style="color: #777575">{{host.taxonomy}}</div>
         </div>
 
-
-        <div class="col-1">
-            <ul class="list-group" style="border-radius: 0">
-                <li class="list-group-item list-group-item-success mt-1 rounded-right" (click)="addRemoveTier(tier1)"
-                    style="border:0; border-right: 3px solid red">Tier 1
-                </li>
-                <li class="list-group-item mt-3 bg-light rounded-right" (click)="addRemoveTier(tier2)"
-                    style="border:0; border-right: 3px solid purple">Tier 2
-                </li>
-                <li class="list-group-item mt-3 bg-light rounded-right" (click)="addRemoveTier(tier3)"
-                    style="border:0; border-right: 3px solid blue">Tier 3
-                </li>
-                <li class="list-group-item mt-3 bg-light rounded-right" (click)="addRemoveTier(tier4)"
-                    style="border:0; border-right: 3px solid orange">Tier 4
-                </li>
-            </ul>
+        <div class="float-right btn-toolbar mr-3">
+            <div class="card border-0 shadow-sm ml-5" style="width: 24rem">
+                <div class="card-body">
+                    <strong>Lawrence Berkeley National Lab</strong><br>
+                    Sandia National Lab
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div style="width: 100%">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0">
+
+
+        <li [ngbNavItem]="1">
+            <a ngbNavLink class="mr-5 ml-5">ATTRIBUTES</a>
+            <ng-template ngbNavContent>
+                <div class="container-fluid font-90 pt-3">
+                    <i class="text-muted">No information available</i>
+                </div>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="2">
+            <a ngbNavLink class="mr-5 ml-5">PUBLICATIONS
+                <div class="badge badge-light badge-pill font-90 p-1 text-muted">6</div>
+            </a>
+            <ng-template ngbNavContent>
+
+                <div class="container-fluid pt-3">
+                    <h5 class="pb-2 border-bottom ">
+                        <i>ABF Publications</i>
+                        <a class="float-right small">Add</a>
+                    </h5>
+
+
+                    <ul>
+                        <li>Chen, J., Densmore, D., Ham, T.S. et al. <a
+                            href="https://jbioleng.biomedcentral.com/articles/10.1186/1754-1611-6-1#citeas">DeviceEditor
+                            visual biological CAD canvas.</a> J Biol Eng 6, 1 (2012).
+                            https://doi.org/10.1186/1754-1611-6-1<br>
+                            <small class="text-muted">Published 01 December 2012</small> &nbsp; <small>Download
+                                PDF</small>
+                        </li>
+
+                        <li>Chen, J., Densmore, D., Ham, T.S. et al. <a
+                            href="https://jbioleng.biomedcentral.com/articles/10.1186/1754-1611-6-1#citeas">DeviceEditor
+                            visual biological CAD canvas.</a> J Biol Eng 6, 1 (2012).
+                            https://doi.org/10.1186/1754-1611-6-1<br>
+                            <small class="text-muted">Published 01 December 2012</small> &nbsp; <small>Download
+                                PDF</small>
+                        </li>
+                    </ul>
+
+                    &nbsp;
+                    <br><br>
+
+                    <h5 class="pb-2 border-bottom">
+                        <i>External Publications</i>
+                        <a class="float-right small">Add</a>
+                    </h5>
+
+                    <ul>
+                        <li>Chen, J., Densmore, D., Ham, T.S. et al. <a
+                            href="https://jbioleng.biomedcentral.com/articles/10.1186/1754-1611-6-1#citeas">DeviceEditor
+                            visual biological CAD canvas.</a> J Biol Eng 6, 1 (2012).
+                            https://doi.org/10.1186/1754-1611-6-1<br>
+                            <small class="text-muted">Published 01 December 2012</small> &nbsp; <small>Download
+                                PDF</small>
+                        </li>
+                        <li>Chen, J., Densmore, D., Ham, T.S. et al. <a
+                            href="https://jbioleng.biomedcentral.com/articles/10.1186/1754-1611-6-1#citeas">DeviceEditor
+                            visual biological CAD canvas.</a> J Biol Eng 6, 1 (2012).
+                            https://doi.org/10.1186/1754-1611-6-1<br>
+                            <small class="text-muted">Published 01 December 2012</small> &nbsp; <small>Download
+                                PDF</small>
+                        </li>
+                        <li>Chen, J., Densmore, D., Ham, T.S. et al. <a
+                            href="https://jbioleng.biomedcentral.com/articles/10.1186/1754-1611-6-1#citeas">DeviceEditor
+                            visual biological CAD canvas.</a> J Biol Eng 6, 1 (2012).
+                            https://doi.org/10.1186/1754-1611-6-1<br>
+                            <small class="text-muted">Published 01 December 2012</small> &nbsp; <small>Download
+                                PDF</small>
+                        </li>
+                        <li>Chen, J., Densmore, D., Ham, T.S. et al. <a
+                            href="https://jbioleng.biomedcentral.com/articles/10.1186/1754-1611-6-1#citeas">DeviceEditor
+                            visual biological CAD canvas.</a> J Biol Eng 6, 1 (2012).
+                            https://doi.org/10.1186/1754-1611-6-1<br>
+                            <small class="text-muted">Published, 01 December 2012</small> &nbsp; <small>Download
+                                PDF</small>
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="3">
+            <a ngbNavLink class="mr-5 ml-5">PARTS
+                <div class="badge badge-light badge-pill p-1 font-90 text-muted">192</div>
+            </a>
+            <ng-template ngbNavContent>
+                <div class="container-fluid font-90 pt-3">
+                    <i class="text-muted">No information available</i>
+                </div>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="4">
+            <a ngbNavLink class="mr-5 ml-5">PROTOCOLS</a>
+            <ng-template ngbNavContent>
+                <div class="container-fluid font-90 pt-3">
+                    <i class="text-muted">No information available</i>
+                </div>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="5">
+            <a ngbNavLink class="mr-5 ml-5">EXPERIMENTS
+                <div class="badge badge-light badge-pill p-1 font-90 text-muted">12</div>
+            </a>
+            <ng-template ngbNavContent>
+                <div class="container-fluid font-90 pt-3">
+                    <i class="text-muted">No information available</i>
+                </div>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="6">
+            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS &nbsp;
+                <span style="font-size: 10px" class="p-1 pr-1 pl-1 badge" [ngClass]="{'badge-secondary': host.tier === 1,
+                    'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier }}</span>
+            </a>
+            <ng-template ngbNavContent>
+
+                <div class="container-fluid pt-3">
+                    <h4 class="border-bottom">Tier 1</h4>
+                    <table class="table table-sm table-responsive-sm table-bordered font-90">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase font-90">Criteria</th>
+                            <th class="text-uppercase font-90">Details</th>
+                            <th class="text-uppercase font-90">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="font-weight-bold">Annotated genome</td>
+                            <td style="width: 55%" class="font-italic text-muted">Closed genome for bacteria, at least
+                                draft genome for fungi; codon usage analysis
+                            </td>
+                            <td>
+                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Growth conditions</td>
+                            <td style="width: 55%" class="font-italic text-muted">One or more sets of growth conditions:
+                                defined minimal or rich media, temperature, aeration, pH, light, vessel geometries,
+                                antibiotic or auxotrophic supplement concentration, growth on petri plates
+                            </td>
+                            <td>
+                                <ngb-progressbar type="info" [value]="25" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Growth kinetics</td>
+                            <td style="width: 55%" class="font-italic text-muted">Growth kinetics data (OD or cfu, media
+                                utilization) for each growth condition and availability of simple growth models (i.e.,
+                                Monod)
+                            </td>
+                            <td>
+                                <ngb-progressbar type="success" [value]="100" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Antibiotic susceptibility</td>
+                            <td style="width: 55%" class="font-italic text-muted">Profile for susceptibility to common
+                                antibiotics under typical growth conditions
+                            </td>
+                            <td>
+                                <ngb-progressbar type="info" [value]="20" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Selectable markers</td>
+                            <td style="width: 55%" class="font-italic text-muted">One or more antibiotic and/or
+                                auxotrophic markers
+                            </td>
+                            <td>
+                                <ngb-progressbar type="info" [value]="20" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Transformation methods</td>
+                            <td style="width: 55%" class="font-italic text-muted">One or more transformation methods,
+                                such as natural competence, conjugation, electroporation, heat-shock, phage
+                                transduction, and protoplast fusion
+                            </td>
+                            <td>
+                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Plasmids/vectors</td>
+                            <td style="width: 55%" class="font-italic text-muted">One or more integrative or replicative
+                                plasmids and/or transposase insertion vectors
+                            </td>
+                            <td>
+                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Basic expression parts</td>
+                            <td style="width: 55%" class="font-italic text-muted">One or more enzymatic, fluorescence,
+                                and/or luminescence reporters; one or more combination of promoter and translation
+                                initiation sequence with characterized expression level (could be inducible but more
+                                likely will be constitutive); one or more transcriptional terminators
+                            </td>
+                            <td>
+                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Biosafety/Biosecurity</b></td>
+                            <td style="width: 55%" class="font-italic text-muted">Documentation of known health hazards,
+                                biosafety level, environmental impacts; for due diligence and biosecurity purposes, the
+                                identity of strains, plasmids and synthetic DNA will be confirmed by sequencing when
+                                received by the ABF and on a periodic basis
+                            </td>
+                            <td>
+                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <br><br><br>
+
+                <div class="container-fluid font-90 pt-3">
+                    <div class="row">
+                        <div class="col-11">
+                            <div class="card-groupModel pt-1 pb-2">
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <strong class="card-title font-weight-bold font-90">
+                                            <i class="fa fa-fw fa-question-circle opacity-hover"></i> Cultivation /
+                                            Phenotype
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <strong class="card-title font-weight-bold font-90">Genome Editing</strong>
+                                    </div>
+                                </div>
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <strong class="card-title font-weight-bold font-90">Expression</strong>
+                                    </div>
+                                </div>
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <strong class="card-title font-weight-bold font-90">Omics</strong>
+                                    </div>
+                                </div>
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <strong class="card-title font-weight-bold font-90">Libraries</strong>
+                                    </div>
+                                </div>
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <strong class="card-title font-weight-bold font-90">Models</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-groupModel mb-4" *ngFor="let tier of tiers">
+                                <div class="card p-0">
+                                    <app-criteria [tierCriteriaList]="tier.cultivation"></app-criteria>
+                                </div>
+
+                                <div class="card">
+                                    <app-criteria [tierCriteriaList]="tier.genome"></app-criteria>
+                                </div>
+
+                                <div class="card">
+                                    <app-criteria [tierCriteriaList]="tier.expression"></app-criteria>
+                                </div>
+
+                                <div class="card">
+                                    <app-criteria [tierCriteriaList]="tier.omics"></app-criteria>
+                                </div>
+
+                                <div class="card">
+                                    <app-criteria [tierCriteriaList]="tier.libraries"></app-criteria>
+                                </div>
+
+                                <div class="card">
+                                    <app-criteria [tierCriteriaList]="tier.models"></app-criteria>
+                                </div>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">Tier Completed</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-1">
+                            <ul class="list-groupModel" style="border-radius: 0">
+                                <li class="list-groupModel-item list-groupModel-item-success mt-1 rounded-right"
+                                    (click)="addRemoveTier(tier1)"
+                                    style="border:0; border-right: 3px solid red">Tier 1
+                                </li>
+                                <li class="list-groupModel-item mt-3 bg-light rounded-right"
+                                    (click)="addRemoveTier(tier2)"
+                                    style="border:0; border-right: 3px solid purple">Tier 2
+                                </li>
+                                <li class="list-groupModel-item mt-3 bg-light rounded-right"
+                                    (click)="addRemoveTier(tier3)"
+                                    style="border:0; border-right: 3px solid blue">Tier 3
+                                </li>
+                                <li class="list-groupModel-item mt-3 bg-light rounded-right"
+                                    (click)="addRemoveTier(tier4)"
+                                    style="border:0; border-right: 3px solid orange">Tier 4
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+
+<!--<div class="d-flex justify-content-around text-white pt-1 text-uppercase font-80 border-bottom"-->
+<!--     style="background-color: #0074B3">-->
+<!--    <div class="sub-menu-selected">Attributes</div>-->
+<!--    <div class="sub-menu"><i class="fa fa-newspaper-o font-12"></i> &nbsp;-->
+<!--        Publications-->
+<!--    </div>-->
+<!--    <div class="sub-menu">Parts</div>-->
+<!--    <div class="sub-menu">Protocols</div>-->
+<!--    <div class="sub-menu">Experiments</div>-->
+<!--    <div class="sub-menu">Tier Progress</div>-->
+<!--</div>-->
+
+
 
 
 

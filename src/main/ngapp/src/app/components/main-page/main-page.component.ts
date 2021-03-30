@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Host} from "../../model/host.model";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-main-page',
@@ -8,93 +10,43 @@ import {Component, OnInit} from '@angular/core';
 export class MainPageComponent implements OnInit {
 
     gridMode: boolean = true;
-    params = { asc: false, sort: "updated" };
+    params = { asc: false, sort: "id" };
 
-    constructor() {
+    constructor(private router: Router) {
     }
 
     ngOnInit(): void {
     }
 
     sort(type: string): void {
+        if (this.params.sort === type) {
+            this.params.asc = !this.params.asc;
+        } else {
+            this.params.sort = type;
+        }
+
+        this.hosts.sort((a, b) => (a[type] > b[type]) ? 1 : (a[type] === b[type]) ? ((a[type] > b[type]) ? 1 : -1) : -1);
+    }
+
+    goToHost(host: Host): void {
+        this.router.navigate(['host/', host.id]);
     }
 
     hosts = [
-        {
-            name: "Pseudomonas putida",
-            taxonomy: "Gammaproteobacteria",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Rhodosporidium  toruloides",
-            taxonomy: "Basidiomycota",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Aspergillus niger",
-            taxonomy: "Ascomycota",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Corynebacterium glutamicum",
-            taxonomy: "Actinobacteria",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Cupriavidus necator",
-            taxonomy: "Betaproteobacteria",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Bacillus coagulans",
-            taxonomy: "Firmicutes",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Pichia kudriavzevii",
-            taxonomy: "Ascomycota",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Clostridium tyrobutyricum",
-            taxonomy: "Firmicutes",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Lipomyces starkeyi",
-            taxonomy: "Ascomycota",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Rhodobacter sphaeroides",
-            taxonomy: "Alphaproteobacteria",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Aspergillus pseudoterreus",
-            taxonomy: "Ascomycota",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Zymomonas mobilis",
-            taxonomy: "Alphaproteobacteria",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Clostridium ljungdahlii",
-            taxonomy: "Firmicutes",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Zygosaccharomyces bailii",
-            taxonomy: "Ascomycota",
-            tier: Math.floor(Math.random() * 4) + 1
-        },
-        {
-            name: "Methylomicrobium buryatense",
-            taxonomy: "Gammaproteobacteria",
-            tier: Math.floor(Math.random() * 4) + 1
-        }
+        new Host(1, "Pseudomonas putida", "Gammaproteobacteria"),
+        new Host(2, "Rhodosporidium toruloides", "Basidiomycota"),
+        new Host(3, "Aspergillus niger", "Ascomycota"),
+        new Host(4, "Corynebacterium glutamicum", "Actinobacteria"),
+        new Host(5, "Cupriavidus necator", "Betaproteobacteria"),
+        new Host(6, "Bacillus coagulans", "Firmicutes"),
+        new Host(7, "Pichia kudriavzevii", "Ascomycota"),
+        new Host(8, "Clostridium tyrobutyricum", "Firmicutes"),
+        new Host(9, "Lipomyces starkeyi", "Ascomycota"),
+        new Host(10, "Rhodobacter sphaeroides", "Alphaproteobacteria"),
+        new Host(11, "Aspergillus pseudoterreus", "Ascomycota"),
+        new Host(12, "Zymomonas mobilis", "Alphaproteobacteria"),
+        new Host(13, "Clostridium ljungdahlii", "Firmicutes"),
+        new Host(14, "Zygosaccharomyces bailii", "Ascomycota"),
+        new Host(15, "Methylomicrobium buryatense", "Gammaproteobacteria")
     ];
-
 }

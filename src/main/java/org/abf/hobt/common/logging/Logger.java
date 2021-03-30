@@ -1,9 +1,15 @@
-package org.abf.hobt.lib.common;
+package org.abf.hobt.common.logging;
 
 import org.slf4j.LoggerFactory;
 
-public class Log {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("HOBT");
+/**
+ * Logging for hobt
+ *
+ * @author Hector Plahar
+ */
+public class Logger {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger("org.abf.hobt");
 
     public static void error(String message) {
         LOGGER.error(message);
@@ -14,6 +20,10 @@ public class Log {
     }
 
     public static void error(Throwable e) {
+        LOGGER.error(e.getMessage(), e);
+    }
+
+    public static void logErrorOnly(Throwable e) {
         LOGGER.error(e.getMessage(), e);
     }
 

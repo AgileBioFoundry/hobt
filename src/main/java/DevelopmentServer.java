@@ -1,5 +1,3 @@
-package org.abf.hobt;
-
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.predicate.PredicatesHandler;

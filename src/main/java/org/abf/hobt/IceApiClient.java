@@ -1,6 +1,6 @@
-package org.abf.hobt.lib;
+package org.abf.hobt;
 
-import org.abf.hobt.lib.common.Log;
+import org.abf.hobt.common.logging.Logger;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
@@ -43,7 +43,7 @@ public class IceApiClient {
         try {
             properties.load(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("config.properties")));
         } catch (Exception e) {
-            Log.error(e);
+            Logger.error(e);
         }
         url = properties.getProperty("ICE_URL");
         apiClientId = properties.getProperty("URI_PREFIX");
@@ -68,7 +68,7 @@ public class IceApiClient {
             Invocation invocation = getInvocationHeaders(target).buildGet();
             return invocation.invoke(clazz);
         } catch (Exception e) {
-            Log.error(e);
+            Logger.error(e);
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class IceApiClient {
         Response postResponse = invocationBuilder.post(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
         if (postResponse.getStatus() == Response.Status.OK.getStatusCode() && postResponse.hasEntity())
             return postResponse.readEntity(responseClass);
-        Log.error("Status from registry client post call " + postResponse.getStatus());
+        Logger.error("Status from registry client post call " + postResponse.getStatus());
         return null;
     }
 
@@ -89,7 +89,7 @@ public class IceApiClient {
         Response postResponse = invocationBuilder.post(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
         if (postResponse.getStatus() == Response.Status.OK.getStatusCode() && postResponse.hasEntity())
             return postResponse.readEntity(responseClass);
-        Log.error("Status from  client post call " + postResponse.getStatus());
+        Logger.error("Status from  client post call " + postResponse.getStatus());
         return null;
     }
 }

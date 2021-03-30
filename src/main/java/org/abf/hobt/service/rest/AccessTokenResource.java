@@ -1,6 +1,6 @@
 package org.abf.hobt.service.rest;
 
-import org.abf.hobt.lib.account.AccountTransfer;
+import org.abf.hobt.account.AccountTransfer;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

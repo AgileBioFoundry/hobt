@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TierCriteria} from "../../model/tier-criteria.model";
+import {ActivatedRoute} from "@angular/router";
+import {Host} from "../../model/host.model";
 
 @Component({
     selector: 'app-host-detail',
@@ -8,10 +10,16 @@ import {TierCriteria} from "../../model/tier-criteria.model";
 })
 export class HostDetailComponent implements OnInit {
 
-    constructor() {
+    host: Host;
+    active = 1;
+
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.route.data.subscribe((data) => {
+            this.host = data.host;
+        });
     }
 
     tier1 =

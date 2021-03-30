@@ -2,11 +2,12 @@ export class TierCriteria {
     label: string;
     available: boolean;
     status: number;
+    details: string;
 
     constructor(label: string, available = false) {
         this.label = label;
         this.available = available;
-        this.status = Math.floor(Math.random() * 4) + 1;  // todo remove
+        this.status = 0;
 
         switch (this.status) {
             case 1:
