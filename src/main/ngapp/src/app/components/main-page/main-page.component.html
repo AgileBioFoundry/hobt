@@ -45,7 +45,7 @@
         <tbody>
         <tr *ngFor="let host of hosts">
             <td class="text-primary">{{ host.name }}</td>
-            <td>{{ host.taxonomy }}</td>
+            <td>{{ host.phylum }}</td>
             <td><span style="font-size: 14px" class="p-2 pr-3 pl-3 badge" [ngClass]="{'badge-secondary': host.tier === 1,
                     'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier }}</span>
             </td>
@@ -55,14 +55,14 @@
     </table>
 
     <div class="row mt-3" *ngIf="gridMode">
-        <div class="card ml-4 mb-4  border-0 shadow-sm" style="width: 28rem;" *ngFor="let host of hosts">
+        <div class="card ml-4 mb-4 border-0 shadow-sm" style="width: 28rem" *ngFor="let host of hosts">
             <div class="card-body pb-1">
                 <h5 class="card-title">
                     <span class="cursor-pointer" (click)="goToHost(host)">{{ host.name }}</span>
                     <span style="font-size: 14px" class="p-2 float-right badge" [ngClass]="{'badge-secondary': host.tier === 1,
                     'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier }}</span>
                 </h5>
-                <h6 class="card-subtitle mb-2 text-muted font-italic">{{ host.taxonomy }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted font-italic">{{ host.phylum }}</h6>
                 <p class="card-text pt-3 border-top">
                     <b class="text-primary">{{ host.publications }}</b> publications<br>
                     <b class="text-primary">{{ host.parts }}</b> associated parts<br>
@@ -74,6 +74,31 @@
                 <a routerLink="/host/{{ host.id }}" class="card-link float-right small">details &raquo;</a>
             </div>
         </div>
+
+        <div class="card ml-4 mb-4 border-0 shadow-sm opacity-hover" style="width: 28rem"
+             (click)="showCreateOrganism()">
+            <div class="card-body pb-1 text-center">
+                <i class="fa fa-fw fa-plus text-success" style="font-size: 120px"></i>
+                <br>
+                <h5>Add new organism</h5>
+            </div>
+        </div>
+
+        <div class="card ml-4 mb-4 border-0 shadow-sm" style="width: 28rem">
+            <div class="card-body pb-1">
+                <form (submit)="createOrganism()" id="createOrganismForm">
+                    <h5>Create a new organism</h5>
+                    <input name="hostName" class="form-control" [(ngModel)]="newHost.name" placeholder="Enter name">
+                    <input name="hostPhylum" class="form-control mt-1" [(ngModel)]="newHost.phylum"
+                           placeholder="Enter phylum">
+                    <div class="m-2 pull-right">
+                        <button class="btn btn-link" type="reset">Cancel</button>
+                        <button class="btn btn-sm btn-primary" type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
 

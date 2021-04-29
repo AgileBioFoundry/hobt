@@ -5,7 +5,6 @@ import {catchError} from 'rxjs/operators';
 import {UserService} from './user.service';
 import {Router} from '@angular/router';
 import {environment} from "../../environments/environment";
-import {Host} from "../model/host.model";
 
 @Injectable({
     providedIn: 'root'
@@ -14,24 +13,6 @@ import {Host} from "../model/host.model";
 export class HttpService {
 
     private readonly apiUrl: string;
-
-    hosts = [
-        new Host(1, "Pseudomonas putida", "Gammaproteobacteria"),
-        new Host(2, "Rhodosporidium toruloides", "Basidiomycota"),
-        new Host(3, "Aspergillus niger", "Ascomycota"),
-        new Host(4, "Corynebacterium glutamicum", "Actinobacteria"),
-        new Host(5, "Cupriavidus necator", "Betaproteobacteria"),
-        new Host(6, "Bacillus coagulans", "Firmicutes"),
-        new Host(7, "Pichia kudriavzevii", "Ascomycota"),
-        new Host(8, "Clostridium tyrobutyricum", "Firmicutes"),
-        new Host(9, "Lipomyces starkeyi", "Ascomycota"),
-        new Host(10, "Rhodobacter sphaeroides", "Alphaproteobacteria"),
-        new Host(11, "Aspergillus pseudoterreus", "Ascomycota"),
-        new Host(12, "Zymomonas mobilis", "Alphaproteobacteria"),
-        new Host(13, "Clostridium ljungdahlii", "Firmicutes"),
-        new Host(14, "Zygosaccharomyces bailii", "Ascomycota"),
-        new Host(15, "Methylomicrobium buryatense", "Gammaproteobacteria")
-    ];
 
     private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -46,14 +27,6 @@ export class HttpService {
         // }, error => {
         //     console.error(error);
         // });
-    }
-
-    getHostById(id: number): Host {
-        for (const host of this.hosts) {
-            if (host.id == id)
-                return host;
-        }
-        return undefined;
     }
 
     get<T>(api: string, options?, redirect?): Observable<T> {

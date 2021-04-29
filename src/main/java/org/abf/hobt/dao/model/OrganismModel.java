@@ -1,7 +1,7 @@
 package org.abf.hobt.dao.model;
 
 import org.abf.hobt.dao.IDataModel;
-import org.abf.hobt.service.ice.IDataTransferObject;
+import org.abf.hobt.dto.Organism;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,7 +18,7 @@ public class OrganismModel implements IDataModel {
     @Column(name = "name", length = 125, nullable = false)
     private String name;
 
-    @Column(name = "name", length = 125, nullable = false)
+    @Column(name = "phylum", length = 125, nullable = false)
     private String phylum;
 
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -29,8 +29,51 @@ public class OrganismModel implements IDataModel {
     @Column(name = "updated")
     private Date lastUpdateTime;
 
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhylum() {
+        return phylum;
+    }
+
+    public void setPhylum(String phylum) {
+        this.phylum = phylum;
+    }
+
+    public Date getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
     @Override
-    public IDataTransferObject toDataTransferObject() {
-        return null;
+    public Organism toDataTransferObject() {
+        Organism organism = new Organism();
+        organism.setId(id);
+        organism.setName(name);
+        organism.setPhylum(phylum);
+        organism.setCreated(creationTime.getTime());
+        if (lastUpdateTime != null)
+            organism.setUpdated(lastUpdateTime.getTime());
+        return organism;
     }
 }

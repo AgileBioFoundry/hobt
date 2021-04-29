@@ -4,6 +4,7 @@ import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dao.DbType;
 import org.abf.hobt.dao.model.AccountModel;
 import org.abf.hobt.dao.model.GroupModel;
+import org.abf.hobt.dao.model.OrganismModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -109,6 +110,7 @@ public class HibernateConfiguration {
     private static void addAnnotatedClasses(Configuration configuration) {
         configuration.addAnnotatedClass(AccountModel.class);
         configuration.addAnnotatedClass(GroupModel.class);
+        configuration.addAnnotatedClass(OrganismModel.class);
     }
 
     /**

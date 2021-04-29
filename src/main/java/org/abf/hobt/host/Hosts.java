@@ -1,0 +1,58 @@
+package org.abf.hobt.host;
+
+import org.abf.hobt.common.ResultData;
+import org.abf.hobt.common.util.StringUtils;
+import org.abf.hobt.dao.DAOFactory;
+import org.abf.hobt.dao.hibernate.OrganismDAO;
+import org.abf.hobt.dao.model.OrganismModel;
+import org.abf.hobt.dto.Organism;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author Hector Plahar
+ */
+public class Hosts {
+
+    private final OrganismDAO dao;
+
+    public Hosts() {
+        this.dao = DAOFactory.getOrganismDAO();
+    }
+
+    public Organism retrieve(long id) {
+        OrganismModel model = this.dao.get(id);
+        if (model == null)
+            return null;
+        return model.toDataTransferObject();
+    }
+
+    public Organism create(Organism organism) {
+        if (StringUtils.isBlank(organism.getName()) || StringUtils.isBlank(organism.getPhylum()))
+            throw new IllegalArgumentException("Cannot create organism without name or phylum");
+
+        OrganismModel model = new OrganismModel();
+        model.setCreationTime(new Date());
+        model.setName(organism.getName());
+        model.setPhylum(organism.getPhylum());
+
+        model = this.dao.create(model);
+        if (model != null)
+            return model.toDataTransferObject();
+
+        return null;
+    }
+
+    public ResultData<Organism> retrieveList(int offset, int limit, String sort, boolean asc) {
+        ResultData<Organism> result = new ResultData<>();
+        List<OrganismModel> organisms = this.dao.retrieveOrganisms(offset, limit, asc, sort);
+        long count = this.dao.getAvailableOrganismCount();
+        result.setAvailable(count);
+
+        for (OrganismModel model : organisms)
+            result.getRequested().add(model.toDataTransferObject());
+
+        return result;
+    }
+}

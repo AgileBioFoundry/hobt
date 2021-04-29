@@ -11,12 +11,6 @@ export class HostDetailResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Host> {
-        // TODO
-        const host: Host = this.http.getHostById(route.params.hid);
-        return new Observable(observer => {
-            observer.next(host)
-            observer.complete()
-        });
-        // return this.http.get('hosts/' + route.params.designId);
+        return this.http.get('hosts/' + route.params.hid);
     }
 }
