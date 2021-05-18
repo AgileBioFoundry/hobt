@@ -29,6 +29,10 @@ public class OrganismModel implements IDataModel {
     @Column(name = "updated")
     private Date lastUpdateTime;
 
+    @OneToOne
+    @JoinColumn(name = "tier_id")
+    private TierModel tier;
+
     public long getId() {
         return id;
     }
@@ -74,6 +78,8 @@ public class OrganismModel implements IDataModel {
         organism.setCreated(creationTime.getTime());
         if (lastUpdateTime != null)
             organism.setUpdated(lastUpdateTime.getTime());
+        if (tier != null)
+            organism.setTier(tier.toDataTransferObject());
         return organism;
     }
 }

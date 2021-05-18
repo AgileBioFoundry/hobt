@@ -11,9 +11,10 @@ import {HttpService} from "../../service/http.service";
 export class MainPageComponent implements OnInit {
 
     gridMode: boolean = true;
-    params = { asc: false, sort: "id", limit: 100 };
+    params = { asc: false, sort: "id", limit: 15 };
     newHost: Host;
     hosts: Host[];
+    showCreateNewHost = false;
 
     constructor(private router: Router, private http: HttpService) {
         this.hosts = [];
@@ -54,11 +55,13 @@ export class MainPageComponent implements OnInit {
     createOrganism(): void {
         this.http.post('hosts', this.newHost).subscribe((result) => {
             this.getHosts();
+            this.showCreateNewHost = false;
             this.newHost = new Host();
         });
     }
 
     showCreateOrganism(): void {
+        this.showCreateNewHost = true;
     }
 
     // hosts = [

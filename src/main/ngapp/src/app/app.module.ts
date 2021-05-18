@@ -13,6 +13,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {CriteriaComponent} from './components/host-detail/criteria/criteria.component';
 import {HostDetailResolver} from "./components/host-detail/host-detail.resolver";
+import {AddPermissionComponent} from './components/host-detail/modals/add-permission/add-permission.component';
+import {AddAttributeComponent} from './components/host-detail/modals/add-attribute/add-attribute.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import {HostDetailResolver} from "./components/host-detail/host-detail.resolver"
         FooterComponent,
         HostDetailComponent,
         MainPageComponent,
-        CriteriaComponent
+        CriteriaComponent,
+        AddPermissionComponent,
+        AddAttributeComponent
     ],
     imports: [
         BrowserModule,

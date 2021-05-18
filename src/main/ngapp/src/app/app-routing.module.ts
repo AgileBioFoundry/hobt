@@ -8,7 +8,8 @@ import {HostDetailResolver} from "./components/host-detail/host-detail.resolver"
 const routes: Routes = [
     { path: '', component: MainPageComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'host/:hid', component: HostDetailComponent, resolve: { host: HostDetailResolver } }
+    { path: 'host/:hid', redirectTo: 'host/:hid/attributes', pathMatch: 'full' },
+    { path: 'host/:hid/:attribute', component: HostDetailComponent, resolve: { host: HostDetailResolver } }
 ];
 
 @NgModule({

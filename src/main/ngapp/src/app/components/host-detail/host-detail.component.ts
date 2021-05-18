@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {TierCriteria} from "../../model/tier-criteria.model";
 import {ActivatedRoute} from "@angular/router";
 import {Host} from "../../model/host.model";
+import {Location} from "@angular/common";
+import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {AddPermissionComponent} from "./modals/add-permission/add-permission.component";
+import {Publication} from "../../model/Publication";
+import {AddAttributeComponent} from "./modals/add-attribute/add-attribute.component";
 
 @Component({
     selector: 'app-host-detail',
@@ -11,14 +16,46 @@ import {Host} from "../../model/host.model";
 export class HostDetailComponent implements OnInit {
 
     host: Host;
-    active = 1;
+    active: 'attributes';
+    publications: Publication[];
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private location: Location, private modalService: NgbModal) {
+        this.publications = [];
     }
 
     ngOnInit(): void {
         this.route.data.subscribe((data) => {
             this.host = data.host;
+        });
+
+        const param = this.route.snapshot.params['attribute'];
+        if (param)
+            this.active = param;
+    }
+
+    activeChanged(event): void {
+        this.location.go('/host/' + this.host.id + '/' + event.nextId);
+    }
+
+    showPublicationAddModal(): void {
+        const options: NgbModalOptions = { backdrop: 'static', keyboard: false };
+        const modalRef = this.modalService.open(AddPermissionComponent, options);
+        modalRef.result.then((result: Publication) => {
+            console.log(result);
+            if (result)
+                this.publications.push(result);
+        }, error => {
+            console.log('error', error);
+        });
+    }
+
+    showAttributeAddModal(): void {
+        const options: NgbModalOptions = { backdrop: 'static', keyboard: false };
+        const modalRef = this.modalService.open(AddAttributeComponent, options);
+        modalRef.result.then((result) => {
+            console.log(result);
+        }, error => {
+            console.log('error', error);
         });
     }
 

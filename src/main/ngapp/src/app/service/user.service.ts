@@ -27,7 +27,7 @@ export class UserService {
         return user.roles.indexOf('ADMINISTRATOR') !== -1;
     }
 
-    getUser(redirectToLogin: boolean = true): User {
+    getUser(redirectToLogin: boolean = false): User {
         if (!this.user) {
             this.user = JSON.parse(localStorage.getItem('user'));
             console.log('user from local storage', this.user);
@@ -35,7 +35,7 @@ export class UserService {
 
         if (!this.user && redirectToLogin) {
             this.clearUser();
-            this.router.navigate(['/login']);
+            // this.router.navigate(['/login']);
         }
 
         return this.user;
