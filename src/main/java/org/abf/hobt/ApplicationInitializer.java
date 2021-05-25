@@ -110,7 +110,7 @@ public class ApplicationInitializer {
             hobtDataHome = Paths.get(propertyHome);
         }
 
-        Logger.info("Using HOBT data directory: " + hobtDataHome.toString());
+        Logger.info("Using HOBT data directory: " + hobtDataHome);
         return hobtDataHome;
     }
 
