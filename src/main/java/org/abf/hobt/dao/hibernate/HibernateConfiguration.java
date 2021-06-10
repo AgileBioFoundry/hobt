@@ -2,10 +2,7 @@ package org.abf.hobt.dao.hibernate;
 
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dao.DbType;
-import org.abf.hobt.dao.model.AccountModel;
-import org.abf.hobt.dao.model.GroupModel;
-import org.abf.hobt.dao.model.OrganismModel;
-import org.abf.hobt.dao.model.TierModel;
+import org.abf.hobt.dao.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -113,6 +110,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(GroupModel.class);
         configuration.addAnnotatedClass(OrganismModel.class);
         configuration.addAnnotatedClass(TierModel.class);
+        configuration.addAnnotatedClass(ConfigurationModel.class);
     }
 
     /**

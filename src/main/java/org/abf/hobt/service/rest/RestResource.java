@@ -1,8 +1,12 @@
 package org.abf.hobt.service.rest;
 
+import org.abf.hobt.account.SessionHandler;
 import org.abf.hobt.common.logging.Logger;
+import org.abf.hobt.servlet.ErrorResult;
 
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -16,6 +20,16 @@ public class RestResource {
 
     @HeaderParam(value = AUTHENTICATION_HEADER_NAME)
     protected String sessionId;
+
+    protected String getUserId() {
+        String userId = SessionHandler.getUserIdBySession(sessionId);
+        if (userId == null)
+            throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED)
+                .entity(new ErrorResult("Your session has expired or was invalidated. Please login again."))
+                .type(MediaType.APPLICATION_JSON_TYPE)
+                .build());
+        return userId;
+    }
 
     protected Response respond(Object object) {
         if (object == null)

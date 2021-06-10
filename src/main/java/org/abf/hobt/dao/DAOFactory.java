@@ -1,6 +1,7 @@
 package org.abf.hobt.dao;
 
 import org.abf.hobt.dao.hibernate.AccountDAO;
+import org.abf.hobt.dao.hibernate.ConfigurationDAO;
 import org.abf.hobt.dao.hibernate.OrganismDAO;
 import org.abf.hobt.dao.hibernate.TierDAO;
 
@@ -14,6 +15,7 @@ public class DAOFactory {
     private static AccountDAO accountDAO;
     private static OrganismDAO organismDAO;
     private static TierDAO tierDAO;
+    private static ConfigurationDAO configurationDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -31,5 +33,11 @@ public class DAOFactory {
         if (tierDAO == null)
             tierDAO = new TierDAO();
         return tierDAO;
+    }
+
+    public static ConfigurationDAO getConfigurationDAO() {
+        if (configurationDAO == null)
+            configurationDAO = new ConfigurationDAO();
+        return configurationDAO;
     }
 }

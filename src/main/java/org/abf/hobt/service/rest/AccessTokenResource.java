@@ -1,6 +1,6 @@
 package org.abf.hobt.service.rest;
 
-import org.abf.hobt.account.AccountTransfer;
+import org.abf.hobt.dto.Account;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,7 +24,7 @@ public class AccessTokenResource extends RestResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(final AccountTransfer transfer) {
+    public Response create(final Account transfer) {
         return super.respond(false);
     }
 

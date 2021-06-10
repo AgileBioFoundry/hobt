@@ -3,8 +3,11 @@ package org.abf.hobt;
 import org.abf.hobt.account.Accounts;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.common.util.StringUtils;
+import org.abf.hobt.config.ConfigurationValue;
+import org.abf.hobt.config.Settings;
 import org.abf.hobt.dao.DbType;
 import org.abf.hobt.dao.hibernate.HibernateConfiguration;
+import org.abf.hobt.dto.Setting;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -140,21 +143,21 @@ public class ApplicationInitializer {
         new Accounts().createDefaultAdminAccount();
 
         // initialize settings
-//        new Settings().initialize();
+        new Settings().initialize();
 
         // check data directory
-//        checkDataDirectory(dataDirectory);
+        checkDataDirectory(dataDirectory);
     }
 
-//    private static void checkDataDirectory(Path dataDirectory) {
-//        Settings settings = new Settings();
-//        String value = settings.getValue(ConfigurationValue.DATA_DIR);
-//        if (!StringUtil.isEmpty(value))
-//            return;
-//
-//        Setting setting = new Setting();
-//        setting.setValue(dataDirectory.toString());
-//        setting.setKey(ConfigurationValue.DATA_DIR.name());
-//        settings.update(setting);
-//    }
+    private static void checkDataDirectory(Path dataDirectory) {
+        Settings settings = new Settings();
+        String value = settings.getValue(ConfigurationValue.DATA_DIR);
+        if (!StringUtils.isBlank(value))
+            return;
+
+        Setting setting = new Setting();
+        setting.setValue(dataDirectory.toString());
+        setting.setKey(ConfigurationValue.DATA_DIR.name());
+        settings.update(setting);
+    }
 }

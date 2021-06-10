@@ -1,7 +1,7 @@
 package org.abf.hobt.dao.model;
 
 import org.abf.hobt.dao.IDataModel;
-import org.abf.hobt.service.ice.IDataTransferObject;
+import org.abf.hobt.dto.Account;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -184,7 +184,30 @@ public class AccountModel implements IDataModel {
     }
 
     @Override
-    public IDataTransferObject toDataTransferObject() {
-        return null;
+    public Account toDataTransferObject() {
+        Account transfer = new Account();
+        transfer.setId(id);
+//        ArrayList<AccountRole> roles = new ArrayList<>();
+//        if (this.roles != null)
+//            roles.addAll(this.roles);
+//        transfer.setAccountType(roles);
+        transfer.setFirstName(firstName);
+        transfer.setLastName(lastName);
+        transfer.setEmail(email);
+        transfer.setUserId(userId);
+//        if (lastUpdateTime != null)
+//            transfer.setLastUpdateTime(lastUpdateTime.getTime());
+//        if (creationTime != null)
+//            transfer.setCreationTime(creationTime.getTime());
+//        if (lastLoginTime != null)
+//            transfer.setLastLoginTime(lastLoginTime.getTime());
+//        if (!Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(this.userId))
+//            transfer.setUsingTemporaryPassword(this.usingTempPassword != null && this.usingTempPassword);
+//        transfer.setJ5Enabled(this.j5Enabled == null || this.j5Enabled);
+//        transfer.setCurrentTime(System.currentTimeMillis());
+//        transfer.setCommercial(type == AccountType.COMMERCIAL);
+//        transfer.setDescription(description);
+//        transfer.setDisabled(Objects.requireNonNullElse(disabled, false));
+        return transfer;
     }
 }
