@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
 import {User} from "../model/user.model";
 
 @Injectable({
@@ -9,13 +8,14 @@ export class UserService {
 
     private user: User;
     private redirectUrl: string;
+    private USER_KEY: string = 'hobt-user';
 
-    constructor(private router: Router) {
+    constructor() {
     }
 
     setUser(user: User) {
         this.user = user;
-        localStorage.setItem('user', JSON.stringify(this.user));
+        localStorage.setItem(this.USER_KEY, JSON.stringify(this.user));
     }
 
     isAdmin(): boolean {
@@ -29,7 +29,7 @@ export class UserService {
 
     getUser(redirectToLogin: boolean = false): User {
         if (!this.user) {
-            this.user = JSON.parse(localStorage.getItem('user'));
+            this.user = JSON.parse(localStorage.getItem(this.USER_KEY));
             console.log('user from local storage', this.user);
         }
 
@@ -42,7 +42,7 @@ export class UserService {
     }
 
     clearUser(): void {
-        localStorage.removeItem('user');
+        localStorage.removeItem(this.USER_KEY);
         this.user = undefined;
     }
 

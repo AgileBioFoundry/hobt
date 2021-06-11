@@ -11,8 +11,17 @@
             </div>
 
             <div class="col">
-                <div class="float-right" style="font-size: 12px">
-                    <button class="btn btn-link font-12 text-black-50" (click)="loginUser()">
+                <div *ngIf="loggedInUser" class="float-right font-90 text-black-50 p-3">
+                    <i class="fa fa-fw fa-user-circle-o"></i> {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+
+                    |
+
+                    <button class="btn btn-link text-black-50" (click)="logoutUser()">Logout</button>
+
+                </div>
+
+                <div class="float-right" style="font-size: 12px" *ngIf="!loggedInUser">
+                    <button class="btn btn-link text-black-50" (click)="loginUser()">
                         <i class="fa fa-fw fa-user-circle-o"></i> Login
                     </button>
 

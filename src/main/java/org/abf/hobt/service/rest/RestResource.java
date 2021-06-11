@@ -38,6 +38,11 @@ public class RestResource {
         return Response.status(Response.Status.OK).entity(object).build();
     }
 
+    protected Response respond(Response.Status status, String errorMessage) {
+        ErrorResult errorResult = new ErrorResult(errorMessage);
+        return Response.status(status).entity(errorResult).build();
+    }
+
     protected Response respond(Response.Status status) {
         return Response.status(status).build();
     }

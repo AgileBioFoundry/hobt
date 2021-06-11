@@ -1,5 +1,7 @@
 package org.abf.hobt.service.rest;
 
+import org.abf.hobt.account.Authenticator;
+import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dto.Account;
 
 import javax.ws.rs.*;
@@ -25,7 +27,22 @@ public class AccessTokenResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(final Account transfer) {
-        return super.respond(false);
+        Authenticator authenticator = new Authenticator();
+        try {
+            Account info = authenticator.authenticate(transfer.getUserId(), transfer.getPassword());
+
+            if (info == null) {
+                String errMsg = "Authentication failed for user '" + transfer.getUserId() + "'";
+                Logger.warn(errMsg);
+                return respond(Response.Status.UNAUTHORIZED, errMsg);
+            }
+
+            Logger.info("User '" + transfer.getUserId() + "' successfully logged in");
+            return respond(info);
+        } catch (Exception e) {
+            Logger.error(e);
+            return respond(Response.Status.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

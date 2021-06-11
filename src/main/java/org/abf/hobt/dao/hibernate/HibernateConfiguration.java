@@ -111,6 +111,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(OrganismModel.class);
         configuration.addAnnotatedClass(TierModel.class);
         configuration.addAnnotatedClass(ConfigurationModel.class);
+        configuration.addAnnotatedClass(CriteriaModel.class);
     }
 
     /**

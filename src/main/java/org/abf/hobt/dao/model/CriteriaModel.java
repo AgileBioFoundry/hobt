@@ -11,8 +11,12 @@ public class CriteriaModel implements IDataModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "criteria_id")
-    @SequenceGenerator(name = "organism_id", sequenceName = "organism_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "criteria_id", sequenceName = "criteria_id_seq", allocationSize = 1)
     private long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tier_id")
+    private TierModel tier;
 
     @Override
     public IDataTransferObject toDataTransferObject() {

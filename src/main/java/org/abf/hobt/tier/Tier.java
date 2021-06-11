@@ -5,7 +5,8 @@ import org.abf.hobt.service.ice.IDataTransferObject;
 public class Tier implements IDataTransferObject {
 
     private long id;
-    private String value;
+    private int index;
+    private String label;
 
     public long getId() {
         return id;
@@ -15,11 +16,19 @@ public class Tier implements IDataTransferObject {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public String getLabel() {
+        return label;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public int getIndex() {
+        return this.index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

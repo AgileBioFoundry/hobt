@@ -15,6 +15,7 @@ import {CriteriaComponent} from './components/host-detail/criteria/criteria.comp
 import {HostDetailResolver} from "./components/host-detail/host-detail.resolver";
 import {AddPermissionComponent} from './components/host-detail/modals/add-permission/add-permission.component';
 import {AddAttributeComponent} from './components/host-detail/modals/add-attribute/add-attribute.component';
+import {SettingsComponent} from './components/admin/settings/settings.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import {AddAttributeComponent} from './components/host-detail/modals/add-attribu
         MainPageComponent,
         CriteriaComponent,
         AddPermissionComponent,
-        AddAttributeComponent
+        AddAttributeComponent,
+        SettingsComponent
     ],
     imports: [
         BrowserModule,

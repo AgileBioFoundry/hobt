@@ -82,14 +82,4 @@ public class IceApiClient {
         Logger.error("Status from registry client post call " + postResponse.getStatus());
         return null;
     }
-
-    public <T> T postWOR(Object object, Class<T> responseClass) {
-        WebTarget target = client.target("https://www.webofregistries.org").path("rest/search");
-        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON_TYPE);
-        Response postResponse = invocationBuilder.post(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
-        if (postResponse.getStatus() == Response.Status.OK.getStatusCode() && postResponse.hasEntity())
-            return postResponse.readEntity(responseClass);
-        Logger.error("Status from  client post call " + postResponse.getStatus());
-        return null;
-    }
 }
