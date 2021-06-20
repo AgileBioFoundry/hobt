@@ -9,7 +9,7 @@ import {SettingsComponent} from "./components/admin/settings/settings.component"
 const routes: Routes = [
     {path: '', component: MainPageComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'admin', redirectTo: 'admin/settings', pathMatch: 'full'},
+    {path: 'admin', redirectTo: 'admin/tiers', pathMatch: 'full'},
     {path: 'host/:hid', redirectTo: 'host/:hid/attributes', pathMatch: 'full'},
     {path: 'admin/:subsection', component: SettingsComponent},
     {path: 'host/:hid/:attribute', component: HostDetailComponent, resolve: {host: HostDetailResolver}}
