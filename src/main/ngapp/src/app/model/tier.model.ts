@@ -7,7 +7,9 @@ export class Tier {
     index: number;
     criteria: Array<TierCriteria>;
 
+    // ui options
     showAddCriteria: boolean;
+    retrievingCriteria: boolean;
 
     constructor(index: number) {
         this.index = index;

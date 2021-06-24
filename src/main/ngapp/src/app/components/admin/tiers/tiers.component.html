@@ -28,28 +28,31 @@
 
                     <div class="form-group col-sm-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="tierLocation"
-                                   id="beforeRadio" [value]="newTier.index - 1">
-                            <label class="form-check-label" for="beforeRadio">
+                            <input class="form-check-input cursor-pointer" type="radio" name="tierLocation"
+                                   id="beforeRadio" [(ngModel)]="newTierIndex" [value]="0"
+                                   (change)="tierIndexChange()">
+                            <label class="form-check-label cursor-pointer" for="beforeRadio">
                                 Before
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="tierLocation"
-                                   id="afterRadio" [value]="newTier.index + 1">
-                            <label class="form-check-label" for="afterRadio">
+                            <input class="form-check-input cursor-pointer" type="radio" name="tierLocation"
+                                   id="afterRadio" [(ngModel)]="newTierIndex" [value]="1" (change)="tierIndexChange()">
+                            <label class="form-check-label cursor-pointer" for="afterRadio">
                                 After
                             </label>
                         </div>
                     </div>
 
-                    <select class="form-control col-sm-4" id="createTierSelect" [(ngModel)]="newTier.index">
-                        <option *ngFor="let tier of tiers" [value]="tier.index">{{tier.label}}</option>
+                    <select class="form-control col-sm-4" id="createTierSelect" [(ngModel)]="selectedTier"
+                            name="createTierSelect" (change)="tierIndexChange()">
+                        <option [selected]="tier.index === tiers.length - 1" *ngFor="let tier of tiers"
+                                [ngValue]="tier">{{tier.label}}</option>
                     </select>
                 </div>
 
-                <div class="btn-group mt-3">
+                <div class="mt-3">
                     <button class="btn btn-primary" (click)="addNewTier()" [disabled]="!newTier.label">
                         Create Tier
                     </button>
@@ -83,7 +86,7 @@
 
                 <div class="text-muted font-italic"
                      *ngIf="!tier.showAddCriteria && (!tier.criteria || !tier.criteria.length)">
-                    No criteria available for tier
+                    No criteria specified for this tier
                 </div>
 
                 <div *ngIf="tier.showAddCriteria">
@@ -125,7 +128,8 @@
                                         Create Criteria
                                     </button>
 
-                                    <button class="btn btn-sm btn-link">Cancel</button>
+                                    <button class="btn btn-sm btn-link" (click)="tier.showAddCriteria= false">Cancel
+                                    </button>
                                 </div>
 
                             </form>
@@ -134,9 +138,9 @@
                 </div>
 
                 <!-- list of available criteria for tier -->
-                <div *ngFor="let criteria of tier.criteria" class="border-bottom p-2 font-90">
-                    <div class="font-weight-bold">{{criteria.label}}</div>
-                    <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
+                <div *ngFor="let criteria of tier.criteria" class="p-2 font-90">
+                    <div class="font-weight-bold"><i class="fa fa-fw fa-caret-right"></i> {{criteria.label}}</div>
+                    <p class="text-muted ml-4">{{criteria.description || 'No description provided'}}</p>
                 </div>
 
             </td>

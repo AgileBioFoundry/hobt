@@ -1,9 +1,6 @@
 package org.abf.hobt.dao;
 
-import org.abf.hobt.dao.hibernate.AccountDAO;
-import org.abf.hobt.dao.hibernate.ConfigurationDAO;
-import org.abf.hobt.dao.hibernate.OrganismDAO;
-import org.abf.hobt.dao.hibernate.TierDAO;
+import org.abf.hobt.dao.hibernate.*;
 
 /**
  * Instantiates various data access objects as needed. To be replaced by DI
@@ -16,6 +13,7 @@ public class DAOFactory {
     private static OrganismDAO organismDAO;
     private static TierDAO tierDAO;
     private static ConfigurationDAO configurationDAO;
+    private static CriteriaDAO criteriaDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -39,5 +37,11 @@ public class DAOFactory {
         if (configurationDAO == null)
             configurationDAO = new ConfigurationDAO();
         return configurationDAO;
+    }
+
+    public static CriteriaDAO getCriteriaDAO() {
+        if (criteriaDAO == null)
+            criteriaDAO = new CriteriaDAO();
+        return criteriaDAO;
     }
 }

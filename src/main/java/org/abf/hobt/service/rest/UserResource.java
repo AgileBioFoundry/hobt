@@ -54,6 +54,7 @@ public class UserResource extends RestResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getList(@DefaultValue("15") @QueryParam("limit") int limit,
                             @DefaultValue("0") @QueryParam("start") int start,
                             @DefaultValue("false") @QueryParam("asc") boolean asc,

@@ -5,6 +5,7 @@ import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.OrganismDAO;
 import org.abf.hobt.dao.model.OrganismModel;
+import org.abf.hobt.dao.model.TierModel;
 import org.abf.hobt.dto.Organism;
 
 import java.util.Date;
@@ -36,6 +37,12 @@ public class Hosts {
         model.setCreationTime(new Date());
         model.setName(organism.getName());
         model.setPhylum(organism.getPhylum());
+
+        TierModel tier = DAOFactory.getTierDAO().get(organism.getTier().getId());
+        if (tier == null)
+            throw new IllegalArgumentException("Cannot retrieve tier for organism creation");
+
+        model.setTier(tier);
 
         model = this.dao.create(model);
         if (model != null)

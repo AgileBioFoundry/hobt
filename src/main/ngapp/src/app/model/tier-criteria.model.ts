@@ -3,7 +3,7 @@ export class TierCriteria {
     label: string;
     available: boolean;
     status: number;
-    details: string;
+    description: string;
 
     // validation
     labelInvalid: boolean;

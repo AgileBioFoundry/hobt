@@ -1,9 +1,12 @@
+import {Tier} from "./tier.model";
+
 export class Host {
 
     id: number;
     name: string;
     phylum: string;
-    tier: number;
+    tier: Tier;
+
     publications: number = 0;
     parts: number = 0;
     experiments: number = 0;

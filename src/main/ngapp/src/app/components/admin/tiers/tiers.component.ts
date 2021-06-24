@@ -12,7 +12,9 @@ export class TiersComponent implements OnInit {
 
     newTier: Tier;
     newCriteria: TierCriteria;
+    newTierIndex: number;
     showCreateTier: boolean;
+    selectedTier: Tier;
     tiers: Array<Tier>;
 
     // validation
@@ -33,6 +35,8 @@ export class TiersComponent implements OnInit {
     showCreateTierClick(): void {
         this.showCreateTier = true;
         this.newTier = new Tier(this.tiers.length);
+        this.newTierIndex = 1;
+        this.selectedTier = this.tiers[this.tiers.length - 1];
     }
 
     addNewTier(): void {
@@ -45,11 +49,27 @@ export class TiersComponent implements OnInit {
             }
         }
 
-        this.newTier.index = this.tiers.length;
         this.http.post('tiers', this.newTier).subscribe((result: Tier) => {
+            // on update, for each tier at newTier.index onwards, increment index by one
+            for (let i = 0; i < this.tiers.length; i += 1) {
+                if (this.tiers[i].index < this.newTier.index)
+                    continue;
+
+                this.updateTierIndex(this.tiers[i], this.tiers[i].index + 1);
+            }
+
             this.tiers.push(result);
             this.showCreateTier = false;
         })
+    }
+
+    private updateTierIndex(tier: Tier, newIndex: number): void {
+        this.http.put('tiers/' + tier.id + '/index/' + newIndex, {}).subscribe((result: Tier) => {
+            tier.index = result.index;
+
+            // todo : does this belong here ?
+            this.tiers = this.tiers.sort((a, b) => a.index - b.index);
+        });
     }
 
     addNewCriteria(tier: Tier): void {
@@ -73,5 +93,9 @@ export class TiersComponent implements OnInit {
             tier.criteria.push(result);
             this.newCriteria = new TierCriteria();
         })
+    }
+
+    tierIndexChange(): void {
+        this.newTier.index = this.selectedTier.index + this.newTierIndex;
     }
 }

@@ -16,7 +16,7 @@ public class TierModel implements IDataModel {
     @SequenceGenerator(name = "tier_id", sequenceName = "tier_id_seq", allocationSize = 1)
     private long id;
 
-    @Column(name = "name", length = 25, nullable = false)
+    @Column(name = "name", length = 125, nullable = false)
     private String name;
 
     @Column(name = "index")

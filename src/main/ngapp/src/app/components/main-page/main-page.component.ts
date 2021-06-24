@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Host} from "../../model/host.model";
 import {Router} from "@angular/router";
 import {HttpService} from "../../service/http.service";
+import {Tier} from "../../model/tier.model";
 
 @Component({
     selector: 'app-main-page',
@@ -11,10 +12,11 @@ import {HttpService} from "../../service/http.service";
 export class MainPageComponent implements OnInit {
 
     gridMode: boolean = true;
-    params = { asc: false, sort: "id", limit: 15 };
+    params = {asc: false, sort: "id", limit: 15};
     newHost: Host;
     hosts: Host[];
     showCreateNewHost = false;
+    availableTiers: Tier[];
 
     constructor(private router: Router, private http: HttpService) {
         this.hosts = [];
@@ -23,10 +25,15 @@ export class MainPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.getHosts();
+    }
 
-        // this.http.post('hosts', {}).subscribe((result) => {
-        //     console.log(result);
-        // });
+    private getTiers(): void {
+        this.http.get('tiers').subscribe((result: Tier[]) => {
+            console.log(result);
+            this.availableTiers = result;
+            if (this.availableTiers && this.availableTiers.length)
+                this.newHost.tier = this.availableTiers[0];
+        });
     }
 
     private getHosts(): void {
@@ -53,8 +60,9 @@ export class MainPageComponent implements OnInit {
     }
 
     createOrganism(): void {
-        this.http.post('hosts', this.newHost).subscribe((result) => {
-            this.getHosts();
+        this.http.post('hosts', this.newHost).subscribe((created: Host) => {
+            // this.getHosts();
+            this.hosts.push(created);
             this.showCreateNewHost = false;
             this.newHost = new Host();
         });
@@ -62,6 +70,7 @@ export class MainPageComponent implements OnInit {
 
     showCreateOrganism(): void {
         this.showCreateNewHost = true;
+        this.getTiers();
     }
 
     // hosts = [

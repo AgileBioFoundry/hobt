@@ -61,6 +61,14 @@ public class OrganismModel implements IDataModel {
         this.creationTime = creationTime;
     }
 
+    public void setTier(TierModel tierModel) {
+        this.tier = tierModel;
+    }
+
+    public TierModel getTier() {
+        return this.tier;
+    }
+
     public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
