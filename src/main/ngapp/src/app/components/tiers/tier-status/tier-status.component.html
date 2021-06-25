@@ -1,0 +1,2 @@
+<span *ngIf="tier" class="pt-2 pb-2 pr-3 pl-3 badge"
+      [ngClass]="{'badge-secondary': tier.index === 0, 'badge-primary': tier.index === 1, 'badge-info': tier.index === 2, 'badge-success': tier.index === 3}">{{ tier.label }}</span>
