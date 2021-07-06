@@ -17,7 +17,9 @@ import {AddPermissionComponent} from './components/host-detail/modals/add-permis
 import {AddAttributeComponent} from './components/host-detail/modals/add-attribute/add-attribute.component';
 import {SettingsComponent} from './components/admin/settings/settings.component';
 import {UsersComponent} from './components/admin/users/users.component';
-import {TiersComponent} from './components/admin/tiers/tiers.component';
+import {TierStatusComponent} from './components/tiers/tier-status/tier-status.component';
+import {HostTiersComponent} from './components/host-detail/host-tiers/host-tiers.component';
+import {TiersComponent} from "./components/admin/tiers/tiers.component";
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import {TiersComponent} from './components/admin/tiers/tiers.component';
         AddAttributeComponent,
         SettingsComponent,
         UsersComponent,
-        TiersComponent
+        TiersComponent,
+        TierStatusComponent,
+        HostTiersComponent
     ],
     imports: [
         BrowserModule,

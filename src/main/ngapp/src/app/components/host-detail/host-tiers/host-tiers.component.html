@@ -1,0 +1,61 @@
+<!--{{ host | json}}-->
+
+<div class="container-fluid">
+    <div *ngFor="let tier of tiers">
+
+        <div class="d-flex justify-content-between border p-2 bg-light">
+            <h4>{{tier.label}}</h4>
+            <div>Completed <i class="fa fa-fw font-14 fa-toggle-on mt-1"></i></div>
+        </div>
+
+        <table class="table table-bordered table-responsive-sm table-hover font-90">
+            <thead class="font-80 text-uppercase">
+            <tr>
+                <th class="w-25">Criteria</th>
+                <th class="w-50">Details</th>
+                <th class="w-25">Status</th>
+            </tr>
+            </thead>
+
+            <tbody *ngIf="!tier.criteria.length">
+            <tr>
+                <td colspan="3" class="text-muted font-italic">No criteria created for this tier</td>
+            </tr>
+            </tbody>
+
+            <tbody *ngIf="tier.criteria.length">
+            <tr *ngFor="let criteria of tier.criteria">
+                <td>{{criteria.label}}
+                    <!--                    <i class="fa fa-fw font-14 fa-check float-right"></i>-->
+                </td>
+                <td class="text-muted font-90">{{criteria.description}}</td>
+                <td>
+
+                    <div ngbDropdown class="float-right">
+                        <i class="fa fa-fw" ngbDropdownToggle></i>
+                        <div class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px">
+                            <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 25)">25%</a>
+                            <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 50)">50%</a>
+                            <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 75)">75%</a>
+                            <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 100)">100%</a>
+                        </div>
+                    </div>
+
+                    <ngb-progressbar *ngIf="!criteria.status" type="secondary" [value]="criteria.status"
+                                     [showValue]="true"></ngb-progressbar>
+                    <ngb-progressbar *ngIf="criteria.status === 25" type="secondary" [value]="criteria.status"
+                                     [showValue]="true"></ngb-progressbar>
+                    <ngb-progressbar *ngIf="criteria.status === 50" type="info" [value]="criteria.status"
+                                     [showValue]="true"></ngb-progressbar>
+                    <ngb-progressbar *ngIf="criteria.status === 75" type="primary" [value]="criteria.status"
+                                     [showValue]="true"></ngb-progressbar>
+                    <ngb-progressbar *ngIf="criteria.status === 100" type="success" [value]="criteria.status"
+                                     [showValue]="true"></ngb-progressbar>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
