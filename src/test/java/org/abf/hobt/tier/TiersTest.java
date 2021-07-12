@@ -43,7 +43,7 @@ class TiersTest {
         BitSet bitSet = new BitSet();
         for (Tier tier : tierList)
             bitSet.set(tier.getIndex());
-        Assertions.assertEquals(count, tierList.size());
+        Assertions.assertTrue(count <= tierList.size());
     }
 
     @Test
