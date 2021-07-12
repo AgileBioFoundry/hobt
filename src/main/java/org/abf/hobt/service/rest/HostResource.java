@@ -1,5 +1,6 @@
 package org.abf.hobt.service.rest;
 
+import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.host.Hosts;
 
@@ -23,6 +24,20 @@ public class HostResource extends RestResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/criterias")
+    public Response getHostCriterias(
+        @PathParam("id") long organismId,
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        Hosts hosts = new Hosts();
+        return super.respond(hosts.retrieveCriteria(organismId));
+    }
+
+    @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,6 +52,16 @@ public class HostResource extends RestResource {
     public Response createHost(Organism organism) {
         Hosts hosts = new Hosts();
         return super.respond(hosts.create(organism));
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/criterias/{cid}/status")
+    public Response createHostCriteria(@PathParam("id") long orgId, @PathParam("cid") long cid, Criteria criteria) {
+        Hosts hosts = new Hosts();
+        hosts.updateOrganismCriteriaStatus(orgId, cid, criteria.getStatus());
+        return super.respond(true);
     }
 
     @DELETE

@@ -18,13 +18,41 @@ export class HostTiersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.http.get('tiers').subscribe((result: Tier[]) => {
-            console.log(result);
-            this.tiers = result;
+        this.http.get('tiers').subscribe((tiers: Tier[]) => {
+            this.tiers = tiers;
+
+            this.http.get('hosts/' + this.host.id + '/criterias/').subscribe((result: TierCriteria[]) => {
+                for (const tier of this.tiers) {
+                    for (const criteria of tier.criteria) {
+                        criteria.status = this.getTierCriteriaStatus(criteria.id, result);
+                    }
+                }
+
+                // todo : use criteriaId -> [criteria]
+            })
         })
     }
 
+    markTierCompleted(tier: Tier): void {
+        // todo : make call to backend
+        tier.completed = true;
+        tier.collapsed = true;
+    }
+
     setTierCriteriaStatus(tier: Tier, criteria: TierCriteria, status: number): void {
-        criteria.status = status;
+        this.http.post('hosts/' + this.host.id + '/criterias/' + criteria.id + '/status', {
+            id: criteria.id,
+            status: status
+        }).subscribe((result) => {
+            criteria.status = status;
+        });
+    }
+
+    getTierCriteriaStatus(criteriaId: number, tierCriterias: TierCriteria[]): number {
+        for (const criteria of tierCriterias) {
+            if (criteria.id === criteriaId)
+                return criteria.status;
+        }
+        return 0;
     }
 }

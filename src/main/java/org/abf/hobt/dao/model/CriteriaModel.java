@@ -59,6 +59,7 @@ public class CriteriaModel implements IDataModel {
     @Override
     public Criteria toDataTransferObject() {
         Criteria criteria = new Criteria();
+        criteria.setId(this.id);
         criteria.setLabel(this.label);
         criteria.setDescription(this.description);
         return criteria;

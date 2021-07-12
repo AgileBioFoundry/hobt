@@ -14,6 +14,7 @@ public class DAOFactory {
     private static TierDAO tierDAO;
     private static ConfigurationDAO configurationDAO;
     private static CriteriaDAO criteriaDAO;
+    private static OrganismCriteriaDAO organismCriteriaDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -43,5 +44,11 @@ public class DAOFactory {
         if (criteriaDAO == null)
             criteriaDAO = new CriteriaDAO();
         return criteriaDAO;
+    }
+
+    public static OrganismCriteriaDAO getOrganismCriteriaDAO() {
+        if (organismCriteriaDAO == null)
+            organismCriteriaDAO = new OrganismCriteriaDAO();
+        return organismCriteriaDAO;
     }
 }

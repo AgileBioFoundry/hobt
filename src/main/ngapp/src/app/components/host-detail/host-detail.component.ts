@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TierCriteria} from "../../model/tier-criteria.model";
 import {ActivatedRoute} from "@angular/router";
 import {Host} from "../../model/host.model";
 import {Location} from "@angular/common";
@@ -103,12 +102,4 @@ export class HostDetailComponent implements OnInit {
     //     }
     //
     tiers = [];
-
-    addRemoveTier(tier: any): void {
-        // this.tiers = [tier];
-    }
-
-    setCriteria(criteria: TierCriteria): void {
-        criteria.available = !criteria.available;
-    }
 }

@@ -28,7 +28,7 @@
 
 .nav-link {
     display: block;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1rem;
 }
 
 .nav {
@@ -42,3 +42,4 @@
 .nav-tabs .nav-link:hover {
     border-bottom: 3px solid slategray;
 }
+

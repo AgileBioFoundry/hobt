@@ -2,6 +2,6 @@ import {TierCriteria} from './tier-criteria.model';
 
 describe('TierCriteria', () => {
     it('should create an instance', () => {
-        expect(new TierCriteria("foo")).toBeTruthy();
+        expect(new TierCriteria()).toBeTruthy();
     });
 });

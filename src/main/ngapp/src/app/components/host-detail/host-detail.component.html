@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div style="width: 100%">
+<div style="width: 100%; padding-bottom: 72px">
     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0" (navChange)="activeChanged($event)">
 
         <li [ngbNavItem]="'attributes'">
@@ -55,9 +55,9 @@
         </li>
 
 
-        <li [ngbNavItem]="3">
+        <li [ngbNavItem]="'parts'">
             <a ngbNavLink class="mr-5 ml-5">PARTS
-                <div class="badge badge-light badge-pill p-1 font-90 text-muted">192</div>
+                <div class="badge badge-light badge-pill p-1 font-90 text-muted">{{host.parts}}</div>
             </a>
             <ng-template ngbNavContent>
                 <div class="container-fluid font-90 pt-3">
@@ -77,9 +77,9 @@
         </li>
 
 
-        <li [ngbNavItem]="5">
+        <li [ngbNavItem]="'experiments'">
             <a ngbNavLink class="mr-5 ml-5">EXPERIMENTS
-                <div class="badge badge-light badge-pill p-1 font-90 text-muted">12</div>
+                <div class="badge badge-light badge-pill p-1 font-90 text-muted">{{host.experiments}}</div>
             </a>
             <ng-template ngbNavContent>
                 <div class="container-fluid font-90 pt-3">
@@ -89,191 +89,12 @@
         </li>
 
 
-        <li [ngbNavItem]="6">
-            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS &nbsp;
-                <!--                <span style="font-size: 10px" class="p-1 pr-1 pl-1 badge" [ngClass]="{'badge-secondary': (host.tier === 1 || !host.tier),-->
-                <!--                    'badge-primary': host.tier === 2, 'badge-info': host.tier === 3, 'badge-success': host.tier === 4}">Tier {{ host.tier || '1'}}</span>-->
+        <li [ngbNavItem]="'tiers'">
+            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS &nbsp;<app-tier-status [tier]="host.tier"
+                                                                                 class="font-12"></app-tier-status>
             </a>
             <ng-template ngbNavContent>
-
-                <div class="container-fluid pt-3">
-                    <h4 class="border-bottom">Tier 1</h4>
-                    <table class="table table-sm table-responsive-sm table-bordered font-90">
-                        <thead>
-                        <tr>
-                            <th class="text-uppercase font-90">Criteria</th>
-                            <th class="text-uppercase font-90">Details</th>
-                            <th class="text-uppercase font-90">Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="font-weight-bold">Annotated genome</td>
-                            <td style="width: 55%" class="font-italic text-muted">Closed genome for bacteria, at least
-                                draft genome for fungi; codon usage analysis
-                            </td>
-                            <td>
-                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Growth conditions</td>
-                            <td style="width: 55%" class="font-italic text-muted">One or more sets of growth conditions:
-                                defined minimal or rich media, temperature, aeration, pH, light, vessel geometries,
-                                antibiotic or auxotrophic supplement concentration, growth on petri plates
-                            </td>
-                            <td>
-                                <ngb-progressbar type="info" [value]="25" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Growth kinetics</td>
-                            <td style="width: 55%" class="font-italic text-muted">Growth kinetics data (OD or cfu, media
-                                utilization) for each growth condition and availability of simple growth models (i.e.,
-                                Monod)
-                            </td>
-                            <td>
-                                <ngb-progressbar type="success" [value]="100" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Antibiotic susceptibility</td>
-                            <td style="width: 55%" class="font-italic text-muted">Profile for susceptibility to common
-                                antibiotics under typical growth conditions
-                            </td>
-                            <td>
-                                <ngb-progressbar type="info" [value]="20" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Selectable markers</td>
-                            <td style="width: 55%" class="font-italic text-muted">One or more antibiotic and/or
-                                auxotrophic markers
-                            </td>
-                            <td>
-                                <ngb-progressbar type="info" [value]="20" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Transformation methods</td>
-                            <td style="width: 55%" class="font-italic text-muted">One or more transformation methods,
-                                such as natural competence, conjugation, electroporation, heat-shock, phage
-                                transduction, and protoplast fusion
-                            </td>
-                            <td>
-                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Plasmids/vectors</td>
-                            <td style="width: 55%" class="font-italic text-muted">One or more integrative or replicative
-                                plasmids and/or transposase insertion vectors
-                            </td>
-                            <td>
-                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Basic expression parts</td>
-                            <td style="width: 55%" class="font-italic text-muted">One or more enzymatic, fluorescence,
-                                and/or luminescence reporters; one or more combination of promoter and translation
-                                initiation sequence with characterized expression level (could be inducible but more
-                                likely will be constitutive); one or more transcriptional terminators
-                            </td>
-                            <td>
-                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Biosafety/Biosecurity</b></td>
-                            <td style="width: 55%" class="font-italic text-muted">Documentation of known health hazards,
-                                biosafety level, environmental impacts; for due diligence and biosecurity purposes, the
-                                identity of strains, plasmids and synthetic DNA will be confirmed by sequencing when
-                                received by the ABF and on a periodic basis
-                            </td>
-                            <td>
-                                <ngb-progressbar type="primary" [value]="50" [showValue]="true"></ngb-progressbar>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <br><br><br>
-
-                <div class="container-fluid font-90 pt-3">
-                    <div class="row">
-                        <div class="col-11">
-                            <div class="card-groupModel pt-1 pb-2">
-                                <div class="card bg-light">
-                                    <div class="card-body p-2">
-                                        <strong class="card-title font-weight-bold font-90">
-                                            <i class="fa fa-fw fa-question-circle opacity-hover"></i> Cultivation /
-                                            Phenotype
-                                        </strong>
-                                    </div>
-                                </div>
-                                <div class="card bg-light">
-                                    <div class="card-body p-2">
-                                        <strong class="card-title font-weight-bold font-90">Genome Editing</strong>
-                                    </div>
-                                </div>
-                                <div class="card bg-light">
-                                    <div class="card-body p-2">
-                                        <strong class="card-title font-weight-bold font-90">Expression</strong>
-                                    </div>
-                                </div>
-                                <div class="card bg-light">
-                                    <div class="card-body p-2">
-                                        <strong class="card-title font-weight-bold font-90">Omics</strong>
-                                    </div>
-                                </div>
-                                <div class="card bg-light">
-                                    <div class="card-body p-2">
-                                        <strong class="card-title font-weight-bold font-90">Libraries</strong>
-                                    </div>
-                                </div>
-                                <div class="card bg-light">
-                                    <div class="card-body p-2">
-                                        <strong class="card-title font-weight-bold font-90">Models</strong>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-groupModel mb-4" *ngFor="let tier of tiers">
-                                <div class="card p-0">
-                                    <app-criteria [tierCriteriaList]="tier.cultivation"></app-criteria>
-                                </div>
-
-                                <div class="card">
-                                    <app-criteria [tierCriteriaList]="tier.genome"></app-criteria>
-                                </div>
-
-                                <div class="card">
-                                    <app-criteria [tierCriteriaList]="tier.expression"></app-criteria>
-                                </div>
-
-                                <div class="card">
-                                    <app-criteria [tierCriteriaList]="tier.omics"></app-criteria>
-                                </div>
-
-                                <div class="card">
-                                    <app-criteria [tierCriteriaList]="tier.libraries"></app-criteria>
-                                </div>
-
-                                <div class="card">
-                                    <app-criteria [tierCriteriaList]="tier.models"></app-criteria>
-                                </div>
-                            </div>
-
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                <label class="custom-control-label" for="customSwitch1">Tier Completed</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-host-tiers [host]="host"></app-host-tiers>
             </ng-template>
         </li>
     </ul>

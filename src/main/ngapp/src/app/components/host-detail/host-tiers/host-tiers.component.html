@@ -3,12 +3,17 @@
 <div class="container-fluid">
     <div *ngFor="let tier of tiers">
 
-        <div class="d-flex justify-content-between border p-2 bg-light">
-            <h4>{{tier.label}}</h4>
-            <div>Completed <i class="fa fa-fw font-14 fa-toggle-on mt-1"></i></div>
+        <div class="d-flex justify-content-between border p-2 bg-light mt-2">
+            <h4 class="cursor-pointer" (click)="tier.collapsed = !tier.collapsed"><i class="fa fa-fw fa-caret-right"
+                                                                                     *ngIf="tier.collapsed"></i> <i
+                class="fa fa-fw fa-caret-down" *ngIf="!tier.collapsed"></i>{{tier.label}}</h4>
+            <div class="opacity-hover" (click)="markTierCompleted(tier)" *ngIf="!tier.completed">Complete <i
+                class="fa fa-fw font-14 fa-toggle-off mt-1"></i></div>
+            <div *ngIf="tier.completed" (click)="markTierCompleted(tier)">Completed <i
+                class="fa fa-fw font-14 fa-toggle-on text-success mt-1"></i></div>
         </div>
 
-        <table class="table table-bordered table-responsive-sm table-hover font-90">
+        <table class="table table-bordered table-responsive-sm table-hover font-90" *ngIf="!tier.collapsed">
             <thead class="font-80 text-uppercase">
             <tr>
                 <th class="w-25">Criteria</th>
@@ -25,9 +30,7 @@
 
             <tbody *ngIf="tier.criteria.length">
             <tr *ngFor="let criteria of tier.criteria">
-                <td>{{criteria.label}}
-                    <!--                    <i class="fa fa-fw font-14 fa-check float-right"></i>-->
-                </td>
+                <td>{{criteria.label}}</td>
                 <td class="text-muted font-90">{{criteria.description}}</td>
                 <td>
 
@@ -41,7 +44,7 @@
                         </div>
                     </div>
 
-                    <ngb-progressbar *ngIf="!criteria.status" type="secondary" [value]="criteria.status"
+                    <ngb-progressbar *ngIf="!criteria.status" type="secondary" [value]="0"
                                      [showValue]="true"></ngb-progressbar>
                     <ngb-progressbar *ngIf="criteria.status === 25" type="secondary" [value]="criteria.status"
                                      [showValue]="true"></ngb-progressbar>
