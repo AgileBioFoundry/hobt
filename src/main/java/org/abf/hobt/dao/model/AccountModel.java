@@ -59,10 +59,10 @@ public class AccountModel implements IDataModel {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_group", joinColumns = @JoinColumn(name = "account_id"),
         inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private Set<GroupModel> groups = new LinkedHashSet<>();
+    private final Set<GroupModel> groups = new LinkedHashSet<>();
 
     @Column(name = "disabled")
-    private Boolean disabled;
+    private boolean disabled;
 
     @Column(name = "password_updated")
     private Date passwordUpdatedTime;
@@ -162,7 +162,7 @@ public class AccountModel implements IDataModel {
         this.usingTempPassword = usingTempPassword;
     }
 
-    public Boolean getDisabled() {
+    public boolean getDisabled() {
         return this.disabled;
     }
 
@@ -187,27 +187,12 @@ public class AccountModel implements IDataModel {
     public Account toDataTransferObject() {
         Account transfer = new Account();
         transfer.setId(id);
-//        ArrayList<AccountRole> roles = new ArrayList<>();
-//        if (this.roles != null)
-//            roles.addAll(this.roles);
-//        transfer.setAccountType(roles);
         transfer.setFirstName(firstName);
         transfer.setLastName(lastName);
         transfer.setEmail(email);
         transfer.setUserId(userId);
-//        if (lastUpdateTime != null)
-//            transfer.setLastUpdateTime(lastUpdateTime.getTime());
-//        if (creationTime != null)
-//            transfer.setCreationTime(creationTime.getTime());
-//        if (lastLoginTime != null)
-//            transfer.setLastLoginTime(lastLoginTime.getTime());
-//        if (!Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(this.userId))
-//            transfer.setUsingTemporaryPassword(this.usingTempPassword != null && this.usingTempPassword);
-//        transfer.setJ5Enabled(this.j5Enabled == null || this.j5Enabled);
-//        transfer.setCurrentTime(System.currentTimeMillis());
-//        transfer.setCommercial(type == AccountType.COMMERCIAL);
-//        transfer.setDescription(description);
-//        transfer.setDisabled(Objects.requireNonNullElse(disabled, false));
+        transfer.setDescription(description);
+        transfer.setDisabled(this.disabled);
         return transfer;
     }
 }

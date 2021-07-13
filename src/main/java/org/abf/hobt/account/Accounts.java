@@ -36,7 +36,7 @@ public class Accounts {
         AccountModel account = dao.getByUserId(DEFAULT_ADMIN_USERID);
         if (account != null) {
             Logger.info("Resetting default admin account");
-            String newPassword = PasswordUtil.generateRandomToken(64);
+            String newPassword = PasswordUtil.generateRandomToken(32);
             try {
                 account.setPassword(PasswordUtil.encryptPassword(newPassword, account.getSalt()));
             } catch (UtilityException e) {
@@ -75,7 +75,7 @@ public class Accounts {
         dao.create(account);
     }
 
-    public Account create(Account account) {
+    public Account create(Account account, boolean createPassword) {
 
         if (account == null || account.getUserId() == null || account.getUserId().trim()
             .isEmpty())
@@ -98,60 +98,53 @@ public class Accounts {
         accountModel.setLastName(account.getLastName());
         accountModel.setUserId(account.getUserId());
         accountModel.setEmail(account.getEmail());
-        accountModel.setSalt(PasswordUtil.generateSalt());
-        accountModel.setDescription(account.getDescription());
 
-        String password = account.getPassword();
+        String password = null;
 
-        if (StringUtils.isBlank(password)) {
-            // generate a temporary password if user doesn't specify password
-            password = PasswordUtil.generateTemporaryPassword();
-        }
+        if (createPassword) {
+            accountModel.setSalt(PasswordUtil.generateSalt());
+            accountModel.setDescription(account.getDescription());
+            password = account.getPassword();
 
-        try {
-            account.setPassword(PasswordUtil.encryptPassword(password, accountModel.getSalt()));
-        } catch (UtilityException ue) {
-            throw new ServiceException("Exception encrypting password", ue);
+            if (StringUtils.isBlank(password)) {
+                // generate a temporary password if user doesn't specify password
+                password = PasswordUtil.generateTemporaryPassword();
+            }
+
+            try {
+                account.setPassword(PasswordUtil.encryptPassword(password, accountModel.getSalt()));
+            } catch (UtilityException ue) {
+                throw new ServiceException("Exception encrypting password", ue);
+            }
         }
 
         Account newAccount = dao.create(accountModel).toDataTransferObject();
-
-//        if (account.getUsingTempPassword() != null && account.getUsingTempPassword())
-//            newAccount.setPassword(password);
-//
-//        if (vettingEnabled) {
-//            sendNotificationEmail();
-//            return newAccount;
-//        }
+        if (!createPassword)
+            return newAccount;
 
         // send email to new user
         sendAccountEmail(newAccount, password);
-
         return newAccount;
     }
 
     private void sendAccountEmail(Account newAccount, String password) {
         String subject = "Account created successfully";
-        StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Dear ")
-            .append(newAccount.getFirstName())
-            .append(", ")
-            .append("\n\nThank you for creating a Host Onboarding Tool")
-            .append(" account. \nPlease use the following credentials to access ")
-            .append("the site ");
-
-        stringBuilder.append("at https://hobt.agilebiofoundry.org")
-            .append(". ");
-
-        stringBuilder.append("\n\nUser Id: ")
-            .append(newAccount.getUserId())
-            .append("\nPassword: ")
-            .append(password);
-
-        stringBuilder.append("\n\nPlease remember to change your password once you login.\n\n");
         Email email = new Email();
-        email.send(newAccount.getEmail(), null, subject, stringBuilder.toString());
+        String stringBuilder = "Dear " +
+            newAccount.getFirstName() +
+            ", " +
+            "\n\nThank you for creating a Host Onboarding Tool" +
+            " account. \nPlease use the following credentials to access " +
+            "the site " +
+            "at https://hobt.agilebiofoundry.org" +
+            ". " +
+            "\n\nUser Id: " +
+            newAccount.getUserId() +
+            "\nPassword: " +
+            password +
+            "\n\nPlease remember to change your password once you login.\n\n";
+        email.send(newAccount.getEmail(), null, subject, stringBuilder);
     }
 
     public boolean update(String userId, long id, Account transfer) {
@@ -218,7 +211,7 @@ public class Accounts {
         if (account == null)
             throw new IllegalArgumentException("User id \"" + userId + "\" is invalid");
 
-        if (account.getDisabled() == null || account.getDisabled() || userId.equalsIgnoreCase(DEFAULT_ADMIN_USERID)) {
+        if (account.getDisabled() || userId.equalsIgnoreCase(DEFAULT_ADMIN_USERID)) {
             Logger.error("Cannot reset password for account " + account.getUserId());
             String errorMsg = "Cannot reset the password for this account";
             throw new ServiceException(errorMsg);

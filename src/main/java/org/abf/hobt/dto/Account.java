@@ -17,11 +17,10 @@ public class Account implements IDataTransferObject {
     private String description;
     private long lastLogin;
     private long registerDate;
-    private long userEntryCount;
-    private long visibleEntryCount;
     private long creationTime;
     private long lastUpdateTime;
     private boolean isAdmin;
+    private boolean isDisabled;
     private int newMessageCount;
 
     public Account() {
@@ -97,22 +96,6 @@ public class Account implements IDataTransferObject {
         this.sessionId = sessionId;
     }
 
-    public long getUserEntryCount() {
-        return userEntryCount;
-    }
-
-    public void setUserEntryCount(long ownerEntryCount) {
-        this.userEntryCount = ownerEntryCount;
-    }
-
-    public long getVisibleEntryCount() {
-        return visibleEntryCount;
-    }
-
-    public void setVisibleEntryCount(long visibleEntryCount) {
-        this.visibleEntryCount = visibleEntryCount;
-    }
-
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -185,4 +168,11 @@ public class Account implements IDataTransferObject {
         this.lastUpdateTime = lastUpdateTime;
     }
 
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
+    }
 }

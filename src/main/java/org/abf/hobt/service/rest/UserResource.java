@@ -26,7 +26,7 @@ public class UserResource extends RestResource {
         Logger.info("Creating new account");
         try {
             Accounts accounts = new Accounts();
-            accountTransfer = accounts.create(accountTransfer);
+            accountTransfer = accounts.create(accountTransfer, true);
         } catch (IllegalArgumentException e) {
             Logger.error(e);
             return super.respond(Response.Status.CONFLICT);

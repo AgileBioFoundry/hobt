@@ -85,7 +85,7 @@ public class LdapAuthentication implements IAuthentication {
         if (account == null) {
             try {
                 Accounts creator = new Accounts();
-                creator.create(user);
+                creator.create(user, false);
             } catch (ServiceException e) {
                 throw new AuthenticationException("Exception creating account for user " + loginId, e);
             }
