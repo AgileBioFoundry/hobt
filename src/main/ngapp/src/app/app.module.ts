@@ -20,6 +20,7 @@ import {UsersComponent} from './components/admin/users/users.component';
 import {TierStatusComponent} from './components/tiers/tier-status/tier-status.component';
 import {HostTiersComponent} from './components/host-detail/host-tiers/host-tiers.component';
 import {TiersComponent} from "./components/admin/tiers/tiers.component";
+import {RegisterComponent} from './components/register/register.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import {TiersComponent} from "./components/admin/tiers/tiers.component";
         UsersComponent,
         TiersComponent,
         TierStatusComponent,
-        HostTiersComponent
+        HostTiersComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule,
