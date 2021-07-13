@@ -75,9 +75,9 @@ public class Hosts {
     /**
      * Update criteria for specified organism
      *
-     * @param organismId
-     * @param criteriaId
-     * @param percentComplete
+     * @param organismId      unique identifier for organism
+     * @param criteriaId      unique identifier for criteria
+     * @param percentComplete current status of organism
      */
     public void updateOrganismCriteriaStatus(long organismId, long criteriaId, int percentComplete) {
         if (percentComplete < 0 || percentComplete > 100)
