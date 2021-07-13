@@ -11,24 +11,24 @@
             </div>
 
             <div class="col">
-                <div *ngIf="loggedInUser" class="float-right font-90 text-black-50 p-3">
+                <div *ngIf="loggedInUser" class="float-right text-black-50 p-3">
                     <i class="fa fa-fw fa-user-circle-o"></i> {{loggedInUser.firstName}} {{loggedInUser.lastName}}
 
-                    |
+                    &nbsp;|&nbsp;
 
-                    <button class="btn btn-link text-black-50" (click)="logoutUser()">Logout</button>
+                    <i class="fa fa-fw fa-sign-out"></i> <span class="cursor-pointer"
+                                                               (click)="logoutUser()">Logout</span>
 
                 </div>
 
-                <div class="float-right" style="font-size: 12px" *ngIf="!loggedInUser">
-                    <button class="btn btn-link text-black-50" (click)="loginUser()">
-                        <i class="fa fa-fw fa-user-circle-o"></i> Login
-                    </button>
+                <div *ngIf="!loggedInUser" class="float-right text-black-50 p-3">
+                    <i class="fa fa-fw fa-sign-in"></i>
+                    <span class="cursor-pointer" (click)="loginUser()">Login</span>
 
-                    |
+                    &nbsp;|&nbsp;
 
-                    <button class="btn btn-link font-12 text-black-50">Register
-                    </button>
+                    <i class="fa fa-fw fa-user-plus"></i>
+                    <span class="cursor-pointer" (click)="registerUser()">Register</span>
                 </div>
             </div>
 

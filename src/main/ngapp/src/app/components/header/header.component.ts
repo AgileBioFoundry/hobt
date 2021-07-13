@@ -4,6 +4,7 @@ import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
 import {User} from "../../model/user.model";
 import {UserService} from "../../service/user.service";
+import {RegisterComponent} from "../register/register.component";
 
 @Component({
     selector: 'app-header',
@@ -31,6 +32,14 @@ export class HeaderComponent implements OnInit {
             console.log(loggedInUser);
         }, () => {
             // console.log('delete modal cancel');
+        });
+    }
+
+    registerUser(): void {
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const modalRef = this.modalService.open(RegisterComponent, options);
+        modalRef.result.then(() => {
+
         });
     }
 
