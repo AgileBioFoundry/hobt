@@ -7,7 +7,6 @@ import {User} from "../model/user.model";
 export class UserService {
 
     private user: User;
-    private redirectUrl: string;
     private USER_KEY: string = 'hobt-user';
 
     constructor() {
@@ -15,7 +14,7 @@ export class UserService {
 
     setUser(user: User) {
         this.user = user;
-        localStorage.setItem(this.USER_KEY, JSON.stringify(this.user));
+        sessionStorage.setItem(this.USER_KEY, JSON.stringify(this.user));
     }
 
     isAdmin(): boolean {
@@ -28,29 +27,21 @@ export class UserService {
     }
 
     getUser(redirectToLogin: boolean = false): User {
+        // if user is not set, then attempt to retrieve from local storage
         if (!this.user) {
-            this.user = JSON.parse(localStorage.getItem(this.USER_KEY));
+            this.user = JSON.parse(sessionStorage.getItem(this.USER_KEY));
             console.log('user from local storage', this.user);
         }
 
         if (!this.user && redirectToLogin) {
             this.clearUser();
-            // this.router.navigate(['/login']);
         }
 
         return this.user;
     }
 
     clearUser(): void {
-        localStorage.removeItem(this.USER_KEY);
+        sessionStorage.removeItem(this.USER_KEY);
         this.user = undefined;
-    }
-
-    setLoginRedirect(url: string): void {
-        this.redirectUrl = url;
-    }
-
-    getLoginRedirect(): string {
-        return this.redirectUrl;
     }
 }
