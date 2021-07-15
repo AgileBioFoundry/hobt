@@ -1,0 +1,21 @@
+<div>
+    <div class="pt-3 pb-3 border-bottom">
+        <button class="btn btn-secondary" (click)="showCreateRoleModal()">
+            <i class="fa fa-fw fa-plus"></i> Create New Role
+        </button>
+    </div>
+
+    <div *ngIf="!roles || !roles.length" class="p-3 text-muted font-italic">
+        No roles available
+    </div>
+
+    <table class="table border-bottom table-responsive-md" *ngIf="roles && roles.length">
+        <tr *ngFor="let role of roles">
+            <td class="border-right">
+                {{role.label}}<br>
+                <small class="text-muted">{{role.description}}</small>
+            </td>
+            <td class="w-25"></td>
+        </tr>
+    </table>
+</div>

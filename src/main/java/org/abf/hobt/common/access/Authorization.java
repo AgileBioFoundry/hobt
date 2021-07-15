@@ -39,7 +39,7 @@ public abstract class Authorization<T extends IDataModel> {
     }
 
     public boolean isAdmin(String userId) {
-        return false;
+        return true;
 //        AccountModel account = getAccount(userId);
 //        return account.getRoles().contains(AccountRole.ADMINISTRATOR);
     }

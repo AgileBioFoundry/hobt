@@ -10,7 +10,6 @@ public class Account implements IDataTransferObject {
     private long id;
     private String sessionId;
     private String password;
-    private String initials;
     private String firstName;
     private String lastName;
     private String institution;
@@ -26,7 +25,6 @@ public class Account implements IDataTransferObject {
     public Account() {
         institution = "";
         description = "";
-        initials = "";
     }
 
     public Account(String email, String password) {
@@ -102,14 +100,6 @@ public class Account implements IDataTransferObject {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
     }
 
     public long getLastLogin() {

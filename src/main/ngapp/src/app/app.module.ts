@@ -21,6 +21,8 @@ import {TierStatusComponent} from './components/tiers/tier-status/tier-status.co
 import {HostTiersComponent} from './components/host-detail/host-tiers/host-tiers.component';
 import {TiersComponent} from "./components/admin/tiers/tiers.component";
 import {RegisterComponent} from './components/register/register.component';
+import {RolesComponent} from './components/admin/roles/roles.component';
+import {CreateRoleModalComponent} from './components/admin/modal/create-role-modal/create-role-modal.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import {RegisterComponent} from './components/register/register.component';
         TiersComponent,
         TierStatusComponent,
         HostTiersComponent,
-        RegisterComponent
+        RegisterComponent,
+        RolesComponent,
+        CreateRoleModalComponent
     ],
     imports: [
         BrowserModule,

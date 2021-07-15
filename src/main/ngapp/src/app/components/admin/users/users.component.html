@@ -1,1 +1,22 @@
-<p>users works!</p>
+<table class="table table-condensed table-bordered table-hover">
+    <thead class="font-80 text-uppercase bg-light">
+    <tr>
+        <th>Name</th>
+        <th>UserID</th>
+        <th class="w-25">Roles</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+        <td>{{user.firstName}} {{user.lastName}}</td>
+        <td>
+            {{user.userId}}<br><span class="text-muted">({{user.email}})</span>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-link">Add New Role</button>
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>

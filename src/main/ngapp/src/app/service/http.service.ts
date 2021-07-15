@@ -81,9 +81,11 @@ export class HttpService {
     private handleError<T>(result?) {
         return (error: any): Observable<T> => {
 
-            // TODO: send the error to remote logging infrastructure
+            // redirect to the main page if user session expires
+            // todo : might not be a good user option
             if (error.status === 401) {
-                this.router.navigate(['/login']);
+                this.userService.clearUser();
+                // this.router.navigate(['/']);
                 return;
             }
 

@@ -15,6 +15,8 @@ public class DAOFactory {
     private static ConfigurationDAO configurationDAO;
     private static CriteriaDAO criteriaDAO;
     private static OrganismCriteriaDAO organismCriteriaDAO;
+    private static UserRoleDAO userRoleDAO;
+    private static RoleDAO roleDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -50,5 +52,17 @@ public class DAOFactory {
         if (organismCriteriaDAO == null)
             organismCriteriaDAO = new OrganismCriteriaDAO();
         return organismCriteriaDAO;
+    }
+
+    public static RoleDAO getRoleDAO() {
+        if (roleDAO == null)
+            roleDAO = new RoleDAO();
+        return roleDAO;
+    }
+
+    public static UserRoleDAO getUserRoleDAO() {
+        if (userRoleDAO == null)
+            userRoleDAO = new UserRoleDAO();
+        return userRoleDAO;
     }
 }

@@ -6,20 +6,27 @@
         <div class="col-11">
             <app-tiers *ngIf="active === 'tiers'"></app-tiers>
             <app-users *ngIf="active === 'users'"></app-users>
+            <app-roles *ngIf="active === 'roles'"></app-roles>
         </div>
 
         <div class="col-1">
-            <table class="table table-borderless">
-                <tr>
-                    <td class="bg-light font-80 text-uppercase text-black-50 font-weight-bold cursor-pointer"
+            <table class="table table-borderless table-hover font-80">
+                <tr style="border-top: 1px solid white; height: 60px">
+                    <td class="bg-info text-uppercase text-center text-white cursor-pointer align-middle"
                         (click)="goTo('tiers')">
                         Tier Settings
                     </td>
                 </tr>
-                <tr>
-                    <td class="bg-light font-80 text-uppercase text-black-50 font-weight-bold cursor-pointer"
+                <tr style="border-top: 1px solid white; height: 60px">
+                    <td class="bg-info text-uppercase text-center text-white cursor-pointer align-middle"
                         (click)="goTo('users')">
                         Users
+                    </td>
+                </tr>
+                <tr style="border-top: 1px solid white; height: 60px">
+                    <td class="bg-info text-uppercase text-center text-white cursor-pointer align-middle"
+                        (click)="goTo('roles')">
+                        Roles
                     </td>
                 </tr>
             </table>

@@ -25,7 +25,7 @@ public class Accounts {
     private final AccountDAO dao;
     public static final String DEFAULT_ADMIN_USERID = "Administrator";
     private static final long MIN_PASSWORD_RESET_PERIOD = 1000 * 60 * 60 * 3;  // 3 hour in milliseconds
-    private AccountAuthorization authorization;
+    private final AccountAuthorization authorization;
 
     public Accounts() {
         dao = DAOFactory.getAccountDAO();
@@ -336,7 +336,6 @@ public class Accounts {
 
         for (AccountModel account : accounts) {
             Account transfer = account.toDataTransferObject();
-//            transfer.setAllowedToChangePassword(canChangePassword(account.getUserId()));
             data.getRequested().add(transfer);
         }
         data.setAvailable(dao.getAccountTotal(filter));

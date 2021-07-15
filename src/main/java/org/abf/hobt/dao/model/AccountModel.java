@@ -62,7 +62,7 @@ public class AccountModel implements IDataModel {
     private final Set<GroupModel> groups = new LinkedHashSet<>();
 
     @Column(name = "disabled")
-    private boolean disabled;
+    private Boolean disabled;
 
     @Column(name = "password_updated")
     private Date passwordUpdatedTime;
@@ -192,7 +192,8 @@ public class AccountModel implements IDataModel {
         transfer.setEmail(email);
         transfer.setUserId(userId);
         transfer.setDescription(description);
-        transfer.setDisabled(this.disabled);
+        if (this.disabled != null)
+            transfer.setDisabled(this.disabled);
         return transfer;
     }
 }

@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-title">Create New Role</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <div class="form-group">
+        <label for="link" class="font-weight-bold font-90">Label:</label>
+        <input type="email" class="form-control" id="link" ngbAutofocus [(ngModel)]="newRole.label"
+               [ngClass]="{'is-invalid': existingLabel}" (ngModelChange)="existingLabel = false"
+               placeholder="Enter a unique label for this role" required>
+        <div class="invalid-feedback">
+            Please enter a unique role label
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="display" class="font-weight-bold font-90">Description:</label>
+        <textarea class="form-control" id="display" rows="3" [(ngModel)]="newRole.description" required></textarea>
+    </div>
+</div>
+
+<div class="modal-footer justify-content-between">
+    <div>
+
+        <!--        <span class="red" *ngIf="errorSaving">-->
+        <!--            <i class="fa fa-exclamation-triangle"></i> Error saving part</span>-->
+    </div>
+
+    <div class="pull-right">
+        <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-primary" (click)="createNewRole()" [disabled]="!newRole.label || !newRole.description">
+            Create Role
+        </button>
+    </div>
+</div>
