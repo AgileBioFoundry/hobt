@@ -26,6 +26,7 @@ export class HostTiersComponent implements OnInit {
                     for (const criteria of tier.criteria) {
                         criteria.status = this.getTierCriteriaStatus(criteria.id, result);
                     }
+                    tier.criteria = tier.criteria.sort((a, b) => a.id - b.id);
                 }
 
                 // todo : use criteriaId -> [criteria]

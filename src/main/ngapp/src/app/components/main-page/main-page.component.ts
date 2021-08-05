@@ -27,12 +27,12 @@ export class MainPageComponent implements OnInit {
         this.getHosts();
     }
 
+    // get available tiers
     private getTiers(): void {
         this.http.get('tiers').subscribe((result: Tier[]) => {
-            console.log(result);
             this.availableTiers = result;
-            if (this.availableTiers && this.availableTiers.length)
-                this.newHost.tier = this.availableTiers[0];
+            // if (this.availableTiers && this.availableTiers.length)
+            //     this.newHost.tier = this.availableTiers[0];
         });
     }
 
@@ -71,6 +71,21 @@ export class MainPageComponent implements OnInit {
     showCreateOrganism(): void {
         this.showCreateNewHost = true;
         this.getTiers();
+    }
+
+    changeTier(e) {
+        const id: number = e.target.value as number;
+
+        if (isNaN(id)) {
+            this.newHost.tier = undefined;
+        } else {
+            for (let tier of this.availableTiers) {
+                if (tier.id == id) {
+                    this.newHost.tier = tier;
+                    return;
+                }
+            }
+        }
     }
 
     // hosts = [

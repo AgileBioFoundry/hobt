@@ -7,14 +7,14 @@
             <div class="lead font-italic mt-n2" style="color: #777575">{{host.phylum}}</div>
         </div>
 
-        <div class="float-right btn-toolbar mr-3">
-            <div class="card border-0 shadow-sm ml-5" style="width: 24rem">
-                <div class="card-body">
-                    <strong>Lawrence Berkeley National Lab</strong><br>
-                    Sandia National Lab
-                </div>
-            </div>
-        </div>
+        <!--        <div class="float-right btn-toolbar mr-3">-->
+        <!--            <div class="card border-0 shadow-sm ml-5" style="width: 24rem">-->
+        <!--                <div class="card-body">-->
+        <!--                    <strong>Lawrence Berkeley National Lab</strong><br>-->
+        <!--                    Sandia National Lab-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 
@@ -90,9 +90,7 @@
 
 
         <li [ngbNavItem]="'tiers'">
-            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS &nbsp;<app-tier-status [tier]="host.tier"
-                                                                                 class="font-12"></app-tier-status>
-            </a>
+            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS</a>
             <ng-template ngbNavContent>
                 <app-host-tiers [host]="host"></app-host-tiers>
             </ng-template>

@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="container-fluid pt-2 pb-4" style="background-color: #F4F4F4">
+<div class="container-fluid pt-2 pb-4" style="background-color: #f5f7f8">
 
     <div class="pull-right">
         <div>
@@ -60,6 +60,7 @@
             <div class="card-body pb-1">
                 <h5 class="card-title">
                     <span class="cursor-pointer" (click)="goToHost(host)">{{ host.name }}</span>
+                    <span *ngIf="!host.tier" class="float-right badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
                     <span *ngIf="host.tier" style="font-size: 14px" class="p-2 pr-3 pl-3 float-right badge" [ngClass]="{'badge-secondary': host.tier.index === 0,
                     'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">{{ host.tier.label }}</span>
 
@@ -92,26 +93,19 @@
         <div class="card ml-4 mb-4 border-0 shadow-sm" style="width: 28rem" *ngIf="showCreateNewHost">
             <div class="card-body pb-1">
                 <form (submit)="createOrganism()" id="createOrganismForm">
-
                     <h5 class="border-bottom">Create new organism</h5>
 
                     <div class="row mb-1">
-                        <!--                        <label for="tier" class="offset-6 col-sm-2 col-form-label font-weight-bold">Tier</label>-->
                         <div class="col-sm-5 offset-7">
-                            <!--                            <div ngbDropdown class="d-inline-block">-->
-                            <!--                                <button class="btn btn-outline-secondary" type="button" ngbDropdownToggle>Select Tier</button>-->
-                            <!--                                <div ngbDropdownMenu>-->
-                            <!--                                    <button ngbDropdownItem (click)="newHost.tier = tier" *ngFor="let tier of availableTiers">{{tier.label}}</button>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-
-                            <select class="form-control float-right" id="tier" [value]="newHost.tier.index">
-                                <option [value]="undefined">Select Tier</option>
-                                <option [value]="tier.index" *ngFor="let tier of availableTiers">{{tier.label}}</option>
+                            <span *ngIf="!availableTiers"
+                                  class="float-right badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
+                            <select class="form-control float-right" id="tier" (change)="changeTier($event)"
+                                    *ngIf="availableTiers && availableTiers.length">
+                                <option [value]="undefined">Tier 0</option>
+                                <option [value]="tier.id" *ngFor="let tier of availableTiers">{{tier.label}}</option>
                             </select>
                         </div>
                     </div>
-
 
                     <input name="hostName" class="form-control" [(ngModel)]="newHost.name" placeholder="Enter name">
                     <input name="hostPhylum" class="form-control mt-1" [(ngModel)]="newHost.phylum"
