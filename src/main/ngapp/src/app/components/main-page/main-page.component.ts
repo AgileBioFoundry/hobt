@@ -31,8 +31,6 @@ export class MainPageComponent implements OnInit {
     private getTiers(): void {
         this.http.get('tiers').subscribe((result: Tier[]) => {
             this.availableTiers = result;
-            // if (this.availableTiers && this.availableTiers.length)
-            //     this.newHost.tier = this.availableTiers[0];
         });
     }
 
@@ -41,7 +39,7 @@ export class MainPageComponent implements OnInit {
             if (!result || !result.requested)
                 return;
 
-            this.hosts = result.requested;
+            this.hosts = result.requested.sort((a: Host, b: Host) => a.id - b.id);
         });
     }
 
