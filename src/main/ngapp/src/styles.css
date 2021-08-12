@@ -18,6 +18,10 @@ html body {
     font-size: .9em;
 }
 
+.font-95 {
+    font-size: .95em;
+}
+
 .font-12 {
     font-size: 1.2em;
 }
@@ -37,4 +41,8 @@ html body {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.bg-light-blue {
+    background-color: #EDF4FA;
 }

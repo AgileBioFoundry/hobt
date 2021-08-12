@@ -71,21 +71,6 @@ export class MainPageComponent implements OnInit {
         this.getTiers();
     }
 
-    changeTier(e) {
-        const id: number = e.target.value as number;
-
-        if (isNaN(id)) {
-            this.newHost.tier = undefined;
-        } else {
-            for (let tier of this.availableTiers) {
-                if (tier.id == id) {
-                    this.newHost.tier = tier;
-                    return;
-                }
-            }
-        }
-    }
-
     // hosts = [
     // new Host(1, "Pseudomonas putida", "Gammaproteobacteria"),
     // new Host(2, "Rhodosporidium toruloides", "Basidiomycota"),

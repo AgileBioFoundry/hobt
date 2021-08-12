@@ -15,7 +15,7 @@
 .nav-tabs .nav-link.active {
     color: #495057;
     background-color: #fff;
-    border-bottom: 3px solid darkblue;
+    border-bottom: 5px solid darkblue;
     /*border-color: #dee2e6 #dee2e6 #fff;*/
 }
 
@@ -40,6 +40,6 @@
 }
 
 .nav-tabs .nav-link:hover {
-    border-bottom: 3px solid slategray;
+    border-bottom: 5px solid slategray;
 }
 

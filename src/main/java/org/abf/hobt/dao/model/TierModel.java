@@ -23,7 +23,10 @@ public class TierModel implements IDataModel {
     private int index;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tier", orphanRemoval = true)
-    private Set<CriteriaModel> criteria = new HashSet<>();
+    private final Set<CriteriaModel> criteria = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tier", orphanRemoval = true)
+    private final Set<TierRuleModel> rules = new HashSet<>();
 
     public long getId() {
         return id;
@@ -47,6 +50,10 @@ public class TierModel implements IDataModel {
 
     public Set<CriteriaModel> getCriteria() {
         return this.criteria;
+    }
+
+    public Set<TierRuleModel> getRules() {
+        return this.rules;
     }
 
     @Override

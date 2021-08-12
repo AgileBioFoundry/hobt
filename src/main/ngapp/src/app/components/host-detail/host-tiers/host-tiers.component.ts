@@ -18,15 +18,19 @@ export class HostTiersComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.host.tier);
+
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
 
             this.http.get('hosts/' + this.host.id + '/criterias/').subscribe((result: TierCriteria[]) => {
+
                 for (const tier of this.tiers) {
                     for (const criteria of tier.criteria) {
                         criteria.status = this.getTierCriteriaStatus(criteria.id, result);
                     }
                     tier.criteria = tier.criteria.sort((a, b) => a.id - b.id);
+                    tier.collapsed = (tier.index <= this.host.tier.index);
                 }
 
                 // todo : use criteriaId -> [criteria]

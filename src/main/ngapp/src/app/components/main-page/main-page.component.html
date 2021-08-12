@@ -99,10 +99,11 @@
                         <div class="col-sm-5 offset-7">
                             <span *ngIf="!availableTiers"
                                   class="float-right badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
-                            <select class="form-control float-right" id="tier" (change)="changeTier($event)"
-                                    *ngIf="availableTiers && availableTiers.length">
-                                <option [value]="undefined">Tier 0</option>
-                                <option [value]="tier.id" *ngFor="let tier of availableTiers">{{tier.label}}</option>
+
+                            <select class="form-control float-right" id="tier" name="hostTierSelect"
+                                    *ngIf="availableTiers && availableTiers.length" [(ngModel)]="newHost.tier">
+                                <option [ngValue]="undefined">Tier 0</option>
+                                <option [ngValue]="tier" *ngFor="let tier of availableTiers">{{tier.label}}</option>
                             </select>
                         </div>
                     </div>
