@@ -2,11 +2,15 @@ package org.abf.hobt.dto;
 
 import org.abf.hobt.service.ice.IDataTransferObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Role implements IDataTransferObject {
 
     private long id;
     private String label;
     private String description;
+    private List<Permission> permissions = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -30,5 +34,9 @@ public class Role implements IDataTransferObject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
     }
 }

@@ -43,11 +43,12 @@ public class UserResource extends RestResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/autocomplete")
     public Response getAutoCompleteForAvailableAccounts(@QueryParam("val") String val,
                                                         @DefaultValue("8") @QueryParam("limit") int limit) {
-        String userId = getUserId();
-        Users users = new Users(userId);
+//        String userId = getUserId();
+        Users users = new Users();
         return super.respond(users.filter(val, limit));
     }
 

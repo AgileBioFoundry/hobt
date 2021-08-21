@@ -4,6 +4,8 @@ import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.Role;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Role")
@@ -20,7 +22,8 @@ public class RoleModel implements IDataModel {
     @Column(name = "description")
     private String description;
 
-    // todo @OneToMany List<Permission> permissions (one role can have many permissions)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role", orphanRemoval = true)
+    private final List<PermissionModel> permissions = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -40,6 +43,10 @@ public class RoleModel implements IDataModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<PermissionModel> getPermissions() {
+        return permissions;
     }
 
     @Override

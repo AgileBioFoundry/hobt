@@ -116,6 +116,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(RoleModel.class);
         configuration.addAnnotatedClass(UserRoleModel.class);
         configuration.addAnnotatedClass(TierRuleModel.class);
+        configuration.addAnnotatedClass(PermissionModel.class);
     }
 
     /**

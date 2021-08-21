@@ -6,6 +6,14 @@ html body {
     font-family: Arial, sans-serif;
 }
 
+.font-70 {
+    font-size: .7em;
+}
+
+.font-75 {
+    font-size: .75em;
+}
+
 .font-80 {
     font-size: .8em;
 }
