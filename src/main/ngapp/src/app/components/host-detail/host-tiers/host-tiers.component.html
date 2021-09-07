@@ -11,8 +11,11 @@
 
                 <div [ngClass]="{'opacity-hover': !tier.completed}" (click)="markTierCompleted(tier)"
                      *ngIf="!tier.completed">Complete
-                    <i class="fa fa-fw font-14 mt-1"
-                       [ngClass]="{'fa-toggle-off': !tier.completed, 'text-success': tier.completed}"></i>
+                    <i class="fa fa-fw font-14 mt-1 fa-toggle-off"></i>
+                </div>
+
+                <div *ngIf="tier.completed">Tier Completed
+                    <i class="fa fa-fw font-14 fa-toggle-on green"></i>
                 </div>
 
             </div>
@@ -72,7 +75,7 @@
                 </table>
             </div>
 
-            Override
+            <!--            Override-->
             <!--            <a href="#" class="btn btn-primary">Go somewhere</a>-->
         </div>
     </div>
