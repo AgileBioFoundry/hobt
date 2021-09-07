@@ -33,23 +33,26 @@
 
     <br>
 
-    <table class="table  table-bordered  table-hover table-responsive-lg bg-white" *ngIf="!gridMode">
+    <table class="table table-bordered table-hover table-responsive-lg bg-white" *ngIf="!gridMode">
         <thead>
         <tr class="text-uppercase" style="font-size: 12px">
             <th>Host</th>
             <th>Taxonomy</th>
             <th>Tier</th>
+            <th>Created</th>
             <th>Updated</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let host of hosts">
             <td class="text-primary">{{ host.name }}</td>
-            <td>{{ host.phylum }}</td>
+            <td class="font-italic text-muted">{{ host.phylum }}</td>
             <td>
-                <span style="font-size: 14px" class="p-2 pr-3 pl-3 badge" [ngClass]="{'badge-secondary': (host.tier.index === 0 || host.tier === undefined),
+                <span *ngIf="!host.tier" class="badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
+                <span *ngIf="host.tier" style="font-size: 14px" class="p-2 pr-3 pl-3 badge" [ngClass]="{'badge-secondary': (host.tier.index === 0 || host.tier === undefined),
                     'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">Tier {{ host.tier.index || '1' }}</span>
             </td>
+            <td>{{ host.created | date }}</td>
             <td><span *ngIf="host.updated">{{ host.updated | date }}</span></td>
         </tr>
         </tbody>
