@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-title">Add Role</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <div class="form-group">
+        <label for="role" class="font-weight-bold font-90">Select Role:</label>
+
+        <select class="form-control" id="role" name="roleSelect" [(ngModel)]="selectedRole">
+            <option [ngValue]="undefined">Select</option>
+            <option [ngValue]="role" *ngFor="let role of roles">{{role.label}}</option>
+        </select>
+    </div>
+
+    <div class="form-group" *ngIf="selectedRole">
+        <label for="display" class="font-weight-bold font-90">Description:</label>
+        <textarea class="form-control" id="display" rows="3" [(ngModel)]="selectedRole.description" disabled></textarea>
+    </div>
+</div>
+
+<div class="modal-footer" [ngClass]="{'d-flex justify-content-between': serverError}">
+    <div class="alert alert-danger font-85 p-2" *ngIf="serverError">
+        <i class="fa fa-exclamation-triangle"></i> Server error creating add new role
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-primary" (click)="createNewRole()" [disabled]="!selectedRole">
+            Assign Role
+        </button>
+    </div>
+</div>
