@@ -2,6 +2,7 @@ package org.abf.hobt.service.rest;
 
 import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
+import org.abf.hobt.host.HostParts;
 import org.abf.hobt.host.Hosts;
 
 import javax.ws.rs.*;
@@ -44,6 +45,15 @@ public class HostResource extends RestResource {
     public Response getHost(@PathParam("id") long orgId) {
         Hosts hosts = new Hosts();
         return super.respond(hosts.retrieve(orgId));
+    }
+
+    @GET
+    @Path("/{id}/parts")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getHostParts(@PathParam("id") long organismId) {
+        HostParts parts = new HostParts();
+        return super.respond(parts.get(organismId));
     }
 
     @POST

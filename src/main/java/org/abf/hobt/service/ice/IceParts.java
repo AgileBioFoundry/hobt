@@ -1,7 +1,6 @@
 package org.abf.hobt.service.ice;
 
 import org.abf.hobt.IceApiClient;
-import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.service.ice.entry.EntryType;
 import org.abf.hobt.service.ice.search.SearchQuery;
 import org.abf.hobt.service.ice.search.SearchResults;
@@ -13,25 +12,17 @@ import java.util.Collections;
  *
  * @author Hector Plahar
  */
-public class IcePart {
+public class IceParts {
 
     private final IceApiClient client;
 
-    public IcePart() {
+    public IceParts() {
         this.client = IceApiClient.getInstance();
     }
 
-    public static void main(String[] args) throws Exception {
-        IcePart part = new IcePart();
-        part.search("host");
-    }
-
-    public void search(String term) {
-        SearchQuery query = new SearchQuery();
+    public SearchResults search(SearchQuery query) {
         query.setEntryTypes(Collections.singletonList(EntryType.STRAIN));
-        query.setQueryString(term);
-        SearchResults results = this.client.post("/rest/search", query, SearchResults.class);
-        Logger.info(results.getResultCount() + "");
+        return this.client.post("/rest/search", query, SearchResults.class);
     }
 }
 

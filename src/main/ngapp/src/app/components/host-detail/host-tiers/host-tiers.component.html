@@ -3,14 +3,13 @@
     <div class="card ml-3 mr-3" [ngClass]="{'shadow-sm': tier.collapsed}">
 
         <div class="card-body">
-            <div class="d-flex justify-content-between"
-                 [ngClass]="{'border-bottom': tier.collapsed}">
+            <div class="d-flex justify-content-between" [ngClass]="{'border-bottom': tier.collapsed}">
                 <h5 class="cursor-pointer pb-2 font-weight-bold" (click)="tier.collapsed = !tier.collapsed"><i
                     class="fa fa-fw fa-caret-right" *ngIf="tier.collapsed"></i> <i
                     class="fa fa-fw fa-caret-down" *ngIf="!tier.collapsed"></i>{{tier.label}}</h5>
 
-                <div [ngClass]="{'opacity-hover': !tier.completed}" (click)="markTierCompleted(tier)"
-                     *ngIf="!tier.completed">Complete
+                <div [ngClass]="{'opacity-hover': !tier.completed && canEditTiers}" (click)="markTierCompleted(tier)"
+                     *ngIf="!tier.completed" class="opacity-4">Complete
                     <i class="fa fa-fw font-14 mt-1 fa-toggle-off"></i>
                 </div>
 
@@ -43,7 +42,7 @@
                         <td class="text-muted font-95">{{criteria.description}}</td>
                         <td class="p-2">
 
-                            <div ngbDropdown class="float-right">
+                            <div ngbDropdown class="float-right" *ngIf="canEditTiers">
                                 <i class="fa fa-fw" ngbDropdownToggle></i>
                                 <div class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px">
                                     <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, -1)">N/A</a>
@@ -74,11 +73,7 @@
                     </tbody>
                 </table>
             </div>
-
-            <!--            Override-->
-            <!--            <a href="#" class="btn btn-primary">Go somewhere</a>-->
         </div>
     </div>
-
 </div>
 

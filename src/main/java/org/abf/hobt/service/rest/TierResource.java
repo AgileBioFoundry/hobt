@@ -101,4 +101,22 @@ public class TierResource extends RestResource {
         Tiers tiers = new Tiers();
         return super.respond(tiers.updateIndex(tierId, indexId));
     }
+
+    @GET
+    @Path("/{id}/completed")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCompletedStatus(@PathParam("id") long tierId) {
+        Tiers tiers = new Tiers();
+        return super.respond(false);
+    }
+
+    @PUT
+    @Path("/{id}/completed")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateCompletedStatus(@PathParam("id") long tierId) {
+        Tiers tiers = new Tiers();
+        return super.respond(false);
+    }
 }

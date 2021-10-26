@@ -4,14 +4,33 @@ import {LoginComponent} from "./components/login/login.component";
 import {HostDetailComponent} from "./components/host-detail/host-detail.component";
 import {MainPageComponent} from "./components/main-page/main-page.component";
 import {HostDetailResolver} from "./components/host-detail/host-detail.resolver";
-import {SettingsComponent} from "./components/admin/settings/settings.component";
+import {AdminGuardGuard} from "./components/admin/admin-guard.guard";
+import {AdminComponent} from "./components/admin/admin.component";
+import {TiersComponent} from "./components/admin/tiers/tiers.component";
+import {UsersComponent} from "./components/admin/users/users.component";
+import {RolesComponent} from "./components/admin/roles/roles.component";
 
 const routes: Routes = [
     {path: '', component: MainPageComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'admin', redirectTo: 'admin/tiers', pathMatch: 'full'},
+    {
+        path: 'admin', component: AdminComponent, canActivate: [AdminGuardGuard],
+        children: [
+            {
+                path: '', redirectTo: 'tiers', pathMatch: 'full'
+            }, {
+                path: 'tiers',
+                component: TiersComponent
+            }, {
+                path: 'users',
+                component: UsersComponent
+            }, {
+                path: 'roles',
+                component: RolesComponent
+            }
+        ]
+    },
     {path: 'host/:hid', redirectTo: 'host/:hid/attributes', pathMatch: 'full'},
-    {path: 'admin/:subsection', component: SettingsComponent},
     {path: 'host/:hid/:attribute', component: HostDetailComponent, resolve: {host: HostDetailResolver}}
 ];
 

@@ -1,0 +1,37 @@
+<app-header></app-header>
+
+<div class="container-fluid pt-2 pb-4">
+
+    <div class="row">
+        <div class="col-11">
+            <router-outlet></router-outlet>
+        </div>
+
+        <div class="col-1">
+            <table
+                class="table text-uppercase font-weight-bold table-bordered table-hover rounded-left font-75 w-25 table-dark"
+                style="position: absolute; right: 0; top: 25px">
+                <tbody>
+                <tr style="height: 60px">
+                    <td class="text-center text-white cursor-pointer align-middle"
+                        (click)="goTo('tiers')">
+                        Tier Settings
+                    </td>
+                </tr>
+                <tr style="height: 60px">
+                    <td class="text-center text-white cursor-pointer align-middle"
+                        (click)="goTo('users')">
+                        Users
+                    </td>
+                </tr>
+                <tr style="height: 60px">
+                    <td class="text-center text-white cursor-pointer align-middle"
+                        (click)="goTo('roles')">
+                        Roles
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

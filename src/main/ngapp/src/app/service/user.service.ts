@@ -23,7 +23,7 @@ export class UserService {
             return false;
         }
 
-        return user.roles.indexOf('ADMINISTRATOR') !== -1;
+        return user.isAdmin;
     }
 
     getUser(redirectToLogin: boolean = false): User {

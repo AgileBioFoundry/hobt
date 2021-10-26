@@ -48,6 +48,9 @@ public class LocalAuthentication implements IAuthentication {
         if (account == null)
             throw new AuthenticationException("Cannot authenticate password for non-existent account " + username);
 
+        if (StringUtils.isBlank(account.getPassword()))
+            return false;
+
         String existingPassword = account.getPassword().trim();
         if (StringUtils.isBlank(account.getSalt()) || StringUtils.isBlank(existingPassword))
             return false;

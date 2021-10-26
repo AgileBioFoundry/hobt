@@ -1,6 +1,8 @@
 package org.abf.hobt;
 
 import org.abf.hobt.common.logging.Logger;
+import org.abf.hobt.service.rest.ArrayDataJSONHandler;
+import org.abf.hobt.service.rest.DataTransferObjectJSONHandler;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
@@ -25,11 +27,13 @@ public class IceApiClient {
     private String url;
     private String apiClientToken;
     private String apiClientId;
-    private Client client;
+    private final Client client;
 
     private IceApiClient() {
         ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(DataTransferObjectJSONHandler.class);
         clientConfig.register(MultiPartFeature.class);
+        clientConfig.register(ArrayDataJSONHandler.class);
         client = ClientBuilder.newClient(clientConfig);
         loadProperties();
     }

@@ -57,12 +57,10 @@
 
         <li [ngbNavItem]="'parts'">
             <a ngbNavLink class="mr-5 ml-5">PARTS
-                <div class="badge badge-light badge-pill p-1 font-90 text-muted">{{host.parts}}</div>
+<!--                <div class="badge badge-light badge-pill p-1 font-90 text-muted">8</div>-->
             </a>
             <ng-template ngbNavContent>
-                <div class="container-fluid font-90 pt-3">
-                    <i class="text-muted">No information available</i>
-                </div>
+                <app-host-parts [host]="host"></app-host-parts>
             </ng-template>
         </li>
 

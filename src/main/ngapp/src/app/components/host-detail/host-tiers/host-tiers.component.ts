@@ -3,6 +3,8 @@ import {Host} from "../../../model/host.model";
 import {HttpService} from "../../../service/http.service";
 import {Tier} from "../../../model/tier.model";
 import {TierCriteria} from "../../../model/tier-criteria.model";
+import {UserService} from "../../../service/user.service";
+import {User} from "../../../model/user.model";
 
 @Component({
     selector: 'app-host-tiers',
@@ -13,13 +15,15 @@ export class HostTiersComponent implements OnInit {
 
     @Input() host: Host;
     tiers: Tier[];
+    user: User;
+    canEditTiers: boolean;
 
-    constructor(private http: HttpService) {
+    constructor(private http: HttpService, private users: UserService) {
+        this.user = this.users.getUser(false);
+        this.canEditTiers = this.checkCanEditTiers();
     }
 
     ngOnInit(): void {
-        console.log(this.host.tier);
-
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
 
@@ -38,7 +42,18 @@ export class HostTiersComponent implements OnInit {
         })
     }
 
+    //
+    // permissions
+    //
+    checkCanEditTiers(): boolean {
+        return this.user != undefined;   // todo : and has roles
+    }
+
+    // override tier completion
     markTierCompleted(tier: Tier): void {
+        if (!this.canEditTiers)
+            return;
+
         // todo : make call to backend
         tier.completed = true;
         tier.collapsed = true;
