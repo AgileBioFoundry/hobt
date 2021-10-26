@@ -14,17 +14,15 @@ import java.util.List;
 public class Users {
 
     private final AccountDAO dao;
-    private final String userId;
     private final AccountAuthorization authorization;
 
-    public Users(String userId) {
+    public Users() {
         this.dao = DAOFactory.getAccountDAO();
-        this.userId = userId;
         this.authorization = new AccountAuthorization();
     }
 
     public List<Account> filter(String token, int limit) {
-        if (authorization.isAdmin(this.userId)) {
+//        if (authorization.isAdmin(this.userId)) {
             List<AccountModel> results = dao.getMatchingAccounts(token, limit);
             List<Account> accountTransfers = new ArrayList<>();
             for (AccountModel match : results) {
@@ -36,25 +34,25 @@ public class Users {
                 info.setLastName(match.getLastName());
                 accountTransfers.add(info);
             }
-            return accountTransfers;
-        }
+        return accountTransfers;
+//        }
 
-        List<Account> result = new ArrayList<>();
-        AccountModel tokenAccount = dao.getByUserId(token);
-        if (tokenAccount != null) {
-            result.add(tokenAccount.toDataTransferObject());
-            return result;
-        }
-
-        // else non admin; filter by users that account is allowed to see
-        // this is typically based on group membership
-        AccountModel account = dao.getByUserId(userId);
-//        Set<Group> groups = account.getGroups();
-//        if (groups.isEmpty())
+//        List<Account> result = new ArrayList<>();
+//        AccountModel tokenAccount = dao.getByUserId(token);
+//        if (tokenAccount != null) {
+//            result.add(tokenAccount.toDataTransferObject());
 //            return result;
-
-//        List<Account> matches = dao.getMatchingGroupMembers(groups, token, limit);
-//        result.addAll(matches.stream().map(Account::toDataTransferObject).collect(Collectors.toList()));
-        return result;
+//        }
+//
+//        // else non admin; filter by users that account is allowed to see
+//        // this is typically based on group membership
+//        AccountModel account = dao.getByUserId(userId);
+////        Set<Group> groups = account.getGroups();
+////        if (groups.isEmpty())
+////            return result;
+//
+////        List<Account> matches = dao.getMatchingGroupMembers(groups, token, limit);
+////        result.addAll(matches.stream().map(Account::toDataTransferObject).collect(Collectors.toList()));
+//        return result;
     }
 }

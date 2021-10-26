@@ -1,11 +1,9 @@
 package org.abf.hobt.service.rest;
 
-import org.abf.hobt.account.AccountAuthorization;
-import org.abf.hobt.account.AccountRole;
-import org.abf.hobt.account.Accounts;
-import org.abf.hobt.account.Users;
+import org.abf.hobt.account.*;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dto.Account;
+import org.abf.hobt.dto.Role;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -43,11 +41,12 @@ public class UserResource extends RestResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/autocomplete")
     public Response getAutoCompleteForAvailableAccounts(@QueryParam("val") String val,
                                                         @DefaultValue("8") @QueryParam("limit") int limit) {
-        String userId = getUserId();
-        Users users = new Users(userId);
+//        String userId = getUserId();
+        Users users = new Users();
         return super.respond(users.filter(val, limit));
     }
 
@@ -111,6 +110,17 @@ public class UserResource extends RestResource {
         return respond(success);
     }
 
+    @PUT
+    @Path("{id}/roles")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addRole(@PathParam("id") long id, Role role) {
+        String userId = getUserId();
+        Logger.info(userId + ": adding role with id " + role.getId() + " to account " + id);
+        AccountRoles roles = new AccountRoles(userId);
+        roles.addRole(id, role.getId());
+        return respond(true);
+    }
+
     @DELETE
     @Path("{id}/roles/{role}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -122,4 +132,16 @@ public class UserResource extends RestResource {
         boolean success = false; //accounts.removeRole(id, role);
         return respond(success);
     }
+
+    @GET
+    @Path("{id}/permissions")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserPermissions(@PathParam("id") long id) {
+        String userId = getUserId();
+        Logger.info(userId + ": retrieving permissions for " + id);
+        AccountRoles roles = new AccountRoles(userId);
+        return super.respond(roles.getPermissions(id));
+    }
+
 }

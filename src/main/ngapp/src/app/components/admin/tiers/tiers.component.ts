@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Tier} from "../../../model/tier.model";
 import {TierCriteria} from "../../../model/tier-criteria.model";
+import {TierRule} from "../../../model/tier-rules.model";
 import {HttpService} from "../../../service/http.service";
 
 @Component({
@@ -12,7 +13,9 @@ export class TiersComponent implements OnInit {
 
     newTier: Tier;
     newCriteria: TierCriteria;
+    newRule: TierRule;
     newTierIndex: number;
+
     showCreateTier: boolean;
     selectedTier: Tier;
     tiers: Array<Tier>;
@@ -22,6 +25,7 @@ export class TiersComponent implements OnInit {
 
     constructor(private http: HttpService) {
         this.newCriteria = new TierCriteria();
+        this.newRule = new TierRule();
         this.showCreateTier = false;
         this.newTierLabelInvalid = false;
     }
@@ -29,7 +33,15 @@ export class TiersComponent implements OnInit {
     ngOnInit(): void {
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
-        })
+            for (const tier of this.tiers) {
+                tier.criteria = tier.criteria.sort((a, b) => a.id - b.id);
+
+                // retrieve the rules for each tier
+                this.http.get('tiers/' + tier.id + '/rules').subscribe((rules: TierRule[]) => {
+                    tier.rules = rules;
+                })
+            }
+        });
     }
 
     showCreateTierClick(): void {
@@ -72,6 +84,33 @@ export class TiersComponent implements OnInit {
         });
     }
 
+    cancelNewRules(tier: Tier): void {
+        tier.showAddRules = false;
+        this.newRule = new TierRule();
+    }
+
+    addNewRules(tier: Tier): void {
+        if (isNaN(this.newRule.percentage)) {
+            return;
+        }
+
+        // validate
+        if (this.newRule.percentage < 0 || this.newRule.percentage > 100) {
+            console.error("Invalid rule percentage: " + this.newRule.percentage);
+            return;
+        }
+
+        this.http.post('tiers/' + tier.id + '/rules', this.newRule).subscribe((rule: TierRule) => {
+            tier.rules.push(rule);
+            this.newRule = new TierRule();
+        })
+    }
+
+    cancelNewCriteria(tier: Tier): void {
+        tier.showAddCriteria = false;
+        this.newCriteria = new TierCriteria();
+    }
+
     addNewCriteria(tier: Tier): void {
         if (!this.newCriteria)
             return;
@@ -84,6 +123,14 @@ export class TiersComponent implements OnInit {
 
         if (this.newCriteria.detailsInvalid || this.newCriteria.labelInvalid)
             return;
+
+        // check for unique label
+        for (const criteria of tier.criteria) {
+            if (this.newCriteria.label === criteria.label) {
+                this.newCriteria.labelInvalid = true;
+                return;
+            }
+        }
 
         // add new criteria to server side of application and if successful push to list of criteria
         this.http.post('tiers/' + tier.id + '/criteria', this.newCriteria).subscribe((result: TierCriteria) => {

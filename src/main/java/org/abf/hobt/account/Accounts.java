@@ -10,6 +10,7 @@ import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.AccountDAO;
 import org.abf.hobt.dao.model.AccountModel;
+import org.abf.hobt.dao.model.RoleModel;
 import org.abf.hobt.dto.Account;
 import org.abf.hobt.notification.Email;
 
@@ -28,7 +29,7 @@ public class Accounts {
     private final AccountAuthorization authorization;
 
     public Accounts() {
-        dao = DAOFactory.getAccountDAO();
+        this.dao = DAOFactory.getAccountDAO();
         this.authorization = new AccountAuthorization();
     }
 
@@ -168,8 +169,8 @@ public class Accounts {
      * @throws ServiceException        on exception updating the password
      * @throws AuthenticationException on exception authenticating with the existing password
      */
-    public Account updatePassword(String userId, String password, String newPassword) throws ServiceException,
-        AuthenticationException {
+    public Account updatePassword(String userId, String password, String newPassword)
+        throws ServiceException, AuthenticationException {
         Authenticator authenticator = new Authenticator();
         Account accountTransfer = authenticator.authenticate(userId, password);
         if (accountTransfer == null)
@@ -216,7 +217,6 @@ public class Accounts {
             String errorMsg = "Cannot reset the password for this account";
             throw new ServiceException(errorMsg);
         }
-
 
         // check how long since last update request; it must be greater than the min password reset period
         if (account.getPasswordUpdatedTime() != null && !account.getUsingTempPassword()) {
@@ -336,6 +336,12 @@ public class Accounts {
 
         for (AccountModel account : accounts) {
             Account transfer = account.toDataTransferObject();
+            if (account.getRoles() != null) {
+                for (RoleModel roleModel : account.getRoles()) {
+                    transfer.getRoles().add(roleModel.toDataTransferObject());
+                }
+            }
+
             data.getRequested().add(transfer);
         }
         data.setAvailable(dao.getAccountTotal(filter));

@@ -61,6 +61,11 @@ public class AccountModel implements IDataModel {
         inverseJoinColumns = @JoinColumn(name = "group_id"))
     private final Set<GroupModel> groups = new LinkedHashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private final Set<RoleModel> roles = new LinkedHashSet<>();
+
     @Column(name = "disabled")
     private Boolean disabled;
 
@@ -148,6 +153,10 @@ public class AccountModel implements IDataModel {
 
     public Set<GroupModel> getGroups() {
         return groups;
+    }
+
+    public Set<RoleModel> getRoles() {
+        return roles;
     }
 
     public void setLastLoginTime(Date lastLoginTime) {

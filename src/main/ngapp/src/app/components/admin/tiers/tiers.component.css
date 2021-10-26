@@ -1,0 +1,7 @@
+ul li.list-group-item:hover div.criteria-edit {
+    display: block;
+}
+
+ul li div.criteria-edit {
+    display: none;
+}

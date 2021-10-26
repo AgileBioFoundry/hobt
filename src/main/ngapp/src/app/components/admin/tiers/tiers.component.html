@@ -76,73 +76,183 @@
 
     <table class="table table-bordered mt-3" *ngIf="tiers && tiers.length">
         <tr *ngFor="let tier of tiers">
-            <td class="w-25">
+            <td class="w-25 font-12">
                 <i class="fa fa-fw fa-reorder"></i> {{tier.label}}
             </td>
-            <td class="w-75">
-                <button class="btn btn-link btn-sm float-right" (click)="tier.showAddCriteria = true">
-                    Add Criteria
-                </button>
 
-                <div class="text-muted font-italic"
+            <td class="w-50 p-0">
+
+                <div class="pl-3 pt-3" *ngIf="!tier.showAddCriteria">
+                    <button class="btn btn-outline-primary btn-sm" (click)="tier.showAddCriteria = true">
+                        Add Criteria
+                    </button>
+                </div>
+
+                <div class="text-muted font-italic p-3"
                      *ngIf="!tier.showAddCriteria && (!tier.criteria || !tier.criteria.length)">
                     No criteria specified for this tier
                 </div>
 
-                <div *ngIf="tier.showAddCriteria">
-                    <b class="text-uppercase font-90">Add Criteria</b>
-                    <div class="card">
-                        <div class="card-body bg-light">
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-8">
-                                        <label for="tierCriteriaLabel">Label</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                               [ngClass]="{'is-invalid': newCriteria.labelInvalid}"
-                                               placeholder="Enter Label"
-                                               (ngModelChange)="newCriteria.labelInvalid = false"
-                                               name="tierCriteriaLabel" id="tierCriteriaLabel"
-                                               [(ngModel)]="newCriteria.label">
-                                        <div class="invalid-feedback">
-                                            Please enter a unique (to this tier) criteria label
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-8">
-                                        <label for="tierCriteriaDescription">Description</label>
-                                        <textarea class="form-control form-control-sm"
-                                                  [ngClass]="{'is-invalid': newCriteria.detailsInvalid}"
-                                                  name="tierCriteriaDescription" rows="3"
-                                                  (ngModelChange)="newCriteria.detailsInvalid = false"
-                                                  placeholder="Enter Description" id="tierCriteriaDescription"
-                                                  [(ngModel)]="newCriteria.description"></textarea>
-                                        <div class="invalid-feedback">
-                                            Please enter a description for this criteria
-                                        </div>
-                                    </div>
+                <div *ngIf="tier.showAddCriteria" class="p-4 bg-light-blue">
+                    <form name="createCriteriaForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label for="tierCriteriaLabel">Label</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       [ngClass]="{'is-invalid': newCriteria.labelInvalid}"
+                                       placeholder="Enter unique label for criteria"
+                                       (ngModelChange)="newCriteria.labelInvalid = false"
+                                       name="tierCriteriaLabel" id="tierCriteriaLabel"
+                                       [(ngModel)]="newCriteria.label">
+                                <div class="invalid-feedback">
+                                    Please enter a unique (to this tier) criteria label
                                 </div>
+                            </div>
 
-                                <div class="btn-group  mt-2">
-                                    <button class="btn btn-sm btn-primary" (click)="addNewCriteria(tier)"
-                                            [disabled]="!newCriteria.label || !newCriteria.description">
-                                        Create Criteria
-                                    </button>
-
-                                    <button class="btn btn-sm btn-link" (click)="tier.showAddCriteria= false">Cancel
-                                    </button>
+                            <div class="form-group col-md-8">
+                                <label for="tierCriteriaDescription">Description</label>
+                                <textarea class="form-control form-control-sm"
+                                          [ngClass]="{'is-invalid': newCriteria.detailsInvalid}"
+                                          name="tierCriteriaDescription" rows="3"
+                                          (ngModelChange)="newCriteria.detailsInvalid = false"
+                                          placeholder="Enter description for criteria" id="tierCriteriaDescription"
+                                          [(ngModel)]="newCriteria.description"></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter a description for this criteria
                                 </div>
-
-                            </form>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-link" (click)="cancelNewCriteria(tier)">Cancel</button>
+                            &nbsp;
+                            <button class="btn btn-sm btn-primary" (click)="addNewCriteria(tier)"
+                                    [disabled]="!newCriteria.label || !newCriteria.description">
+                                Create Criteria
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
+
 
                 <!-- list of available criteria for tier -->
-                <div *ngFor="let criteria of tier.criteria" class="p-2 font-90">
-                    <div class="font-weight-bold"><i class="fa fa-fw fa-caret-right"></i> {{criteria.label}}</div>
-                    <p class="text-muted ml-4">{{criteria.description || 'No description provided'}}</p>
+                <ul class="list-group list-group-flush font-90 p-3">
+                    <li class="list-group-item" *ngFor="let criteria of tier.criteria">
+                        <div class="float-right criteria-edit">
+                            <i class="fa fa-fw fa-pencil text-muted opacity-hover" ngbTooltip="Edit"></i> <i
+                            class="fa fa-fw fa-trash-o text-muted opacity-hover" ngbTooltip="Delete"></i></div>
+                        <div class="font-weight-bold">{{criteria.label}}</div>
+                        <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
+
+                        <form name="editCriteriaForm" style="display: none">
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label for="tierCriteriaLabel">Label</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                           [ngClass]="{'is-invalid': newCriteria.labelInvalid}"
+                                           placeholder="Enter unique label for criteria"
+                                           (ngModelChange)="newCriteria.labelInvalid = false"
+                                           name="tierCriteriaLabel"
+                                           [(ngModel)]="newCriteria.label">
+                                    <div class="invalid-feedback">
+                                        Please enter a unique (to this tier) criteria label
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-8">
+                                    <label for="tierCriteriaDescription">Description</label>
+                                    <textarea class="form-control form-control-sm"
+                                              [ngClass]="{'is-invalid': newCriteria.detailsInvalid}"
+                                              name="tierCriteriaDescription" rows="3"
+                                              (ngModelChange)="newCriteria.detailsInvalid = false"
+                                              placeholder="Enter description for criteria"
+                                              [(ngModel)]="newCriteria.description"></textarea>
+                                    <div class="invalid-feedback">
+                                        Please enter a description for this criteria
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-link" (click)="cancelNewCriteria(tier)">Cancel</button>
+                                &nbsp;
+                                <button class="btn btn-sm btn-primary" (click)="addNewCriteria(tier)"
+                                        [disabled]="!newCriteria.label || !newCriteria.description">
+                                    Create Criteria
+                                </button>
+                            </div>
+
+                        </form>
+                    </li>
+                </ul>
+
+            </td>
+
+
+            <td class="w-25 p-0">
+
+                <div class="p-4 bg-light-blue" *ngIf="tier.showAddRules">
+
+                    <form name="createSpecificationForm">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <select class="form-control col-sm-7 font-90" id="specificationType"
+                                        name="specificationType" [(ngModel)]="newRule.type">
+                                    <option [ngValue]=undefined>Select Rule</option>
+                                    <option [ngValue]="'SIMPLE'">% of Tier Criteria</option>
+                                    <option [ngValue]="'SUM'">Sum of Tier Criteria %</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12 font-90">
+                                <div *ngIf="newRule.type === 'SIMPLE'">
+                                    <input type="text" inputmode="numeric" maxlength="3" pattern="[0-9]*"
+                                           [(ngModel)]="newRule.percentage" name="simplePercentage"
+                                           style="width: 55px; padding-right: 20px; text-align: right">
+                                    <span style="margin-left:-20px;">%</span> &nbsp; of tier criteria must be met.
+                                </div>
+
+                                <div *ngIf="newRule.type === 'SUM'">
+                                    Sum of criteria in current tier and higher tiers must add up to
+                                    <input type="text" inputmode="numeric" maxlength="3" pattern="[0-9]*"
+                                           [(ngModel)]="newRule.percentage" name="complexPercentage"
+                                           style="width: 55px; padding-right: 20px; text-align: right"><span
+                                    style="margin-left:-20px;">%</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-primary" (click)="addNewRules(tier)"
+                                    [disabled]="!newRule.type || !newRule.percentage">
+                                Create Rule
+                            </button>
+                            <button class="btn btn-sm btn-link" (click)="cancelNewRules(tier)">Cancel</button>
+                        </div>
+
+                    </form>
                 </div>
 
+                <div class="pl-3 pt-3" *ngIf="!tier.showAddRules">
+                    <button class="btn btn-sm btn-outline-primary" (click)="tier.showAddRules = true">Add Rules</button>
+                </div>
+
+                <div class="p-3">
+
+                    <div class="font-weight-bold">Tier completion rules</div>
+                    <p class="text-muted font-italic" *ngIf="!tier.rules || !tier.rules.length">No rules specified for
+                        this tier</p>
+
+                    <ul *ngIf="tier.rules && tier.rules.length">
+                        <li *ngFor="let rule of tier.rules">
+                            <span *ngIf="rule.type==='SIMPLE'">{{rule.percentage}}% of criteria must be met</span>
+                            <span *ngIf="rule.type==='SUM'">Sum of criteria in current tier and higher tier must add up to {{rule.percentage}}</span>
+                        </li>
+                    </ul>
+                </div>
             </td>
         </tr>
     </table>

@@ -23,6 +23,9 @@ import {TiersComponent} from "./components/admin/tiers/tiers.component";
 import {RegisterComponent} from './components/register/register.component';
 import {RolesComponent} from './components/admin/roles/roles.component';
 import {CreateRoleModalComponent} from './components/admin/modal/create-role-modal/create-role-modal.component';
+import {AdminComponent} from "./components/admin/admin.component";
+import {AddRoleComponent} from './components/admin/users/add-role/add-role.component';
+import {HostPartsComponent} from './components/host-detail/host-parts/host-parts.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +45,10 @@ import {CreateRoleModalComponent} from './components/admin/modal/create-role-mod
         HostTiersComponent,
         RegisterComponent,
         RolesComponent,
-        CreateRoleModalComponent
+        CreateRoleModalComponent,
+        AdminComponent,
+        AddRoleComponent,
+        HostPartsComponent
     ],
     imports: [
         BrowserModule,

@@ -4,9 +4,12 @@ import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.CriteriaDAO;
 import org.abf.hobt.dao.hibernate.TierDAO;
+import org.abf.hobt.dao.hibernate.TierRuleDAO;
 import org.abf.hobt.dao.model.CriteriaModel;
 import org.abf.hobt.dao.model.TierModel;
+import org.abf.hobt.dao.model.TierRuleModel;
 import org.abf.hobt.dto.Criteria;
+import org.abf.hobt.tier.rule.RuleType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +18,12 @@ public class Tiers {
 
     private final TierDAO dao;
     private final CriteriaDAO criteriaDAO;
+    private final TierRuleDAO tierRuleDAO;
 
     public Tiers() {
         this.dao = DAOFactory.getTierDAO();
         this.criteriaDAO = DAOFactory.getCriteriaDAO();
+        this.tierRuleDAO = DAOFactory.getTierRuleDAO();
     }
 
     public List<Tier> get(boolean includeCriteria) {
@@ -129,5 +134,29 @@ public class Tiers {
 
         this.criteriaDAO.delete(criteriaModel);
         return true;
+    }
+
+    public List<Rule> getRules(long tierId) {
+        getTierModel(tierId);
+        List<TierRuleModel> models = tierRuleDAO.getRules(tierId);
+        List<Rule> rules = new ArrayList<>();
+        for (TierRuleModel model : models)
+            rules.add(model.toDataTransferObject());
+        return rules;
+    }
+
+    public Rule addRule(long tierId, Rule rule) {
+        TierModel tierModel = getTierModel(tierId);
+
+        TierRuleModel tierRuleModel = new TierRuleModel();
+        if (rule.getType() == null)
+            rule.setType(RuleType.SIMPLE);
+
+        tierRuleModel.setType(rule.getType());
+        tierRuleModel.setPercentage(rule.getPercentage());
+        tierRuleModel.setTier(tierModel);
+
+        tierRuleModel = this.tierRuleDAO.create(tierRuleModel);
+        return tierRuleModel.toDataTransferObject();
     }
 }

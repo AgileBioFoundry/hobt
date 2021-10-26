@@ -1,6 +1,8 @@
 package org.abf.hobt.service.rest;
 
+import org.abf.hobt.dto.Permission;
 import org.abf.hobt.dto.Role;
+import org.abf.hobt.role.RolePermissions;
 import org.abf.hobt.role.Roles;
 
 import javax.ws.rs.*;
@@ -36,5 +38,15 @@ public class RoleResource extends RestResource {
     public Response createRole(Role role) {
         Roles roles = new Roles();
         return super.respond(roles.create(role));
+    }
+
+    @POST
+    @Path("/{id}/permissions")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createPermission(@PathParam("id") long roleId, Permission permission) {
+        RolePermissions rolePermissions = new RolePermissions(roleId);
+        permission = rolePermissions.add(permission);
+        return super.respond(permission);
     }
 }

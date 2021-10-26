@@ -6,6 +6,14 @@ html body {
     font-family: Arial, sans-serif;
 }
 
+.font-70 {
+    font-size: .7em;
+}
+
+.font-75 {
+    font-size: .75em;
+}
+
 .font-80 {
     font-size: .8em;
 }
@@ -16,6 +24,10 @@ html body {
 
 .font-90 {
     font-size: .9em;
+}
+
+.font-95 {
+    font-size: .95em;
 }
 
 .font-12 {
@@ -37,4 +49,8 @@ html body {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.bg-light-blue {
+    background-color: #EDF4FA;
 }

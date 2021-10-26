@@ -47,11 +47,13 @@ public class Hosts {
         model.setName(organism.getName());
         model.setPhylum(organism.getPhylum());
 
-        TierModel tier = DAOFactory.getTierDAO().get(organism.getTier().getId());
-        if (tier == null)
-            throw new IllegalArgumentException("Cannot retrieve tier for organism creation");
+        if (organism.getTier() != null) {
+            TierModel tier = DAOFactory.getTierDAO().get(organism.getTier().getId());
+            if (tier == null)
+                throw new IllegalArgumentException("Cannot retrieve tier for organism creation");
 
-        model.setTier(tier);
+            model.setTier(tier);
+        }
 
         model = this.dao.create(model);
         if (model != null)
@@ -73,15 +75,16 @@ public class Hosts {
     }
 
     /**
-     * Update criteria for specified organism
+     * Update criteria for specified organism. Values are in 25% increments or -1 to indicate not applicable
      *
      * @param organismId      unique identifier for organism
      * @param criteriaId      unique identifier for criteria
      * @param percentComplete current status of organism
      */
     public void updateOrganismCriteriaStatus(long organismId, long criteriaId, int percentComplete) {
-        if (percentComplete < 0 || percentComplete > 100)
-            throw new IllegalArgumentException("Percent complete status must be in the range [0-100]. Received status of " + percentComplete);
+        // status must either be "-1", or between 0 and 100 inclusive
+        if ((percentComplete < 0 && percentComplete != -1) || percentComplete > 100)
+            throw new IllegalArgumentException("Percent complete status must be in the range [0-100] or -1. Received status of " + percentComplete);
 
         OrganismModel organismModel = this.dao.get(organismId);
         if (organismModel == null)

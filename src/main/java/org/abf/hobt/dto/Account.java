@@ -2,6 +2,9 @@ package org.abf.hobt.dto;
 
 import org.abf.hobt.service.ice.IDataTransferObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Account implements IDataTransferObject {
 
     private String userId;
@@ -21,15 +24,18 @@ public class Account implements IDataTransferObject {
     private boolean isAdmin;
     private boolean isDisabled;
     private int newMessageCount;
+    private final List<Role> roles;
 
     public Account() {
         institution = "";
         description = "";
+        this.roles = new ArrayList<>();
     }
 
     public Account(String email, String password) {
         this.email = email;
         this.password = password;
+        this.roles = new ArrayList<>();
     }
 
     public String getUserId() {
@@ -164,5 +170,9 @@ public class Account implements IDataTransferObject {
 
     public void setDisabled(boolean disabled) {
         isDisabled = disabled;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 }

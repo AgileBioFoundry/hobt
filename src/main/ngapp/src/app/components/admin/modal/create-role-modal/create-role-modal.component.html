@@ -19,14 +19,12 @@
     </div>
 </div>
 
-<div class="modal-footer justify-content-between">
-    <div>
-
-        <!--        <span class="red" *ngIf="errorSaving">-->
-        <!--            <i class="fa fa-exclamation-triangle"></i> Error saving part</span>-->
+<div class="modal-footer" [ngClass]="{'d-flex justify-content-between': serverError}">
+    <div class="alert alert-danger font-85 p-2" *ngIf="serverError">
+        <i class="fa fa-exclamation-triangle"></i> Server error creating new role
     </div>
 
-    <div class="pull-right">
+    <div class="text-right">
         <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
         <button class="btn btn-primary" (click)="createNewRole()" [disabled]="!newRole.label || !newRole.description">
             Create Role

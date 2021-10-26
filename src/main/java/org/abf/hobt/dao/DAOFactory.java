@@ -17,6 +17,8 @@ public class DAOFactory {
     private static OrganismCriteriaDAO organismCriteriaDAO;
     private static UserRoleDAO userRoleDAO;
     private static RoleDAO roleDAO;
+    private static TierRuleDAO tierRuleDAO;
+    private static PermissionDAO permissionDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -64,5 +66,17 @@ public class DAOFactory {
         if (userRoleDAO == null)
             userRoleDAO = new UserRoleDAO();
         return userRoleDAO;
+    }
+
+    public static TierRuleDAO getTierRuleDAO() {
+        if (tierRuleDAO == null)
+            tierRuleDAO = new TierRuleDAO();
+        return tierRuleDAO;
+    }
+
+    public static PermissionDAO getPermissionDAO() {
+        if (permissionDAO == null)
+            permissionDAO = new PermissionDAO();
+        return permissionDAO;
     }
 }

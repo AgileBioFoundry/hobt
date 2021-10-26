@@ -1,3 +1,5 @@
+import {Role} from "./role.model";
+
 export class User {
     id?: number;
     userId?: string;
@@ -7,7 +9,7 @@ export class User {
     password?: string;
     newPassword?: string;
     sessionId?: string;
-    roles: string[];
+    roles: Role[];
     public creationTime: string;
     public lastUpdateTime: string;
     public lastLoginTime: string;
@@ -17,4 +19,5 @@ export class User {
     allowedToChangePassword: boolean;
     usingTemporaryPassword: boolean;
     type?: string;
+    isAdmin: boolean;
 }

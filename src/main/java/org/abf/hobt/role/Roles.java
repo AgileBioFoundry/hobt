@@ -3,6 +3,7 @@ package org.abf.hobt.role;
 import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.RoleDAO;
+import org.abf.hobt.dao.model.PermissionModel;
 import org.abf.hobt.dao.model.RoleModel;
 import org.abf.hobt.dto.Role;
 
@@ -45,6 +46,20 @@ public class Roles {
     }
 
     public List<Role> list(int offset, int limit, String sort, boolean asc) {
-        return new ArrayList<>();
+        List<RoleModel> roles = this.dao.retrieve(offset, limit);
+        List<Role> results = new ArrayList<>(roles.size());
+        for (RoleModel roleModel : roles) {
+            Role role = roleModel.toDataTransferObject();
+
+            // get permissions
+            List<PermissionModel> list = roleModel.getPermissions();
+            for (PermissionModel permissionModel : list)
+                role.getPermissions().add(permissionModel.toDataTransferObject());
+
+            // get members
+
+            results.add(role);
+        }
+        return results;
     }
 }

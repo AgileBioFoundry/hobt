@@ -11,5 +11,7 @@ export class Host {
     parts: number = 0;
     experiments: number = 0;
     protocols: number = 0;
+
+    created: number = 0;
     updated: number = 0;
 }

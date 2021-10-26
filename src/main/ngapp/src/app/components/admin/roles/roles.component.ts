@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {Publication} from "../../../model/Publication";
 import {CreateRoleModalComponent} from "../modal/create-role-modal/create-role-modal.component";
 import {HttpService} from "../../../service/http.service";
 import {Role} from "../../../model/role.model";
+import {Permission} from "../../../model/permission.model";
+import {Observable, of} from "rxjs";
+import {catchError, debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 
 @Component({
     selector: 'app-roles',
@@ -13,8 +15,16 @@ import {Role} from "../../../model/role.model";
 export class RolesComponent implements OnInit {
 
     roles: Role[];
+    newPermission: Permission;
+    availableResources: string[];
+    searching: boolean;
+    searchFailed: boolean;
 
     constructor(private http: HttpService, private modalService: NgbModal) {
+        this.availableResources = ['All', 'Tiers', 'Organisms'];
+        this.newPermission = new Permission();
+        this.searching = false;
+        this.searchFailed = false;
     }
 
     ngOnInit(): void {
@@ -26,12 +36,51 @@ export class RolesComponent implements OnInit {
     showCreateRoleModal(): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(CreateRoleModalComponent, options);
-        modalRef.result.then((result: Publication) => {
-            console.log(result);
-            // if (result)
-            // this.publications.push(result);
+        modalRef.result.then((result: Role) => {
+            if (result)
+                this.roles.push(result);
         }, error => {
             console.log('error', error);
         });
+    }
+
+    savePermission(role: Role): void {
+        // todo : check if permission already exists and update if necessary
+
+        this.http.post('roles/' + role.id + '/permissions', this.newPermission).subscribe((perm: Permission) => {
+            if (!role.permissions)
+                role.permissions = [];
+
+            role.permissions.push(perm);
+            this.newPermission = new Permission();
+        });
+    }
+
+    searchUsers = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(200),
+            distinctUntilChanged(),
+            // tap(() => this.searching = true),
+            switchMap(term => term.length < 2 ? of([]) :
+                this.http.get('users/autocomplete', {val: term})
+                    .pipe(
+                        // tap(() => this.searchFailed = false),
+                        catchError(() => {
+                            this.searchFailed = true;
+                            return of([]);
+                        }))
+            ),
+            tap(() => this.searching = false)
+        );
+
+    formatter(object: any): string {
+        return '';
+    }
+
+    selectRoleMember(member, role: Role): void {
+        console.log(member);
+        if (!role.members)
+            role.members = [];
+        role.members.push(member.item);
     }
 }

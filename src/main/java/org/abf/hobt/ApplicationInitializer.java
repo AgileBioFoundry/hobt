@@ -123,9 +123,17 @@ public class ApplicationInitializer {
         Properties properties = new Properties();
         properties.load(new FileInputStream(serverPropertiesPath.toFile()));
 
+        Logger.info("Loading server properties from " + serverPropertiesPath);
+
         // get type of data base
         String dbTypeString = properties.getProperty("connectionType");
-        DbType type = DbType.valueOf(dbTypeString.toUpperCase());
+        DbType type;
+        if (StringUtils.isBlank(dbTypeString)) {
+            Logger.error("Property \"connectionType\" not found. Defaulting to value of " + DbType.POSTGRESQL);
+            type = DbType.POSTGRESQL;
+        } else {
+            type = DbType.valueOf(dbTypeString.toUpperCase());
+        }
 
         // get type of database etc
         HibernateConfiguration.initialize(type, properties, dataDirectory);

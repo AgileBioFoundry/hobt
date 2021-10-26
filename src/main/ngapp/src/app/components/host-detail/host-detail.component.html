@@ -7,14 +7,14 @@
             <div class="lead font-italic mt-n2" style="color: #777575">{{host.phylum}}</div>
         </div>
 
-        <div class="float-right btn-toolbar mr-3">
-            <div class="card border-0 shadow-sm ml-5" style="width: 24rem">
-                <div class="card-body">
-                    <strong>Lawrence Berkeley National Lab</strong><br>
-                    Sandia National Lab
-                </div>
-            </div>
-        </div>
+        <!--        <div class="float-right btn-toolbar mr-3">-->
+        <!--            <div class="card border-0 shadow-sm ml-5" style="width: 24rem">-->
+        <!--                <div class="card-body">-->
+        <!--                    <strong>Lawrence Berkeley National Lab</strong><br>-->
+        <!--                    Sandia National Lab-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 
@@ -57,12 +57,10 @@
 
         <li [ngbNavItem]="'parts'">
             <a ngbNavLink class="mr-5 ml-5">PARTS
-                <div class="badge badge-light badge-pill p-1 font-90 text-muted">{{host.parts}}</div>
+<!--                <div class="badge badge-light badge-pill p-1 font-90 text-muted">8</div>-->
             </a>
             <ng-template ngbNavContent>
-                <div class="container-fluid font-90 pt-3">
-                    <i class="text-muted">No information available</i>
-                </div>
+                <app-host-parts [host]="host"></app-host-parts>
             </ng-template>
         </li>
 
@@ -90,16 +88,14 @@
 
 
         <li [ngbNavItem]="'tiers'">
-            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS &nbsp;<app-tier-status [tier]="host.tier"
-                                                                                 class="font-12"></app-tier-status>
-            </a>
+            <a ngbNavLink class="mr-5 ml-5">TIER PROGRESS</a>
             <ng-template ngbNavContent>
                 <app-host-tiers [host]="host"></app-host-tiers>
             </ng-template>
         </li>
     </ul>
 
-    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    <div [ngbNavOutlet]="nav"></div>
 </div>
 
 <app-footer></app-footer>

@@ -1,6 +1,7 @@
 package org.abf.hobt.service.rest;
 
 import org.abf.hobt.dto.Criteria;
+import org.abf.hobt.tier.Rule;
 import org.abf.hobt.tier.Tier;
 import org.abf.hobt.tier.Tiers;
 
@@ -34,6 +35,25 @@ public class TierResource extends RestResource {
     public Response updateTier(@PathParam("id") long id, Tier updatedTier) {
         Tiers tiers = new Tiers();
         return super.respond(tiers.update(id, updatedTier));
+    }
+
+    @GET
+    @Path("/{id}/rules")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getTierRules(@PathParam("id") long tierId) {
+        Tiers tiers = new Tiers();
+        return super.respond(tiers.getRules(tierId));
+    }
+
+    @POST
+    @Path("/{id}/rules")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createRule(@PathParam("id") long tierId, Rule rule) {
+        Tiers tiers = new Tiers();
+        rule = tiers.addRule(tierId, rule);
+        return super.respond(rule);
     }
 
     @GET
@@ -80,5 +100,23 @@ public class TierResource extends RestResource {
     public Response updateTierIndex(@PathParam("id") long tierId, @PathParam("indexId") int indexId) {
         Tiers tiers = new Tiers();
         return super.respond(tiers.updateIndex(tierId, indexId));
+    }
+
+    @GET
+    @Path("/{id}/completed")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCompletedStatus(@PathParam("id") long tierId) {
+        Tiers tiers = new Tiers();
+        return super.respond(false);
+    }
+
+    @PUT
+    @Path("/{id}/completed")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateCompletedStatus(@PathParam("id") long tierId) {
+        Tiers tiers = new Tiers();
+        return super.respond(false);
     }
 }
