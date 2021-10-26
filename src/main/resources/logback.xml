@@ -1,6 +1,6 @@
 <configuration>
 
-    <contextListener class="org.jbei.diva.common.logging.LoggerStartupListener"/>
+    <contextListener class="org.abf.hobt.common.logging.LoggerStartupListener"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_PATH}/hobt.log</file>
