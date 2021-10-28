@@ -35,9 +35,10 @@ public class Accounts {
 
     public void createDefaultAdminAccount() throws ServiceException {
         AccountModel account = dao.getByUserId(DEFAULT_ADMIN_USERID);
+        String newPassword = PasswordUtil.generateRandomToken(32);
+
         if (account != null) {
             Logger.info("Resetting default admin account");
-            String newPassword = PasswordUtil.generateRandomToken(32);
             try {
                 account.setPassword(PasswordUtil.encryptPassword(newPassword, account.getSalt()));
             } catch (UtilityException e) {
@@ -45,35 +46,33 @@ public class Accounts {
             }
             account.setLastUpdateTime(account.getCreationTime());
             dao.update(account);
+        } else {
 
-            Logger.info("NEW HOBT ADMIN PASSWORD");
-            Logger.info("************************");
-            Logger.info(newPassword);
-            Logger.info("************************");
-            return;
+            String adminUserId = DEFAULT_ADMIN_USERID.toLowerCase();
+            Logger.info("Creating Administrator Account");
+            account = new AccountModel();
+            account.setCreationTime(new Date(System.currentTimeMillis()));
+            account.setLastUpdateTime(account.getCreationTime());
+            account.setFirstName(adminUserId);
+            account.setLastName("");
+            account.setUserId(adminUserId);
+            account.setDisabled(false);
+            account.setEmail(adminUserId);
+            account.setSalt(PasswordUtil.generateSalt());
+
+            try {
+                account.setPassword(PasswordUtil.encryptPassword(newPassword, account.getSalt()));
+            } catch (UtilityException ue) {
+                throw new ServiceException("Exception encrypting password", ue);
+            }
+
+            dao.create(account);
         }
 
-        String adminUserId = DEFAULT_ADMIN_USERID.toLowerCase();
-        Logger.info("Creating Administrator Account");
-        account = new AccountModel();
-//        account.getRoles().add(AccountRole.ADMINISTRATOR);
-        account.setCreationTime(new Date(System.currentTimeMillis()));
-        account.setLastUpdateTime(account.getCreationTime());
-        account.setFirstName("Administrator");
-        account.setLastName("");
-        account.setUserId(adminUserId);
-        account.setDisabled(false);
-        account.setEmail("administrator");
-        account.setSalt(PasswordUtil.generateSalt());
-        account.setUsingTempPassword(true); // to force the user to update the admin password on login
-
-        try {
-            account.setPassword(PasswordUtil.encryptPassword(adminUserId, account.getSalt()));
-        } catch (UtilityException ue) {
-            throw new ServiceException("Exception encrypting password", ue);
-        }
-
-        dao.create(account);
+        Logger.info("NEW HOBT ADMIN PASSWORD");
+        Logger.info("************************");
+        Logger.info(newPassword);
+        Logger.info("************************");
     }
 
     public Account create(Account account, boolean createPassword) {
