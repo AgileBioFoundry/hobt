@@ -5,7 +5,6 @@ import org.abf.hobt.service.ice.IDataTransferObject;
 public class Permission implements IDataTransferObject {
 
     private long id;
-    private Role role;
     private String resource;
     private boolean isRead;
     private boolean isWrite;
@@ -16,14 +15,6 @@ public class Permission implements IDataTransferObject {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public boolean isRead() {

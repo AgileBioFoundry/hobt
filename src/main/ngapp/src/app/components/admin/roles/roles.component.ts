@@ -6,6 +6,7 @@ import {Role} from "../../../model/role.model";
 import {Permission} from "../../../model/permission.model";
 import {Observable, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
+import {PermissionService} from "../../../service/permission.service";
 
 @Component({
     selector: 'app-roles',
@@ -20,8 +21,8 @@ export class RolesComponent implements OnInit {
     searching: boolean;
     searchFailed: boolean;
 
-    constructor(private http: HttpService, private modalService: NgbModal) {
-        this.availableResources = ['All', 'Tiers', 'Organisms'];
+    constructor(private http: HttpService, private modalService: NgbModal, private permissions: PermissionService) {
+        this.availableResources = ['All', this.permissions.TIERS, this.permissions.ORGANISMS];
         this.newPermission = new Permission();
         this.searching = false;
         this.searchFailed = false;

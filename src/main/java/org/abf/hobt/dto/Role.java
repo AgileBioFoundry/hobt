@@ -10,7 +10,7 @@ public class Role implements IDataTransferObject {
     private long id;
     private String label;
     private String description;
-    private List<Permission> permissions = new ArrayList<>();
+    private final List<Permission> permissions = new ArrayList<>();
 
     public long getId() {
         return id;

@@ -25,6 +25,7 @@ public class Account implements IDataTransferObject {
     private boolean isDisabled;
     private int newMessageCount;
     private final List<Role> roles;
+    private final List<Permission> permissions = new ArrayList<>();
 
     public Account() {
         institution = "";
@@ -174,5 +175,9 @@ public class Account implements IDataTransferObject {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public List<Permission> getPermissions() {
+        return this.permissions;
     }
 }
