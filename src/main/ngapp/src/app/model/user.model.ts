@@ -1,4 +1,5 @@
 import {Role} from "./role.model";
+import {Permission} from "./permission.model";
 
 export class User {
     id?: number;
@@ -10,6 +11,7 @@ export class User {
     newPassword?: string;
     sessionId?: string;
     roles: Role[];
+    permissions: Permission[];
     public creationTime: string;
     public lastUpdateTime: string;
     public lastLoginTime: string;

@@ -2,8 +2,8 @@
 
 <div class="container-fluid pt-2 pb-4" style="background-color: #f5f7f8">
 
-    <div class="pull-right">
-        <div>
+    <div class="float-right">
+        <div class="btn-group pr-3">
             <small ngbDropdown>
                 <span class="text-muted">Sort by:</span>&nbsp;
                 <span ngbDropdownToggle class="cursor-pointer">
@@ -23,12 +23,14 @@
             </small>
         </div>
 
-        <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': gridMode}" (click)="gridMode = true"><i
-            class="fa fa-th"></i>
-        </button>
-        <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': !gridMode}" (click)="gridMode = false"><i
-            class="fa fa-bars"></i>
-        </button>
+        <div class="btn-group">
+            <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': gridMode}" (click)="gridMode = true">
+                <i class="fa fa-th"></i>
+            </button>
+            <button class="btn" [ngClass]="{'border bg-white pt-1 pb-1 pr-2 pl-2': !gridMode}"
+                    (click)="gridMode = false"><i class="fa fa-bars"></i>
+            </button>
+        </div>
     </div>
 
     <br>
@@ -85,7 +87,7 @@
         </div>
 
         <div class="card ml-4 mb-4 border-0 shadow-sm opacity-hover" style="width: 28rem"
-             (click)="showCreateOrganism()" *ngIf="!showCreateNewHost">
+             (click)="showCreateOrganism()" *ngIf="!showCreateNewHost && canCreateNewHost()">
             <div class="card-body pb-1 text-center">
                 <i class="fa fa-fw fa-plus text-success" style="font-size: 120px"></i>
                 <br>

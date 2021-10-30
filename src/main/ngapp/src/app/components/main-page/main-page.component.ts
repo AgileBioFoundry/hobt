@@ -3,6 +3,7 @@ import {Host} from "../../model/host.model";
 import {Router} from "@angular/router";
 import {HttpService} from "../../service/http.service";
 import {Tier} from "../../model/tier.model";
+import {PermissionService} from "../../service/permission.service";
 
 @Component({
     selector: 'app-main-page',
@@ -18,7 +19,7 @@ export class MainPageComponent implements OnInit {
     showCreateNewHost = false;
     availableTiers: Tier[];
 
-    constructor(private router: Router, private http: HttpService) {
+    constructor(private router: Router, private http: HttpService, private permissionService: PermissionService) {
         this.hosts = [];
         this.newHost = new Host();
     }
@@ -69,6 +70,10 @@ export class MainPageComponent implements OnInit {
     showCreateOrganism(): void {
         this.showCreateNewHost = true;
         this.getTiers();
+    }
+
+    canCreateNewHost(): boolean {
+        return this.permissionService.canWrite(this.permissionService.ORGANISMS);
     }
 
     // hosts = [

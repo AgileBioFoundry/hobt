@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {HttpService} from "../../service/http.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Permission} from "../../model/permission.model";
+import {PermissionService} from "../../service/permission.service";
 
 @Component({
     selector: 'app-login',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
     rememberUserKey = 'rememberUser';
 
     constructor(private http: HttpService, private router: Router, private userService: UserService,
-                public activeModal: NgbActiveModal) {
+                public activeModal: NgbActiveModal, private permissionService: PermissionService) {
         this.validation = {validId: true, validPassword: true, invalidPassword: false};
     }
 
@@ -28,11 +30,10 @@ export class LoginComponent implements OnInit {
         // check if the "remember me" setting is enabled
         this.remember = (localStorage.getItem(this.rememberUserKey) !== null);
 
-        // verify if sessionId is valid when visiting the login page and
-        // redirect user to main page if so
+        // verify if sessionId is valid when visiting the login page and redirect user to main page if so
         this.loggedInUser = this.userService.getUser();
         if (this.loggedInUser && this.loggedInUser.sessionId) {
-            this.http.get('accesstoken').subscribe(() => {
+            this.http.get('accesstokens').subscribe(() => {
                 // close modal and send information about logged in user to header
                 this.activeModal.close(this.loggedInUser);
             }, error => {
@@ -50,8 +51,6 @@ export class LoginComponent implements OnInit {
         this.remember = !this.remember;
         if (this.remember) {
             localStorage.setItem(this.rememberUserKey, 'yes');
-            console.log('set local storage');
-            console.log(localStorage.getItem(this.rememberUserKey));
         } else {
             localStorage.setItem(this.rememberUserKey, null);
         }
@@ -71,24 +70,18 @@ export class LoginComponent implements OnInit {
             console.log(result);
             this.processing = false;
 
-            // check if password needs to be created and re-direct if so
-            // if (result.usingTemporaryPassword) {
-            //     this.userService.setUser(result);
-            //     this.router.navigate(['/resetPassword']);
-            //     return;
-            // }
-
             // save to session
             this.loggedInUser = result;
+
+            // check for explicit permissions only if this user is not an administrator
+            if (!this.loggedInUser.isAdmin) {
+                this.http.get('users' + this.loggedInUser.id + '/permissions').subscribe((permissions: Permission[]) => {
+                    this.permissionService.setPermissions(permissions);
+                });
+            }
+
             if (result && result.sessionId) {
                 this.userService.setUser(result);
-
-                // redirect
-                // let redirectUrl = this.userService.getLoginRedirect();
-                // if (redirectUrl === '/register' || redirectUrl === '/forgotPassword' || redirectUrl === '/login' || !redirectUrl) {
-                //     redirectUrl = '/';
-                // }
-                // this.router.navigate([redirectUrl]);
                 this.activeModal.close(this.loggedInUser);
             }
         }, error => {
