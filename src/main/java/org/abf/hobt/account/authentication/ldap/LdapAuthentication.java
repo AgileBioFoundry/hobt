@@ -1,5 +1,6 @@
 package org.abf.hobt.account.authentication.ldap;
 
+import org.abf.hobt.IceApiClient;
 import org.abf.hobt.account.Accounts;
 import org.abf.hobt.account.authentication.AuthenticationException;
 import org.abf.hobt.account.authentication.IAuthentication;
@@ -59,7 +60,16 @@ public class LdapAuthentication implements IAuthentication {
                 checkCreateAccount(user);
                 return true;
             } catch (AuthenticationException ae) {
-                Logger.warn("Authentication failed for user " + loginId);
+                Logger.warn("Authentication failed for user " + loginId + ". checking with ICE");
+                // attempting to validate with ICE
+                Account user = IceApiClient.getInstance().getICEAccessToken(loginId, password);
+                if (user != null) {
+                    Logger.info("Validated " + loginId + " with ICE");
+                    checkCreateAccount(user);
+                    return true;
+                }
+
+                Logger.info("Could not validate " + loginId + " with ICE");
                 return false;
             }
         } else {
