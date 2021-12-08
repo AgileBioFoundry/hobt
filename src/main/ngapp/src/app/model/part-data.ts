@@ -1,4 +1,5 @@
 export class PartData {
+    type: string;
     recordId: string;
     name: string;
     shortDescription: string;
