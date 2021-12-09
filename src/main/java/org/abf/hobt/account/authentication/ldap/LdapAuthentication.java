@@ -1,6 +1,5 @@
 package org.abf.hobt.account.authentication.ldap;
 
-import org.abf.hobt.IceApiClient;
 import org.abf.hobt.account.Accounts;
 import org.abf.hobt.account.authentication.AuthenticationException;
 import org.abf.hobt.account.authentication.IAuthentication;
@@ -53,7 +52,8 @@ public class LdapAuthentication implements IAuthentication {
                 loginId = loginId.substring(0, idx);
         }
 
-        if (isLDAPUser(loginId)) {
+        // skip the default admin userid and non-ldap users
+        if (!Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(loginId) && isLDAPUser(loginId)) {
             try {
                 Account user = authenticateWithLDAP(loginId, password);
                 user.setUserId(loginId);
@@ -61,15 +61,6 @@ public class LdapAuthentication implements IAuthentication {
                 return true;
             } catch (AuthenticationException ae) {
                 Logger.warn("Authentication failed for user " + loginId + ". checking with ICE");
-                // attempting to validate with ICE
-                Account user = IceApiClient.getInstance().getICEAccessToken(loginId, password);
-                if (user != null) {
-                    Logger.info("Validated " + loginId + " with ICE");
-                    checkCreateAccount(user);
-                    return true;
-                }
-
-                Logger.info("Could not validate " + loginId + " with ICE");
                 return false;
             }
         } else {
