@@ -8,8 +8,9 @@
         <table class="table table-hover table-bordered border-bottom-0 font-90" *ngIf="results && results.length">
             <thead class="font-weight-bold text-secondary">
             <tr>
-                <td style="width: 180px">Name</td>
-                <td style="width: 200px">Owner</td>
+                <td style="width: 100px">Type</td>
+                <td>Name</td>
+                <td style="width: 300px">Owner</td>
                 <td style="width: 180px">PartID</td>
                 <td style="width: 120px">BioSafety</td>
                 <td style="width: 280px">Created</td>
@@ -18,14 +19,14 @@
 
             <tbody>
             <tr *ngFor="let result of results">
-                <td style="width: 180px">{{result.entryInfo.name}}<br>
+                <td style="width: 100px" class="font-weight-bold small text-secondary">{{result.entryInfo.type}}</td>
+                <td class="w-25 text-truncate">{{result.entryInfo.name}}<br>
                     <div class="small text-muted">{{result.entryInfo.shortDescription}}</div>
                 </td>
-                <td style="width: 200px">{{result.entryInfo.owner}}</td>
+                <td style="width: 300px" class="text-truncate">{{result.entryInfo.owner}}</td>
                 <td style="width: 180px"><a href="#" target="_blank">{{result.entryInfo.partId}}</a></td>
-                <td style="width: 140px">{{result.entryInfo.bioSafetyLevel}}</td>
+                <td style="width: 120px">Level {{result.entryInfo.bioSafetyLevel}}</td>
                 <td style="width: 280px">{{result.entryInfo.creationTime | date: 'MMM d, y'}}</td>
-                <!--                <td>{{result.entryInfo | json}}</td>-->
             </tr>
             </tbody>
         </table>

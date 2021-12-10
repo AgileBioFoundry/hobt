@@ -1,6 +1,7 @@
 package org.abf.hobt;
 
 import org.abf.hobt.common.logging.Logger;
+import org.abf.hobt.dto.Account;
 import org.abf.hobt.service.rest.ArrayDataJSONHandler;
 import org.abf.hobt.service.rest.DataTransferObjectJSONHandler;
 import org.glassfish.jersey.client.ClientConfig;
@@ -23,7 +24,7 @@ public class IceApiClient {
     private static final IceApiClient INSTANCE = new IceApiClient();
     private static final String API_KEY_TOKEN = "X-ICE-API-Token";
     private static final String API_KEY_CLIENT_ID = "X-ICE-API-Token-Client";
-//    private static final String API_KEY_USER = "X-ICE-API-Token-User";
+    //    private static final String API_KEY_USER = "X-ICE-API-Token-User";
     private String url;
     private String apiClientToken;
     private String apiClientId;
@@ -56,8 +57,8 @@ public class IceApiClient {
 
     private Invocation.Builder getInvocationHeaders(WebTarget target) {
         return target.request(MediaType.APPLICATION_JSON_TYPE)
-                .header(API_KEY_TOKEN, apiClientToken)
-                .header(API_KEY_CLIENT_ID, apiClientId);
+            .header(API_KEY_TOKEN, apiClientToken)
+            .header(API_KEY_CLIENT_ID, apiClientId);
     }
 
     public <T> T get(String path, Class<T> clazz, Map<String, String> parameters) {
@@ -75,6 +76,18 @@ public class IceApiClient {
             Logger.error(e);
             return null;
         }
+    }
+
+    // sends a post to ICE to validate token
+    public Account getICEAccessToken(String userId, String password) {
+        WebTarget target = client.target("https://" + url).path("/accesstokens");
+        Account account = new Account();
+        account.setEmail(userId);
+        account.setPassword(password);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(account, MediaType.APPLICATION_JSON_TYPE));
+        if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity())
+            return response.readEntity(Account.class);
+        return null;
     }
 
     public <T> T post(String resourcePath, Object object, Class<T> responseClass) {

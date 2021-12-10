@@ -3,12 +3,17 @@ package org.abf.hobt.host;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.service.ice.IceParts;
+import org.abf.hobt.service.ice.entry.EntryType;
 import org.abf.hobt.service.ice.search.SearchQuery;
 import org.abf.hobt.service.ice.search.SearchResults;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class HostParts {
 
-    public SearchResults get(long orgId) {
+    public SearchResults get(long orgId, boolean strainsOnly) {
 
         OrganismModel organismModel = DAOFactory.getOrganismDAO().get(orgId);
         SearchQuery searchQuery = new SearchQuery();
@@ -17,6 +22,13 @@ public class HostParts {
             searchQuery.setQueryString(organismModel.getName());
         }
 
+        ArrayList<EntryType> types;
+        if (strainsOnly) {
+            types = new ArrayList<>(List.of(EntryType.STRAIN));
+        } else {
+            types = new ArrayList<>(Arrays.asList(EntryType.STRAIN, EntryType.PLASMID, EntryType.PART, EntryType.ARABIDOPSIS));
+        }
+        searchQuery.setEntryTypes(types);
         IceParts iceParts = new IceParts();
         return iceParts.search(searchQuery);
     }

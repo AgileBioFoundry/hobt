@@ -12,6 +12,8 @@ import {Paging} from "../../../model/paging.model";
 export class HostPartsComponent implements OnInit {
 
     @Input() host: Host;
+    @Input() strains: boolean;
+
     loadingParts: boolean;
     results: SearchResult[];
     paging: Paging;
@@ -20,15 +22,18 @@ export class HostPartsComponent implements OnInit {
     };
 
     ngOnInit(): void {
+
         this.loadingParts = true;
         this.paging = new Paging();
+        let url = 'hosts/' + this.host.id + '/parts';
+        if (this.strains)
+            url += "?strainsOnly=true"
+        console.log(this.strains, url);
 
-        this.http.get('hosts/' + this.host.id + '/parts').subscribe((result: any) => {
+        this.http.get(url).subscribe((result: any) => {
             this.loadingParts = false;
             this.results = result.results;
             this.paging.available = result.resultCount;
-
-            console.log(result);
         }, error => {
             this.loadingParts = false;
         })

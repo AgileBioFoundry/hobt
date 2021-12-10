@@ -51,9 +51,10 @@ public class HostResource extends RestResource {
     @Path("/{id}/parts")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getHostParts(@PathParam("id") long organismId) {
+    public Response getHostParts(@DefaultValue("false") @QueryParam("strainsOnly") boolean strainsOnly,
+                                 @PathParam("id") long organismId) {
         HostParts parts = new HostParts();
-        return super.respond(parts.get(organismId));
+        return super.respond(parts.get(organismId, strainsOnly));
     }
 
     @POST
