@@ -17,12 +17,12 @@
                     <div class="text-muted small">({{user.email}})</div>
                 </td>
                 <td>
-                    <span class="badge badge-secondary p-2" *ngFor="let role of user.roles">{{role.label}} <i
+                    <span class="badge badge-secondary p-2 ml-2" *ngFor="let role of user.roles">{{role.label}} <i
                         class="fa fa-fw fa-times opacity-hover" (click)="showConfirmationModal(user)"></i> </span>
 
                     <button class="btn btn-sm btn-link" (click)="showAddRoleModal(user)"><i
                         class="fa fa-fw fa-plus"></i>
-                        Add New Role
+                        Add Role
                     </button>
                 </td>
                 <td></td>
