@@ -7,7 +7,6 @@ import org.abf.hobt.dao.hibernate.RoleDAO;
 import org.abf.hobt.dao.model.AccountModel;
 import org.abf.hobt.dao.model.PermissionModel;
 import org.abf.hobt.dao.model.RoleModel;
-import org.abf.hobt.dao.model.UserRoleModel;
 import org.abf.hobt.dto.Permission;
 
 import java.util.ArrayList;
@@ -52,17 +51,12 @@ public class AccountRoles {
             throw new AuthorizationException("No permissions to retrieve user permissions");
 
         List<Permission> permissions = new ArrayList<>();
-        List<UserRoleModel> results = DAOFactory.getUserRoleDAO().getByUser(accountModel.getUserId());
-        for (UserRoleModel userRoleModel : results) {
-            if (userRoleModel.getRole() == null)
-                continue;
-
-            List<PermissionModel> permissionModels = userRoleModel.getRole().getPermissions();
-            if (permissionModels == null || permissionModels.isEmpty())
-                continue;
-
-            for (PermissionModel permissionModel : permissionModels) {
-                permissions.add(permissionModel.toDataTransferObject());
+        if (accountModel.getRoles() != null) {
+            for (RoleModel roleModel : accountModel.getRoles()) {
+                List<PermissionModel> permissionModels = roleModel.getPermissions();
+                for (PermissionModel permissionModel : permissionModels) {
+                    permissions.add(permissionModel.toDataTransferObject());
+                }
             }
         }
 

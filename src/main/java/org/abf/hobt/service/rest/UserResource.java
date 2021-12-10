@@ -129,8 +129,8 @@ public class UserResource extends RestResource {
         String userId = getUserId();
         Logger.info(userId + ": removing role " + role + " from account " + id);
         Accounts accounts = new Accounts();
-        boolean success = false; //accounts.removeRole(id, role);
-        return respond(success);
+//        boolean success = accounts.removeRole(id, role);
+        return respond(false);
     }
 
     @GET

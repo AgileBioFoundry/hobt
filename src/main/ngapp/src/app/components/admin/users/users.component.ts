@@ -4,6 +4,7 @@ import {Paging} from "../../../model/paging.model";
 import {User} from "../../../model/user.model";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {AddRoleComponent} from "./add-role/add-role.component";
+import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action.component";
 
 @Component({
     selector: 'app-users',
@@ -20,7 +21,7 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.fetchUsers();
+        this.pageUsers(1);
     }
 
     showAddRoleModal(user: User): void {
@@ -29,12 +30,27 @@ export class UsersComponent implements OnInit {
         modalRef.componentInstance.user = user;
     }
 
-    fetchUsers(): void {
+    showConfirmationModal(user: User): void {
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const modalRef = this.modalService.open(ConfirmActionComponent, options);
+    }
+
+    // fetchUsers(): void {
+    //     this.http.get('users', this.paging).subscribe((result: any) => {
+    //         console.log(result);
+    //         this.users = result.requested;
+    //         this.paging.available = result.available;
+    //     }, error => {
+    //         console.log(error);
+    //     });
+    // }
+
+    pageUsers(page: number): void {
+        this.paging.start = ((page - 1) * this.paging.limit);
+        // this.loadingAdminAccountsPage = true;
         this.http.get('users', this.paging).subscribe((result: any) => {
             this.users = result.requested;
             this.paging.available = result.available;
-        }, error => {
-            console.log(error);
         });
-    }
+    };
 }

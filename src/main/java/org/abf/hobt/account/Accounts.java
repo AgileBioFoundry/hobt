@@ -310,15 +310,6 @@ public class Accounts {
         return transfer;
     }
 
-    public Account getAccount(String userId) {
-        AccountModel account = dao.getByUserId(userId.toLowerCase());
-        if (account == null)
-            return null;
-        Account transfer = account.toDataTransferObject();
-//        transfer.setAllowedToChangePassword(canChangePassword(userId));
-        return transfer;
-    }
-
     public boolean accountExists(String userId) {
         AccountModel account = retrieveAccountByUserId(userId);
         return account != null;
