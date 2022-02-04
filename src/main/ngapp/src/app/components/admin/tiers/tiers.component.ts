@@ -13,12 +13,15 @@ export class TiersComponent implements OnInit {
 
     newTier: Tier;
     newCriteria: TierCriteria;
+    editCriteria: TierCriteria;
     newRule: TierRule;
     newTierIndex: number;
 
     showCreateTier: boolean;
     selectedTier: Tier;
     tiers: Array<Tier>;
+
+    editIndex: number;
 
     // validation
     newTierLabelInvalid: boolean;
@@ -144,5 +147,27 @@ export class TiersComponent implements OnInit {
 
     tierIndexChange(): void {
         this.newTier.index = this.selectedTier.index + this.newTierIndex;
+    }
+
+    submitCriteriaUpdate(tier: Tier, index: number, criteria: TierCriteria): void {
+        this.http.put('tiers/' + tier.id + '/criteria/' + this.editCriteria.id, this.editCriteria)
+            .subscribe((result: TierCriteria) => {
+                if (!result)
+                    return;
+
+                if (result.id === criteria.id)
+                    criteria = result;
+                this.editIndex = undefined;
+            })
+    }
+
+    updateCriteria(index: number, criteria: TierCriteria): void {
+        this.editIndex = index;
+        this.editCriteria = criteria;
+    }
+
+    cancelUpdateCriteria(): void {
+        this.editCriteria = undefined;
+        this.editIndex = -1;
     }
 }

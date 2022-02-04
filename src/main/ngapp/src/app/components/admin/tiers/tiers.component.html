@@ -135,26 +135,29 @@
                     </form>
                 </div>
 
-
                 <!-- list of available criteria for tier -->
                 <ul class="list-group list-group-flush font-90 p-3">
-                    <li class="list-group-item" *ngFor="let criteria of tier.criteria">
-                        <div class="float-right criteria-edit">
-                            <i class="fa fa-fw fa-pencil text-muted opacity-hover" ngbTooltip="Edit"></i> <i
-                            class="fa fa-fw fa-trash-o text-muted opacity-hover" ngbTooltip="Delete"></i></div>
-                        <div class="font-weight-bold">{{criteria.label}}</div>
-                        <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
+                    <li class="list-group-item" *ngFor="let criteria of tier.criteria; let index = index">
 
-                        <form name="editCriteriaForm" style="display: none">
+                        <div [ngClass]="{'d-none': editIndex === index}">
+                            <div class="float-right">
+                                <i class="fa fa-fw fa-pencil text-muted opacity-hover" ngbTooltip="Edit"
+                                   (click)="updateCriteria(index, criteria)"></i> <i
+                                class="fa fa-fw fa-trash-o text-muted opacity-hover" ngbTooltip="Delete"></i></div>
+                            <div class="font-weight-bold">{{criteria.label}}</div>
+                            <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
+                        </div>
+
+                        <form name="editCriteriaForm" *ngIf="editIndex === index">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
                                     <label for="tierCriteriaLabel">Label</label>
                                     <input type="text" class="form-control form-control-sm"
-                                           [ngClass]="{'is-invalid': newCriteria.labelInvalid}"
-                                           placeholder="Enter unique label for criteria"
-                                           (ngModelChange)="newCriteria.labelInvalid = false"
+                                           [ngClass]="{'is-invalid': editCriteria.labelInvalid}"
+                                           placeholder="Enter unique label for criteria9"
+                                           (ngModelChange)="editCriteria.labelInvalid = false"
                                            name="tierCriteriaLabel"
-                                           [(ngModel)]="newCriteria.label">
+                                           [(ngModel)]="editCriteria.label">
                                     <div class="invalid-feedback">
                                         Please enter a unique (to this tier) criteria label
                                     </div>
@@ -163,11 +166,11 @@
                                 <div class="form-group col-md-8">
                                     <label for="tierCriteriaDescription">Description</label>
                                     <textarea class="form-control form-control-sm"
-                                              [ngClass]="{'is-invalid': newCriteria.detailsInvalid}"
+                                              [ngClass]="{'is-invalid': editCriteria.detailsInvalid}"
                                               name="tierCriteriaDescription" rows="3"
-                                              (ngModelChange)="newCriteria.detailsInvalid = false"
+                                              (ngModelChange)="editCriteria.detailsInvalid = false"
                                               placeholder="Enter description for criteria"
-                                              [(ngModel)]="newCriteria.description"></textarea>
+                                              [(ngModel)]="editCriteria.description"></textarea>
                                     <div class="invalid-feedback">
                                         Please enter a description for this criteria
                                     </div>
@@ -175,11 +178,12 @@
                             </div>
 
                             <div class="mt-2">
-                                <button class="btn btn-sm btn-link" (click)="cancelNewCriteria(tier)">Cancel</button>
+                                <button class="btn btn-sm btn-link" (click)="cancelUpdateCriteria()">Cancel</button>
                                 &nbsp;
-                                <button class="btn btn-sm btn-primary" (click)="addNewCriteria(tier)"
-                                        [disabled]="!newCriteria.label || !newCriteria.description">
-                                    Create Criteria
+                                <button class="btn btn-sm btn-primary"
+                                        (click)="submitCriteriaUpdate(tier, index, criteria)"
+                                        [disabled]="!editCriteria.label || !editCriteria.description">
+                                    Update
                                 </button>
                             </div>
 
@@ -189,13 +193,9 @@
 
             </td>
 
-
             <td class="w-25 p-0">
-
                 <div class="p-4 bg-light-blue" *ngIf="tier.showAddRules">
-
                     <form name="createSpecificationForm">
-
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <select class="form-control col-sm-7 font-90" id="specificationType"
