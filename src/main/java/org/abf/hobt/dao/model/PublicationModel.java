@@ -21,9 +21,13 @@ public class PublicationModel implements IDataModel {
     @Column(name = "link", nullable = false)
     private String link;
 
+    @Column(name = "privileged")
+    private Boolean privileged = Boolean.FALSE;
+
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "created")
     private Date created;
+
 
     @Override
     public Publication toDataTransferObject() {

@@ -27,6 +27,7 @@ import {AdminComponent} from "./components/admin/admin.component";
 import {AddRoleComponent} from './components/admin/users/add-role/add-role.component';
 import {HostPartsComponent} from './components/host-detail/host-parts/host-parts.component';
 import {ConfirmActionComponent} from './components/common/confirm-action/confirm-action.component';
+import {PublicationsComponent} from './components/host-detail/publications/publications.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import {ConfirmActionComponent} from './components/common/confirm-action/confirm
         AdminComponent,
         AddRoleComponent,
         HostPartsComponent,
-        ConfirmActionComponent
+        ConfirmActionComponent,
+        PublicationsComponent
     ],
     imports: [
         BrowserModule,

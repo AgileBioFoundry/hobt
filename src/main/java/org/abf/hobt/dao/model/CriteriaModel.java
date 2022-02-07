@@ -20,6 +20,9 @@ public class CriteriaModel implements IDataModel {
     @Column(name = "description", length = 1024)
     private String description;
 
+    @OneToOne(mappedBy = "criteria")
+    private OrganismCriteriaModel organismCriteria;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tier_id")
     private TierModel tier;
@@ -50,6 +53,14 @@ public class CriteriaModel implements IDataModel {
 
     public void setTier(TierModel tier) {
         this.tier = tier;
+    }
+
+    public OrganismCriteriaModel getOrganismCriteria() {
+        return organismCriteria;
+    }
+
+    public void setOrganismCriteria(OrganismCriteriaModel organismCriteria) {
+        this.organismCriteria = organismCriteria;
     }
 
     @Override

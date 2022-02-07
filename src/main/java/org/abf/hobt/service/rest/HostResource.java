@@ -4,6 +4,8 @@ import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.host.HostParts;
 import org.abf.hobt.host.Hosts;
+import org.abf.hobt.host.publication.HostPublications;
+import org.abf.hobt.host.publication.Publication;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -75,9 +77,35 @@ public class HostResource extends RestResource {
         return super.respond(true);
     }
 
+    // TODO : mark tier completed  PUT "{id}/criterias/{cid}/completed
+
     @DELETE
     @Path("/{id}")
     public Response deleteHost(@PathParam("id") long orgId) {
         return super.respond(false);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/publications")
+    public Response getHostPublications(
+        @PathParam("id") long organismId,
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        Hosts hosts = new Hosts();
+        return super.respond(hosts.retrieveCriteria(organismId));
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/publications")
+    public Response createHostPublication(@PathParam("id") long organismId, Publication publication) {
+        String userId = getUserId();
+        HostPublications hostPublications = new HostPublications(organismId, userId);
+        return super.respond(hostPublications.create(publication));
     }
 }

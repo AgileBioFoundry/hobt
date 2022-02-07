@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../../../../service/http.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Publication} from "../../../../model/Publication";
+import {Publication} from "../../../../model/publication";
 
 @Component({
     selector: 'app-add-permission',
