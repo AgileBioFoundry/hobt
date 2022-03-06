@@ -5,10 +5,10 @@ import {Publication} from "../../../../model/publication";
 
 @Component({
     selector: 'app-add-permission',
-    templateUrl: './add-permission.component.html',
-    styleUrls: ['./add-permission.component.css']
+    templateUrl: './add-publication.component.html',
+    styleUrls: ['./add-publication.component.css']
 })
-export class AddPermissionComponent implements OnInit {
+export class AddPublicationComponent implements OnInit {
 
     isUpdate: false;
     publication: Publication;

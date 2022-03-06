@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Host} from "../../../model/host.model";
 import {HttpService} from "../../../service/http.service";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {AddPermissionComponent} from "../modals/add-permission/add-permission.component";
+import {AddPublicationComponent} from "../modals/add-publication/add-publication.component";
 import {Publication} from "../../../model/publication";
 import {Result} from "../../../model/result";
 import {Paging} from "../../../model/paging.model";
@@ -35,7 +35,7 @@ export class PublicationsComponent implements OnInit {
 
     showPublicationAddModal(): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
-        const modalRef = this.modalService.open(AddPermissionComponent, options);
+        const modalRef = this.modalService.open(AddPublicationComponent, options);
         modalRef.result.then((result: Publication) => {
             if (result)
                 this.publications.push(result);

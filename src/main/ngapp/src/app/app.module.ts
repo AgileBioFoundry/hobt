@@ -13,7 +13,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {CriteriaComponent} from './components/host-detail/criteria/criteria.component';
 import {HostDetailResolver} from "./components/host-detail/host-detail.resolver";
-import {AddPermissionComponent} from './components/host-detail/modals/add-permission/add-permission.component';
+import {AddPublicationComponent} from './components/host-detail/modals/add-publication/add-publication.component';
 import {AddAttributeComponent} from './components/host-detail/modals/add-attribute/add-attribute.component';
 import {SettingsComponent} from './components/admin/settings/settings.component';
 import {UsersComponent} from './components/admin/users/users.component';
@@ -38,7 +38,7 @@ import {PublicationsComponent} from './components/host-detail/publications/publi
         HostDetailComponent,
         MainPageComponent,
         CriteriaComponent,
-        AddPermissionComponent,
+        AddPublicationComponent,
         AddAttributeComponent,
         SettingsComponent,
         UsersComponent,
