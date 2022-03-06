@@ -1,16 +1,16 @@
 {
-  "name": "hobt",
-  "version": "3.0.2",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
-  "private": true,
-  "dependencies": {
+    "name": "hobt",
+    "version": "3.0.3",
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e"
+    },
+    "private": true,
+    "dependencies": {
       "@angular/animations": "^13.2.1",
       "@angular/cdk": "^13.2.1",
       "@angular/common": "^13.2.1",
