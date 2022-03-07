@@ -28,7 +28,6 @@ export class HostPartsComponent implements OnInit {
         let url = 'hosts/' + this.host.id + '/parts';
         if (this.strains)
             url += "?strainsOnly=true"
-        console.log(this.strains, url);
 
         this.http.get(url).subscribe((result: any) => {
             this.loadingParts = false;
