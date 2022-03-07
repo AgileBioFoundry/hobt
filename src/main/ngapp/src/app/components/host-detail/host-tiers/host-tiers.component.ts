@@ -28,6 +28,7 @@ export class HostTiersComponent implements OnInit {
             this.tiers = tiers;
 
             this.http.get('hosts/' + this.host.id + '/criterias/').subscribe((result: TierCriteria[]) => {
+                console.log(result);
 
                 for (const tier of this.tiers) {
                     for (const criteria of tier.criteria) {

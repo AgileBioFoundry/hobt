@@ -29,6 +29,10 @@ public class OrganismModel implements IDataModel {
     @Column(name = "updated")
     private Date lastUpdateTime;
 
+    @ManyToOne
+    @JoinColumn(name = "organism_criteria_id")
+    private OrganismCriteriaModel organismCriteria;
+
     @OneToOne
     @JoinColumn(name = "tier_id")
     private TierModel tier;
@@ -75,6 +79,14 @@ public class OrganismModel implements IDataModel {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public OrganismCriteriaModel getOrganismCriteria() {
+        return organismCriteria;
+    }
+
+    public void setOrganismCriteria(OrganismCriteriaModel organismCriteria) {
+        this.organismCriteria = organismCriteria;
     }
 
     @Override

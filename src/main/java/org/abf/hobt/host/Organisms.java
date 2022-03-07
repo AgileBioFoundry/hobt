@@ -10,8 +10,8 @@ import org.abf.hobt.dao.model.CriteriaModel;
 import org.abf.hobt.dao.model.OrganismCriteriaModel;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.dao.model.TierModel;
-import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
+import org.abf.hobt.dto.OrganismCriteria;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,15 +19,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * TODO: rename to Organisms?
- *
  * @author Hector Plahar
  */
-public class Hosts {
+public class Organisms {
 
     private final OrganismDAO dao;
 
-    public Hosts() {
+    public Organisms() {
         this.dao = DAOFactory.getOrganismDAO();
     }
 
@@ -107,17 +105,17 @@ public class Hosts {
             // create new
             OrganismCriteriaModel model = new OrganismCriteriaModel();
             model.setCreated(new Date());
-            model.setOrganism(organismModel);
+            model.getOrganisms().add(organismModel);
             model.setPercentageComplete(percentComplete);
-            model.setCriteria(criteriaModel);
+            model.getCriteria().add(criteriaModel);
             organismCriteriaDAO.create(model);
         }
     }
 
-    public List<Criteria> retrieveCriteria(long organismId) {
+    public List<OrganismCriteria> retrieveCriteria(long organismId) {
         OrganismCriteriaDAO organismCriteriaDAO = DAOFactory.getOrganismCriteriaDAO();
         List<OrganismCriteriaModel> list = organismCriteriaDAO.getByOrganism(organismId);
-        List<Criteria> results = new ArrayList<>();
+        List<OrganismCriteria> results = new ArrayList<>();
         for (OrganismCriteriaModel model : list)
             results.add(model.toDataTransferObject());
         return results;

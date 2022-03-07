@@ -20,7 +20,8 @@ public class CriteriaModel implements IDataModel {
     @Column(name = "description", length = 1024)
     private String description;
 
-    @OneToOne(mappedBy = "criteria")
+    @ManyToOne
+    @JoinColumn(name = "organism_criteria_id")
     private OrganismCriteriaModel organismCriteria;
 
     @ManyToOne(fetch = FetchType.LAZY)
