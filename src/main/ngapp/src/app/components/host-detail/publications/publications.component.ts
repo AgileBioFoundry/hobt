@@ -36,9 +36,12 @@ export class PublicationsComponent implements OnInit {
     showPublicationAddModal(): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(AddPublicationComponent, options);
-        modalRef.result.then((result: Publication) => {
-            if (result)
-                this.publications.push(result);
+        modalRef.result.then((result: any) => {
+            if (!result || result === 'cancel')
+                return;
+
+            console.log(result);
+            this.publications.push(result);
         }, error => {
             console.log('error', error);
         });

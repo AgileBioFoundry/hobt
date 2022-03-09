@@ -5,6 +5,7 @@ import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.PublicationDAO;
 import org.abf.hobt.dao.model.PublicationModel;
 
+import java.util.Date;
 import java.util.List;
 
 public class Publications {
@@ -23,5 +24,19 @@ public class Publications {
         }
         resultData.setAvailable(this.dao.listCount());
         return resultData;
+    }
+
+    public Publication create(String userId, Publication publication) {
+        // todo :  validation and check permission
+        PublicationModel publicationModel = new PublicationModel();
+        publicationModel.setCreated(new Date());
+        publicationModel.setAuthors(publication.getAuthors());
+        publicationModel.setJournal(publication.getJournal());
+        publicationModel.setTitle(publication.getTitle());
+        publicationModel.setPrivileged(publication.isPrivileged());
+        publicationModel.setLink(publication.getLink());
+        publicationModel.setYear(publication.getYear());
+
+        return this.dao.create(publicationModel).toDataTransferObject();
     }
 }

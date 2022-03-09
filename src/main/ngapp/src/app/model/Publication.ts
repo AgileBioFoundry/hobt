@@ -3,8 +3,7 @@ export class Publication {
     authors: string;
     year: string;
     title: string;
-    isABF: boolean;
-
+    privileged: boolean;
+    journal: string;
     link: string;
-    label: string;
 }
