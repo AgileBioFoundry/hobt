@@ -8,10 +8,10 @@
                 <span class="text-muted">Sort by:</span>&nbsp;
                 <span ngbDropdownToggle class="cursor-pointer">
                     <i class="fa" [ngClass]="{'fa-long-arrow-up': params.asc, 'fa-long-arrow-down': !params.asc}"></i>
-                    <span *ngIf="params.sort == 'id'"> Last Updated</span>
-                    <span *ngIf="params.sort == 'taxonomy'"> Phylum</span>
-                    <span *ngIf="params.sort == 'name'"> Name</span>
-                    <span *ngIf="params.sort == 'tier'"> Tier</span>
+                    <span *ngIf="params.sort === 'id'"> Last Updated</span>
+                    <span *ngIf="params.sort === 'taxonomy'"> Phylum</span>
+                    <span *ngIf="params.sort === 'name'"> Name</span>
+                    <span *ngIf="params.sort === 'tier'"> Tier</span>
 
                      <ul ngbDropdownMenu class="dropdown-menu p-1">
                          <li ngbDropdownItem class="small pl-2" (click)="sort('name')">Name</li>
