@@ -5,8 +5,8 @@
     </button>
     <br>
 
-    <div class="text-muted font-italic" *ngIf="paging.processing">
-        <img src="assets/loader.gif"> Loading publications...
+    <div class="text-muted font-italic" *ngIf="paging.processing && !publications">
+        <img src="assets/loader.gif"> <span class="font-italic text-muted">Loading publications...</span>
     </div>
 
     <div class="text-muted font-italic mt-2" *ngIf="!paging.processing && !publications.length">
@@ -16,7 +16,7 @@
 
     <div *ngIf="publications && publications.length" class="mt-2">
         <ul *ngFor="let publication of publications">
-            <li>{{ publication.label }}</li>
+            <li>{{ publication.title }}</li>
         </ul>
     </div>
 </div>

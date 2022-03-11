@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Host, Input, OnInit} from '@angular/core';
 import {HttpService} from "../../../../service/http.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Publication} from "../../../../model/publication";
@@ -9,6 +9,8 @@ import {Publication} from "../../../../model/publication";
     styleUrls: ['./add-publication.component.css']
 })
 export class AddPublicationComponent implements OnInit {
+
+    @Input() host: Host;
 
     isUpdate: false;
     publication: Publication;
@@ -21,6 +23,7 @@ export class AddPublicationComponent implements OnInit {
     }
 
     createPublication(): void {
+        this.http
         this.activeModal.close(this.publication);
     }
 }

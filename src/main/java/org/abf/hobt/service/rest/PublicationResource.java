@@ -1,6 +1,5 @@
 package org.abf.hobt.service.rest;
 
-import org.abf.hobt.host.publication.Publication;
 import org.abf.hobt.host.publication.Publications;
 
 import javax.ws.rs.*;
@@ -19,16 +18,6 @@ public class PublicationResource extends RestResource {
         @DefaultValue("id") @QueryParam("sort") String sort,
         @DefaultValue("false") @QueryParam("asc") boolean asc) {
         Publications publications = new Publications();
-        return super.respond(publications.retrieve(offset, limit, sort, asc));
-    }
-
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPublication(Publication publication) {
-        String userId = getUserId();
-        log(userId, "creating new publication");
-        Publications publications = new Publications();
-        return super.respond(publications.create(userId, publication));
+        return super.respond(publications.getAll(offset, limit, sort, asc));
     }
 }

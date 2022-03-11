@@ -1,7 +1,14 @@
 package org.abf.hobt.dao.hibernate;
 
+import org.abf.hobt.common.logging.Logger;
+import org.abf.hobt.dao.DataAccessException;
+import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.dao.model.PublicationModel;
+import org.hibernate.HibernateException;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class PublicationDAO extends HibernateRepository<PublicationModel> {
@@ -17,5 +24,40 @@ public class PublicationDAO extends HibernateRepository<PublicationModel> {
 
     public long listCount() {
         return super.listCount(PublicationModel.class);
+    }
+
+    public List<PublicationModel> listByOrganism(OrganismModel organism, String sort, boolean asc, int start, int limit,
+                                                 Boolean privilegedOnly) {
+        try {
+            CriteriaQuery<PublicationModel> query = getBuilder().createQuery(PublicationModel.class);
+            Root<PublicationModel> from = query.from(PublicationModel.class);
+            Join<PublicationModel, OrganismModel> organisms = from.join("organisms");
+            if (privilegedOnly == null) {
+                query.where(getBuilder().equal(organisms.get("id"), organism.getId()));
+            } else {
+                query.where(getBuilder().equal(organisms.get("id"), organism.getId()),
+                    getBuilder().equal(from.get("privileged"), privilegedOnly));
+            }
+            query.orderBy(asc ? getBuilder().asc(from.get(sort)) : getBuilder().desc(from.get(sort)));
+            return currentSession().createQuery(query).setMaxResults(limit).setFirstResult(start).list();
+        } catch (HibernateException e) {
+            Logger.error(e);
+            throw new DataAccessException(e);
+        }
+    }
+
+    public long listByOrganismCount(Boolean privilegedOnly) {
+        try {
+            CriteriaQuery<Long> query = getBuilder().createQuery(Long.class);
+            Root<PublicationModel> from = query.from(PublicationModel.class);
+            query.select(getBuilder().countDistinct(from.get("id")));
+            // filter if privileged value is set
+            if (privilegedOnly != null)
+                query.where(getBuilder().equal(from.get("privileged"), privilegedOnly));
+            return currentSession().createQuery(query).uniqueResult();
+        } catch (Exception e) {
+            Logger.error(e);
+            throw new DataAccessException(e);
+        }
     }
 }

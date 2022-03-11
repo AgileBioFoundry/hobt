@@ -5,6 +5,8 @@ import org.abf.hobt.host.publication.Publication;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "PUBLICATION")
@@ -18,7 +20,7 @@ public class PublicationModel implements IDataModel {
     @Column(name = "authors", nullable = false, length = 512)
     private String authors;
 
-    @Column(name = "year", nullable = false)
+    @Column(name = "\"year\"", nullable = false)
     private String year;
 
     @Column(name = "title", nullable = false, length = 1024)
@@ -36,6 +38,11 @@ public class PublicationModel implements IDataModel {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "created")
     private Date created;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "publication_organisms", joinColumns = @JoinColumn(name = "publication_id"),
+        inverseJoinColumns = @JoinColumn(name = "organism_id"))
+    private final Set<OrganismModel> organisms = new LinkedHashSet<>();
 
     public long getId() {
         return id;
@@ -95,6 +102,10 @@ public class PublicationModel implements IDataModel {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Set<OrganismModel> getOrganisms() {
+        return organisms;
     }
 
     @Override

@@ -24,7 +24,7 @@ export class PublicationsComponent implements OnInit {
 
     ngOnInit(): void {
         this.paging.processing = true;
-        this.http.get('publications', this.paging).subscribe((result: Result<Publication>) => {
+        this.http.get('hosts/' + this.host.id + '/publications', this.paging).subscribe((result: Result<Publication>) => {
             this.publications = result.requested
             this.paging.available = result.available;
             this.paging.processing = false;
@@ -36,6 +36,7 @@ export class PublicationsComponent implements OnInit {
     showPublicationAddModal(): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(AddPublicationComponent, options);
+        modalRef.componentInstance.host = this.host;
         modalRef.result.then((result: any) => {
             if (!result || result === 'cancel')
                 return;

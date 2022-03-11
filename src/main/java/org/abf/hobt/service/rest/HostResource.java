@@ -6,6 +6,7 @@ import org.abf.hobt.host.HostParts;
 import org.abf.hobt.host.Organisms;
 import org.abf.hobt.host.publication.HostPublications;
 import org.abf.hobt.host.publication.Publication;
+import org.abf.hobt.host.publication.Publications;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -95,8 +96,8 @@ public class HostResource extends RestResource {
         @DefaultValue("15") @QueryParam("limit") int limit,
         @DefaultValue("id") @QueryParam("sort") String sort,
         @DefaultValue("false") @QueryParam("asc") boolean asc) {
-        Organisms organisms = new Organisms();
-        return super.respond(organisms.retrieveCriteria(organismId));
+        Publications publications = new Publications();
+        return super.respond(publications.getByOrganism(organismId, offset, limit, sort, asc, null));
     }
 
     @POST
