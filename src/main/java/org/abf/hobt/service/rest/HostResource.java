@@ -95,9 +95,10 @@ public class HostResource extends RestResource {
         @DefaultValue("0") @QueryParam("offset") int offset,
         @DefaultValue("15") @QueryParam("limit") int limit,
         @DefaultValue("id") @QueryParam("sort") String sort,
-        @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        @DefaultValue("false") @QueryParam("asc") boolean asc,
+        @QueryParam("privileged") Boolean privileged) {
         Publications publications = new Publications();
-        return super.respond(publications.getByOrganism(organismId, offset, limit, sort, asc, null));
+        return super.respond(publications.getByOrganism(organismId, offset, limit, sort, asc, privileged));
     }
 
     @POST
