@@ -30,7 +30,6 @@ export class UserService {
         // if user is not set, then attempt to retrieve from local storage
         if (!this.user) {
             this.user = JSON.parse(sessionStorage.getItem(this.USER_KEY));
-            console.log('user from local storage', this.user);
         }
 
         if (!this.user && redirectToLogin) {
