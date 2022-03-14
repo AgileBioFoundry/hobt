@@ -22,10 +22,10 @@ public class TierModel implements IDataModel {
     @Column(name = "index")
     private int index;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tier", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tier", orphanRemoval = true)
     private final Set<CriteriaModel> criteria = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tier", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tier", orphanRemoval = true)
     private final Set<TierRuleModel> rules = new HashSet<>();
 
     public long getId() {

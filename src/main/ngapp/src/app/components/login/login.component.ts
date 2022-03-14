@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
         // verify if sessionId is valid when visiting the login page and redirect user to main page if so
         this.loggedInUser = this.userService.getUser();
         if (this.loggedInUser && this.loggedInUser.sessionId) {
+
+            // if user is already logged in, verify that current session id is valid
             this.http.get('accesstokens').subscribe(() => {
                 // close modal and send information about logged in user to header
                 this.activeModal.close(this.loggedInUser);

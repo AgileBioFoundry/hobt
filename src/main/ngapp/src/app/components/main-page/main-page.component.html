@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="container-fluid pt-2 pb-4" style="background-color: #f5f7f8">
+<div class="container-fluid pt-2" style="background-color: #f5f7f8">
 
     <div class="float-right">
         <div class="btn-group pr-3">
@@ -8,10 +8,10 @@
                 <span class="text-muted">Sort by:</span>&nbsp;
                 <span ngbDropdownToggle class="cursor-pointer">
                     <i class="fa" [ngClass]="{'fa-long-arrow-up': params.asc, 'fa-long-arrow-down': !params.asc}"></i>
-                    <span *ngIf="params.sort == 'id'"> Last Updated</span>
-                    <span *ngIf="params.sort == 'taxonomy'"> Phylum</span>
-                    <span *ngIf="params.sort == 'name'"> Name</span>
-                    <span *ngIf="params.sort == 'tier'"> Tier</span>
+                    <span *ngIf="params.sort === 'id'"> Last Updated</span>
+                    <span *ngIf="params.sort === 'taxonomy'"> Phylum</span>
+                    <span *ngIf="params.sort === 'name'"> Name</span>
+                    <span *ngIf="params.sort === 'tier'"> Tier</span>
 
                      <ul ngbDropdownMenu class="dropdown-menu p-1">
                          <li ngbDropdownItem class="small pl-2" (click)="sort('name')">Name</li>
@@ -47,7 +47,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let host of hosts">
-            <td class="text-primary">{{ host.name }}</td>
+            <td class="font-italic text-primary">{{ host.name }}</td>
             <td class="font-italic text-muted">{{ host.phylum }}</td>
             <td>
                 <span *ngIf="!host.tier" class="badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
@@ -64,7 +64,7 @@
         <div class="card ml-4 mb-4 shadow-sm" style="width: 28rem" *ngFor="let host of hosts">
             <div class="card-body pb-1">
                 <h5 class="card-title">
-                    <span class="cursor-pointer" (click)="goToHost(host)">{{ host.name }}</span>
+                    <span class="cursor-pointer font-italic" (click)="goToHost(host)">{{ host.name }}</span>
                     <span *ngIf="!host.tier" class="float-right badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
                     <span *ngIf="host.tier" style="font-size: 14px" class="p-2 pr-3 pl-3 float-right badge" [ngClass]="{'badge-secondary': host.tier.index === 0,
                     'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">{{ host.tier.label }}</span>

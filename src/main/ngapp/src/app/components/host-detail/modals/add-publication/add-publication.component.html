@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-title">Add Publication</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">&times;</button>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <form>
+        <div class="row">
+            <div class="col">
+                <label for="link" class="font-80">Author List</label>
+                <input type="text" class="form-control" name="link"
+                       id="link" ngbAutofocus [(ngModel)]="publication.authors">
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <label for="year" class="font-80">Publication Year</label>
+                <input type="text" name="year" class="form-control" id="year" [(ngModel)]="publication.year">
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <label for="journal" class="font-80">Journal</label>
+                <input type="text" name="journal" class="form-control" id="journal" [(ngModel)]="publication.journal">
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <label for="title" class="font-80">Title</label>
+                <textarea rows="2" name="title" id="title" class="form-control"
+                          [(ngModel)]="publication.title"></textarea>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <label for="url" class="font-80">Publication URL</label>
+                <input type="text" name="url" class="form-control" id="url" [(ngModel)]="publication.link">
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <span class="cursor-pointer" (click)="publication.privileged = !publication.privileged">
+                    <i class="fa fa-fw"
+                       [ngClass]="{'fa-square-o': !publication.privileged, 'fa-check-square-o': publication.privileged}"></i>
+                    This is an Agile BioFoundry publication
+                </span>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer justify-content-between">
+    <div>
+
+        <!--        <span class="red" *ngIf="errorSaving">-->
+        <!--            <i class="fa fa-exclamation-triangle"></i> Error saving part</span>-->
+    </div>
+
+    <div class="pull-right">
+        <button class="btn btn-light" (click)="activeModal.close('cancel')">Cancel</button>
+        &nbsp;
+        <button class="btn btn-primary" (click)="createPublication()">
+            <span *ngIf="isUpdate">Update</span>
+            <span *ngIf="!isUpdate">Save</span>
+        </button>
+    </div>
+</div>

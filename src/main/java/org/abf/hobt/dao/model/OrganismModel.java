@@ -5,6 +5,8 @@ import org.abf.hobt.dto.Organism;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ORGANISM")
@@ -28,6 +30,9 @@ public class OrganismModel implements IDataModel {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "updated")
     private Date lastUpdateTime;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organism", orphanRemoval = true)
+    private final Set<OrganismCriteriaModel> organismCriterias = new LinkedHashSet<>();
 
     @OneToOne
     @JoinColumn(name = "tier_id")
@@ -75,6 +80,10 @@ public class OrganismModel implements IDataModel {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public Set<OrganismCriteriaModel> getOrganismCriterias() {
+        return organismCriterias;
     }
 
     @Override
