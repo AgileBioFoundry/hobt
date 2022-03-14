@@ -25,9 +25,7 @@ export class HeaderComponent implements OnInit {
     loginUser(): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(LoginComponent, options);
-        // modalRef.componentInstance.design = Object.assign({}, this.design);
         modalRef.result.then((loggedInUser: User) => {
-            // this.router.navigate(['/designs']);
             this.loggedInUser = loggedInUser;
             console.log(loggedInUser);
         }, () => {

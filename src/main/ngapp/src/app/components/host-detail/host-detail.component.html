@@ -3,7 +3,7 @@
 <div class="pt-5 pl-5 pb-5 border-bottom" style="background-color: #F6F6F7">
     <div class="d-flex justify-content-between">
         <div>
-            <h2>{{host.name}}</h2>
+            <h2 class="font-italic">{{host.name}}</h2>
             <div class="lead font-italic mt-n2" style="color: #777575">{{host.phylum}}</div>
         </div>
 
@@ -33,39 +33,36 @@
             </ng-template>
         </li>
 
+
         <li [ngbNavItem]="'publications'">
-            <a ngbNavLink class="mr-5 ml-5">PUBLICATIONS
-                <div class="badge badge-light badge-pill font-90 p-1 text-muted">{{ publications.length }}</div>
-            </a>
+            <a ngbNavLink class="mr-5 ml-5">PUBLICATIONS</a>
             <ng-template ngbNavContent>
-                <div class="container-fluid pt-3">
-                    <button class="btn btn-sm btn-secondary float-right" (click)="showPublicationAddModal()">
-                        Add Publication
-                    </button>
-                    <br>
-                    <div class="text-muted font-italic mt-2" *ngIf="!publications.length">No publications available
-                    </div>
-                    <div *ngIf="publications.length" class="mt-2">
-                        <ul *ngFor="let publication of publications">
-                            <li>{{ publication.label }}</li>
-                        </ul>
-                    </div>
-                </div>
+                <app-publications [host]="host"></app-publications>
             </ng-template>
         </li>
 
 
         <li [ngbNavItem]="'parts'">
             <a ngbNavLink class="mr-5 ml-5">PARTS
-<!--                <div class="badge badge-light badge-pill p-1 font-90 text-muted">8</div>-->
+                <!--                <div class="badge badge-light badge-pill p-1 font-90 text-muted">8</div>-->
             </a>
             <ng-template ngbNavContent>
-                <app-host-parts [host]="host"></app-host-parts>
+                <app-host-parts [host]="host" [strains]="false"></app-host-parts>
             </ng-template>
         </li>
 
 
-        <li [ngbNavItem]="4">
+        <li [ngbNavItem]="'strains'">
+            <a ngbNavLink class="mr-5 ml-5">STRAINS
+                <!--                <div class="badge badge-light badge-pill p-1 font-90 text-muted">8</div>-->
+            </a>
+            <ng-template ngbNavContent>
+                <app-host-parts [host]="host" [strains]="true"></app-host-parts>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="'protocols'">
             <a ngbNavLink class="mr-5 ml-5">PROTOCOLS</a>
             <ng-template ngbNavContent>
                 <div class="container-fluid font-90 pt-3">

@@ -17,10 +17,10 @@ public class ConfigurationModel implements IDataModel {
     @SequenceGenerator(name = "configuration_id", sequenceName = "configuration_id_seq", allocationSize = 1)
     private long id;
 
-    @Column(name = "key", unique = true)
+    @Column(name = "\"key\"", unique = true)
     private String key;
 
-    @Column(name = "value")
+    @Column(name = "\"value\"")
     private String value;
 
     public long getId() {

@@ -135,26 +135,30 @@
                     </form>
                 </div>
 
-
                 <!-- list of available criteria for tier -->
                 <ul class="list-group list-group-flush font-90 p-3">
-                    <li class="list-group-item" *ngFor="let criteria of tier.criteria">
-                        <div class="float-right criteria-edit">
-                            <i class="fa fa-fw fa-pencil text-muted opacity-hover" ngbTooltip="Edit"></i> <i
-                            class="fa fa-fw fa-trash-o text-muted opacity-hover" ngbTooltip="Delete"></i></div>
-                        <div class="font-weight-bold">{{criteria.label}}</div>
-                        <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
+                    <li class="list-group-item" *ngFor="let criteria of tier.criteria; let index = index">
 
-                        <form name="editCriteriaForm" style="display: none">
+                        <div [ngClass]="{'d-none': editIndex === index}">
+                            <div class="float-right">
+                                <i class="fa fa-fw fa-pencil text-muted opacity-hover" ngbTooltip="Edit"
+                                   (click)="updateCriteria(index, criteria)"></i> <i
+                                class="fa fa-fw fa-trash-o text-muted opacity-hover" ngbTooltip="Delete"
+                                (click)="deleteCriteria(tier, criteria)"></i></div>
+                            <div class="font-weight-bold">{{criteria.label}}</div>
+                            <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
+                        </div>
+
+                        <form name="editCriteriaForm" *ngIf="editIndex === index">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
                                     <label for="tierCriteriaLabel">Label</label>
                                     <input type="text" class="form-control form-control-sm"
-                                           [ngClass]="{'is-invalid': newCriteria.labelInvalid}"
-                                           placeholder="Enter unique label for criteria"
-                                           (ngModelChange)="newCriteria.labelInvalid = false"
+                                           [ngClass]="{'is-invalid': editCriteria.labelInvalid}"
+                                           placeholder="Enter unique label for criteria9"
+                                           (ngModelChange)="editCriteria.labelInvalid = false"
                                            name="tierCriteriaLabel"
-                                           [(ngModel)]="newCriteria.label">
+                                           [(ngModel)]="editCriteria.label">
                                     <div class="invalid-feedback">
                                         Please enter a unique (to this tier) criteria label
                                     </div>
@@ -163,11 +167,11 @@
                                 <div class="form-group col-md-8">
                                     <label for="tierCriteriaDescription">Description</label>
                                     <textarea class="form-control form-control-sm"
-                                              [ngClass]="{'is-invalid': newCriteria.detailsInvalid}"
+                                              [ngClass]="{'is-invalid': editCriteria.detailsInvalid}"
                                               name="tierCriteriaDescription" rows="3"
-                                              (ngModelChange)="newCriteria.detailsInvalid = false"
+                                              (ngModelChange)="editCriteria.detailsInvalid = false"
                                               placeholder="Enter description for criteria"
-                                              [(ngModel)]="newCriteria.description"></textarea>
+                                              [(ngModel)]="editCriteria.description"></textarea>
                                     <div class="invalid-feedback">
                                         Please enter a description for this criteria
                                     </div>
@@ -175,11 +179,12 @@
                             </div>
 
                             <div class="mt-2">
-                                <button class="btn btn-sm btn-link" (click)="cancelNewCriteria(tier)">Cancel</button>
+                                <button class="btn btn-sm btn-link" (click)="cancelUpdateCriteria()">Cancel</button>
                                 &nbsp;
-                                <button class="btn btn-sm btn-primary" (click)="addNewCriteria(tier)"
-                                        [disabled]="!newCriteria.label || !newCriteria.description">
-                                    Create Criteria
+                                <button class="btn btn-sm btn-primary"
+                                        (click)="submitCriteriaUpdate(tier, criteria)"
+                                        [disabled]="!editCriteria.label || !editCriteria.description">
+                                    Update
                                 </button>
                             </div>
 
@@ -189,13 +194,9 @@
 
             </td>
 
-
             <td class="w-25 p-0">
-
                 <div class="p-4 bg-light-blue" *ngIf="tier.showAddRules">
-
                     <form name="createSpecificationForm">
-
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <select class="form-control col-sm-7 font-90" id="specificationType"
@@ -211,7 +212,7 @@
                                     <input type="text" inputmode="numeric" maxlength="3" pattern="[0-9]*"
                                            [(ngModel)]="newRule.percentage" name="simplePercentage"
                                            style="width: 55px; padding-right: 20px; text-align: right">
-                                    <span style="margin-left:-20px;">%</span> &nbsp; of tier criteria must be met.
+                                    <span style="margin-left:-20px">%</span> &nbsp; of tier criteria must be met.
                                 </div>
 
                                 <div *ngIf="newRule.type === 'SUM'">
@@ -219,18 +220,18 @@
                                     <input type="text" inputmode="numeric" maxlength="3" pattern="[0-9]*"
                                            [(ngModel)]="newRule.percentage" name="complexPercentage"
                                            style="width: 55px; padding-right: 20px; text-align: right"><span
-                                    style="margin-left:-20px;">%</span>
+                                    style="margin-left:-20px">%</span>
                                 </div>
 
                             </div>
                         </div>
 
                         <div class="mt-2">
+                            <button class="btn btn-sm btn-link" (click)="cancelNewRules(tier)">Cancel</button>
                             <button class="btn btn-sm btn-primary" (click)="addNewRules(tier)"
                                     [disabled]="!newRule.type || !newRule.percentage">
                                 Create Rule
                             </button>
-                            <button class="btn btn-sm btn-link" (click)="cancelNewRules(tier)">Cancel</button>
                         </div>
 
                     </form>
@@ -250,6 +251,7 @@
                         <li *ngFor="let rule of tier.rules">
                             <span *ngIf="rule.type==='SIMPLE'">{{rule.percentage}}% of criteria must be met</span>
                             <span *ngIf="rule.type==='SUM'">Sum of criteria in current tier and higher tier must add up to {{rule.percentage}}</span>
+                            <span class="pull-right"><i class="fa fa-fw fa-trash-o opacity-hover small"></i> </span>
                         </li>
                     </ul>
                 </div>

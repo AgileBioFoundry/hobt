@@ -1,0 +1,22 @@
+<div class="container-fluid">
+
+    <button class="btn btn-sm btn-secondary float-right mt-3" (click)="showPublicationAddModal()">
+        Add Publication
+    </button>
+    <br>
+
+    <div class="text-muted font-italic" *ngIf="paging.processing && !publications">
+        <img src="assets/loader.gif"> <span class="font-italic text-muted">Loading publications...</span>
+    </div>
+
+    <div class="text-muted font-italic mt-2" *ngIf="!paging.processing && !publications.length">
+        No publications available
+    </div>
+
+
+    <div *ngIf="publications && publications.length" class="mt-2">
+        <ul *ngFor="let publication of publications">
+            <li>{{ publication.title }}</li>
+        </ul>
+    </div>
+</div>

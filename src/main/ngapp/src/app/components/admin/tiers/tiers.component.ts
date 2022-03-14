@@ -3,6 +3,8 @@ import {Tier} from "../../../model/tier.model";
 import {TierCriteria} from "../../../model/tier-criteria.model";
 import {TierRule} from "../../../model/tier-rules.model";
 import {HttpService} from "../../../service/http.service";
+import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action.component";
 
 @Component({
     selector: 'app-tiers',
@@ -13,6 +15,7 @@ export class TiersComponent implements OnInit {
 
     newTier: Tier;
     newCriteria: TierCriteria;
+    editCriteria: TierCriteria;
     newRule: TierRule;
     newTierIndex: number;
 
@@ -20,10 +23,12 @@ export class TiersComponent implements OnInit {
     selectedTier: Tier;
     tiers: Array<Tier>;
 
+    editIndex: number;
+
     // validation
     newTierLabelInvalid: boolean;
 
-    constructor(private http: HttpService) {
+    constructor(private http: HttpService, private modalService: NgbModal) {
         this.newCriteria = new TierCriteria();
         this.newRule = new TierRule();
         this.showCreateTier = false;
@@ -144,5 +149,44 @@ export class TiersComponent implements OnInit {
 
     tierIndexChange(): void {
         this.newTier.index = this.selectedTier.index + this.newTierIndex;
+    }
+
+    submitCriteriaUpdate(tier: Tier, criteria: TierCriteria): void {
+        this.http.put('tiers/' + tier.id + '/criteria/' + this.editCriteria.id, this.editCriteria)
+            .subscribe((result: TierCriteria) => {
+                if (!result)
+                    return;
+
+                if (result.id === criteria.id)
+                    criteria = result;
+                this.editIndex = undefined;
+            })
+    }
+
+    updateCriteria(index: number, criteria: TierCriteria): void {
+        this.editIndex = index;
+        this.editCriteria = criteria;
+    }
+
+    deleteCriteria(tier: Tier, criteria: TierCriteria): void {
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const modalRef = this.modalService.open(ConfirmActionComponent, options);
+        modalRef.componentInstance.resourceName = 'criteria';
+        modalRef.componentInstance.resourceIdentifier = criteria.label;
+        modalRef.result.then((result: boolean) => {
+            if (!result)
+                return;
+
+            // process delete of criteria
+            console.log(result);
+            this.http.delete('tiers/' + tier.id + '/criteria/' + criteria.id).subscribe(result => {
+                console.log(result);
+            })
+        })
+    }
+
+    cancelUpdateCriteria(): void {
+        this.editCriteria = undefined;
+        this.editIndex = -1;
     }
 }

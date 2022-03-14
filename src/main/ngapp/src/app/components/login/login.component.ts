@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
         // verify if sessionId is valid when visiting the login page and redirect user to main page if so
         this.loggedInUser = this.userService.getUser();
         if (this.loggedInUser && this.loggedInUser.sessionId) {
+
+            // if user is already logged in, verify that current session id is valid
             this.http.get('accesstokens').subscribe(() => {
                 // close modal and send information about logged in user to header
                 this.activeModal.close(this.loggedInUser);
@@ -67,23 +69,23 @@ export class LoginComponent implements OnInit {
 
         this.processing = true;
         this.http.post('accesstokens', this.loggedInUser).subscribe((result: User) => {
-            console.log(result);
             this.processing = false;
+            if (!result || !result.sessionId)
+                return;
 
             // save to session
             this.loggedInUser = result;
+            this.userService.setUser(result);
 
             // check for explicit permissions only if this user is not an administrator
             if (!this.loggedInUser.isAdmin) {
-                this.http.get('users' + this.loggedInUser.id + '/permissions').subscribe((permissions: Permission[]) => {
+                this.http.get('users/' + this.loggedInUser.id + '/permissions').subscribe((permissions: Permission[]) => {
+                    console.log("setting permissions for " + permissions);
                     this.permissionService.setPermissions(permissions);
                 });
             }
 
-            if (result && result.sessionId) {
-                this.userService.setUser(result);
-                this.activeModal.close(this.loggedInUser);
-            }
+            this.activeModal.close(this.loggedInUser);
         }, error => {
             this.processing = false;
             console.error(error);

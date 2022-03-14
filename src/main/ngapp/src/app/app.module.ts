@@ -13,7 +13,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {CriteriaComponent} from './components/host-detail/criteria/criteria.component';
 import {HostDetailResolver} from "./components/host-detail/host-detail.resolver";
-import {AddPermissionComponent} from './components/host-detail/modals/add-permission/add-permission.component';
+import {AddPublicationComponent} from './components/host-detail/modals/add-publication/add-publication.component';
 import {AddAttributeComponent} from './components/host-detail/modals/add-attribute/add-attribute.component';
 import {SettingsComponent} from './components/admin/settings/settings.component';
 import {UsersComponent} from './components/admin/users/users.component';
@@ -26,6 +26,8 @@ import {CreateRoleModalComponent} from './components/admin/modal/create-role-mod
 import {AdminComponent} from "./components/admin/admin.component";
 import {AddRoleComponent} from './components/admin/users/add-role/add-role.component';
 import {HostPartsComponent} from './components/host-detail/host-parts/host-parts.component';
+import {ConfirmActionComponent} from './components/common/confirm-action/confirm-action.component';
+import {PublicationsComponent} from './components/host-detail/publications/publications.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,7 @@ import {HostPartsComponent} from './components/host-detail/host-parts/host-parts
         HostDetailComponent,
         MainPageComponent,
         CriteriaComponent,
-        AddPermissionComponent,
+        AddPublicationComponent,
         AddAttributeComponent,
         SettingsComponent,
         UsersComponent,
@@ -48,7 +50,9 @@ import {HostPartsComponent} from './components/host-detail/host-parts/host-parts
         CreateRoleModalComponent,
         AdminComponent,
         AddRoleComponent,
-        HostPartsComponent
+        HostPartsComponent,
+        ConfirmActionComponent,
+        PublicationsComponent
     ],
     imports: [
         BrowserModule,

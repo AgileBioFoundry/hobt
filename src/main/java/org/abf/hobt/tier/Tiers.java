@@ -123,7 +123,7 @@ public class Tiers {
     }
 
     public boolean deleteTierCriteria(long tierId, long criteriaId) {
-        getTierModel(tierId);
+        TierModel tierModel = getTierModel(tierId);
 
         CriteriaModel criteriaModel = this.criteriaDAO.get(criteriaId);
         if (criteriaModel == null)
@@ -132,7 +132,13 @@ public class Tiers {
         if (criteriaModel.getTier().getId() != tierId)
             throw new IllegalArgumentException("Tier for criteria model doesn't match");
 
-        this.criteriaDAO.delete(criteriaModel);
+        criteriaModel.setTier(null);
+        tierModel.getCriteria().remove(criteriaModel);
+
+//        this.criteriaDAO.update(criteriaModel);
+        DAOFactory.getTierDAO().update(tierModel);
+
+//        this.criteriaDAO.delete(criteriaModel);
         return true;
     }
 

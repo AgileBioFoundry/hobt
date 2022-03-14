@@ -3,7 +3,10 @@ package org.abf.hobt.service.rest;
 import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.host.HostParts;
-import org.abf.hobt.host.Hosts;
+import org.abf.hobt.host.Organisms;
+import org.abf.hobt.host.publication.HostPublications;
+import org.abf.hobt.host.publication.Publication;
+import org.abf.hobt.host.publication.Publications;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,8 +23,8 @@ public class HostResource extends RestResource {
         @DefaultValue("15") @QueryParam("limit") int limit,
         @DefaultValue("id") @QueryParam("sort") String sort,
         @DefaultValue("false") @QueryParam("asc") boolean asc) {
-        Hosts hosts = new Hosts();
-        return super.respond(hosts.retrieveList(offset, limit, sort, asc));
+        Organisms organisms = new Organisms();
+        return super.respond(organisms.retrieveList(offset, limit, sort, asc));
     }
 
     @GET
@@ -34,8 +37,8 @@ public class HostResource extends RestResource {
         @DefaultValue("15") @QueryParam("limit") int limit,
         @DefaultValue("id") @QueryParam("sort") String sort,
         @DefaultValue("false") @QueryParam("asc") boolean asc) {
-        Hosts hosts = new Hosts();
-        return super.respond(hosts.retrieveCriteria(organismId));
+        Organisms organisms = new Organisms();
+        return super.respond(organisms.retrieveCriteria(organismId));
     }
 
     @GET
@@ -43,25 +46,26 @@ public class HostResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getHost(@PathParam("id") long orgId) {
-        Hosts hosts = new Hosts();
-        return super.respond(hosts.retrieve(orgId));
+        Organisms organisms = new Organisms();
+        return super.respond(organisms.retrieve(orgId));
     }
 
     @GET
     @Path("/{id}/parts")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getHostParts(@PathParam("id") long organismId) {
+    public Response getHostParts(@DefaultValue("false") @QueryParam("strainsOnly") boolean strainsOnly,
+                                 @PathParam("id") long organismId) {
         HostParts parts = new HostParts();
-        return super.respond(parts.get(organismId));
+        return super.respond(parts.get(organismId, strainsOnly));
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createHost(Organism organism) {
-        Hosts hosts = new Hosts();
-        return super.respond(hosts.create(organism));
+        Organisms organisms = new Organisms();
+        return super.respond(organisms.create(organism));
     }
 
     @POST
@@ -69,14 +73,41 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/criterias/{cid}/status")
     public Response createHostCriteria(@PathParam("id") long orgId, @PathParam("cid") long cid, Criteria criteria) {
-        Hosts hosts = new Hosts();
-        hosts.updateOrganismCriteriaStatus(orgId, cid, criteria.getStatus());
+        Organisms organisms = new Organisms();
+        organisms.updateOrganismCriteriaStatus(orgId, cid, criteria.getStatus());
         return super.respond(true);
     }
+
+    // TODO : mark tier completed  PUT "{id}/criterias/{cid}/completed
 
     @DELETE
     @Path("/{id}")
     public Response deleteHost(@PathParam("id") long orgId) {
         return super.respond(false);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/publications")
+    public Response getHostPublications(
+        @PathParam("id") long organismId,
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc,
+        @QueryParam("privileged") Boolean privileged) {
+        Publications publications = new Publications();
+        return super.respond(publications.getByOrganism(organismId, offset, limit, sort, asc, privileged));
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/publications")
+    public Response createHostPublication(@PathParam("id") long organismId, Publication publication) {
+        String userId = getUserId();
+        HostPublications hostPublications = new HostPublications(organismId, userId);
+        return super.respond(hostPublications.create(publication));
     }
 }

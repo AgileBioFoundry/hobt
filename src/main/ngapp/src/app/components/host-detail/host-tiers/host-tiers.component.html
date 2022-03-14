@@ -37,7 +37,7 @@
                     </tbody>
 
                     <tbody *ngIf="tier.criteria.length">
-                    <tr *ngFor="let criteria of tier.criteria">
+                    <tr *ngFor="let criteria of sortBy(tier.criteria, 'id')">
                         <td class="pl-5">{{criteria.label}}</td>
                         <td class="text-muted font-95">{{criteria.description}}</td>
                         <td class="p-2">

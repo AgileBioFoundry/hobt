@@ -52,14 +52,15 @@ public class LdapAuthentication implements IAuthentication {
                 loginId = loginId.substring(0, idx);
         }
 
-        if (isLDAPUser(loginId)) {
+        // skip the default admin userid and non-ldap users
+        if (!Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(loginId) && isLDAPUser(loginId)) {
             try {
                 Account user = authenticateWithLDAP(loginId, password);
                 user.setUserId(loginId);
                 checkCreateAccount(user);
                 return true;
             } catch (AuthenticationException ae) {
-                Logger.warn("Authentication failed for user " + loginId);
+                Logger.warn("Authentication failed for user " + loginId + ". checking with ICE");
                 return false;
             }
         } else {

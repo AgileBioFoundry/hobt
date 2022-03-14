@@ -4,3 +4,7 @@
     width: 100%;
     height: 4.5rem; /* Footer height */
 }
+
+.opacity-footer {
+    opacity: 0.6;
+}
