@@ -105,18 +105,20 @@ public class Organisms {
             // create new
             OrganismCriteriaModel model = new OrganismCriteriaModel();
             model.setCreated(new Date());
-            model.getOrganisms().add(organismModel);
+            model.setOrganism(organismModel);
             model.setPercentageComplete(percentComplete);
-            model.getCriteria().add(criteriaModel);
+            model.setCriteria(criteriaModel);
             organismCriteriaDAO.create(model);
         }
     }
 
     public List<OrganismCriteria> retrieveCriteria(long organismId) {
-        OrganismCriteriaDAO organismCriteriaDAO = DAOFactory.getOrganismCriteriaDAO();
-        List<OrganismCriteriaModel> list = organismCriteriaDAO.getByOrganism(organismId);
+//        OrganismCriteriaDAO organismCriteriaDAO = DAOFactory.getOrganismCriteriaDAO();
+//        List<OrganismCriteriaModel> list = organismCriteriaDAO.getByOrganism(organismId);
+        OrganismModel organismModel = this.dao.get(organismId);
+
         List<OrganismCriteria> results = new ArrayList<>();
-        for (OrganismCriteriaModel model : list)
+        for (OrganismCriteriaModel model : organismModel.getOrganismCriterias())
             results.add(model.toDataTransferObject());
         return results;
     }

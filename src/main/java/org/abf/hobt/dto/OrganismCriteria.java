@@ -2,9 +2,6 @@ package org.abf.hobt.dto;
 
 import org.abf.hobt.service.ice.IDataTransferObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * DTO for {@link org.abf.hobt.dao.model.OrganismCriteriaModel}
  *
@@ -12,19 +9,11 @@ import java.util.List;
  */
 public class OrganismCriteria implements IDataTransferObject {
 
-    private final List<Organism> organism = new ArrayList<>();
-    private final List<Criteria> criteria = new ArrayList<>();
+    private long id;
+    private Criteria criteria;
     private int percentageComplete;             // aka status
     private long created;
     private long updated;
-
-    public List<Organism> getOrganism() {
-        return organism;
-    }
-
-    public List<Criteria> getCriteria() {
-        return criteria;
-    }
 
     public int getPercentageComplete() {
         return percentageComplete;
@@ -48,5 +37,21 @@ public class OrganismCriteria implements IDataTransferObject {
 
     public void setUpdated(long updated) {
         this.updated = updated;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Criteria getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(Criteria criteria) {
+        this.criteria = criteria;
     }
 }

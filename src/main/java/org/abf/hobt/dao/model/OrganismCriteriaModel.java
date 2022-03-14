@@ -4,12 +4,10 @@ import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.OrganismCriteria;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "OrganismCriteria")
+@Table(name = "OrganismCriteriaStatus")
 public class OrganismCriteriaModel implements IDataModel {
 
     @Id
@@ -17,11 +15,13 @@ public class OrganismCriteriaModel implements IDataModel {
     @SequenceGenerator(name = "organism_criteria_id", sequenceName = "organism_criteria_id_seq", allocationSize = 1)
     private long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private final List<OrganismModel> organism = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organism_id")
+    private OrganismModel organism;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private final List<CriteriaModel> criteria = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "criteria_id", nullable = false, updatable = false)
+    private CriteriaModel criteria;
 
     @Column(name = "percent_complete")
     private int percentageComplete;             // aka status
@@ -46,14 +46,6 @@ public class OrganismCriteriaModel implements IDataModel {
         this.percentageComplete = percentageComplete;
     }
 
-    public List<OrganismModel> getOrganisms() {
-        return organism;
-    }
-
-    public List<CriteriaModel> getCriteria() {
-        return criteria;
-    }
-
     public Date getCreated() {
         return created;
     }
@@ -70,18 +62,31 @@ public class OrganismCriteriaModel implements IDataModel {
         this.updated = updated;
     }
 
+    public void setCriteria(CriteriaModel criteria) {
+        this.criteria = criteria;
+    }
+
+    public OrganismModel getOrganism() {
+        return organism;
+    }
+
+    public void setOrganism(OrganismModel organism) {
+        this.organism = organism;
+    }
+
+    public CriteriaModel getCriteria() {
+        return criteria;
+    }
+
     @Override
     public OrganismCriteria toDataTransferObject() {
-        OrganismCriteria criteria = new OrganismCriteria();
+        OrganismCriteria organismCriteria = new OrganismCriteria();
         if (this.created != null)
-            criteria.setCreated(this.created.getTime());
-        criteria.setPercentageComplete(this.percentageComplete);
+            organismCriteria.setCreated(this.created.getTime());
+        organismCriteria.setPercentageComplete(this.percentageComplete);
         if (this.updated != null)
-            criteria.setUpdated(this.updated.getTime());
-
-        for (CriteriaModel criteriaModel : this.criteria) {
-            criteria.getCriteria().add(criteriaModel.toDataTransferObject());
-        }
-        return criteria;
+            organismCriteria.setUpdated(this.updated.getTime());
+        organismCriteria.setCriteria(this.criteria.toDataTransferObject());
+        return organismCriteria;
     }
 }

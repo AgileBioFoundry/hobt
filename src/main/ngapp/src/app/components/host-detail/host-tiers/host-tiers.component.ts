@@ -5,6 +5,7 @@ import {Tier} from "../../../model/tier.model";
 import {TierCriteria} from "../../../model/tier-criteria.model";
 import {UserService} from "../../../service/user.service";
 import {User} from "../../../model/user.model";
+import {OrganismCriteria} from "../../../model/organism-criteria";
 
 @Component({
     selector: 'app-host-tiers',
@@ -24,23 +25,41 @@ export class HostTiersComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        // todo : instead of this, simply return specifiec to host organism
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
 
-            this.http.get('hosts/' + this.host.id + '/criterias/').subscribe((result: TierCriteria[]) => {
-                console.log(result);
+            this.http.get('hosts/' + this.host.id + '/criterias').subscribe((result: OrganismCriteria[]) => {
+                // console.log(result, this.host);
+                // console.log(this.tiers);
 
+                console.log(result[0]);
+
+                // for each tier in list of tiers for this organism
                 for (const tier of this.tiers) {
+
+                    // for each criteria in those tiers
                     for (const criteria of tier.criteria) {
-                        criteria.status = this.getTierCriteriaStatus(criteria.id, result);
+
+                        // go through returned criteria and set
+                        criteria.status = this.getTierCriteriaStatus(criteria.id, result[0].criteria);
                     }
+
                     tier.criteria = tier.criteria.sort((a, b) => a.id - b.id);
-                    tier.collapsed = (tier.index <= this.host.tier.index);
+                    // tier.collapsed = (tier.index <= this.host.tier.index);
                 }
 
                 // todo : use criteriaId -> [criteria]
             })
         })
+    }
+
+    getTierCriteriaStatus(criteriaId: number, tierCriteria: TierCriteria[]): number {
+        for (const criteria of tierCriteria) {
+            if (criteria.id === criteriaId)
+                return criteria.status;
+        }
+        return 0;
     }
 
     //
@@ -67,13 +86,5 @@ export class HostTiersComponent implements OnInit {
         }).subscribe((result) => {
             criteria.status = status;
         });
-    }
-
-    getTierCriteriaStatus(criteriaId: number, tierCriterias: TierCriteria[]): number {
-        for (const criteria of tierCriterias) {
-            if (criteria.id === criteriaId)
-                return criteria.status;
-        }
-        return 0;
     }
 }
