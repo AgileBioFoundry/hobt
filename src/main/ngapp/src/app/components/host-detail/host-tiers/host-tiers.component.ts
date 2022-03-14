@@ -25,24 +25,21 @@ export class HostTiersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // todo : instead of this, simply return specifiec to host organism
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
 
             this.http.get('hosts/' + this.host.id + '/criterias').subscribe((result: OrganismCriteria[]) => {
-                // console.log(result, this.host);
-                // console.log(this.tiers);
-
-                console.log(result[0]);
+                if (!result.length)
+                    return;
 
                 // for each tier in list of tiers for this organism
                 for (const tier of this.tiers) {
 
-                    // for each criteria in those tiers
+                    // for each criteria in each tier
                     for (const criteria of tier.criteria) {
 
                         // go through returned criteria and set
-                        criteria.status = this.getTierCriteriaStatus(criteria.id, result[0].criteria);
+                        criteria.status = this.getTierCriteriaStatus(criteria.id, result);
                     }
 
                     tier.criteria = tier.criteria.sort((a, b) => a.id - b.id);
@@ -54,12 +51,17 @@ export class HostTiersComponent implements OnInit {
         })
     }
 
-    getTierCriteriaStatus(criteriaId: number, tierCriteria: TierCriteria[]): number {
-        for (const criteria of tierCriteria) {
-            if (criteria.id === criteriaId)
-                return criteria.status;
+    getTierCriteriaStatus(criteriaId: number, organismCriteria: OrganismCriteria[]): number {
+        for (const item of organismCriteria) {
+            if (item.criteria.id === criteriaId) {
+                return item.percentageComplete;
+            }
         }
         return 0;
+    }
+
+    sortBy(criteriaArray: Array<TierCriteria>, prop: string) {
+        return criteriaArray.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
     }
 
     //

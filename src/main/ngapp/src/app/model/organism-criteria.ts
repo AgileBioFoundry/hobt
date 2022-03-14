@@ -1,10 +1,9 @@
-import {Host} from "./host.model";
 import {TierCriteria} from "./tier-criteria.model";
 
 export class OrganismCriteria {
-    organism: Host[];
-    criteria: TierCriteria[];
-    percentageComplete: number;
+    id: number;
+    criteria: TierCriteria;
+    percentageComplete: number; // aka status
     created: number;
     updated: number;
 }
