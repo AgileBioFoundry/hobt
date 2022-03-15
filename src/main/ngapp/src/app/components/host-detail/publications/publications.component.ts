@@ -23,7 +23,13 @@ export class PublicationsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.pagePublications();
+    }
+
+    pagePublications(page = 1): void {
+        this.paging.start = ((page - 1) * this.paging.limit);
         this.paging.processing = true;
+
         this.http.get('hosts/' + this.host.id + '/publications', this.paging).subscribe((result: Result<Publication>) => {
             this.publications = result.requested
             this.paging.available = result.available;
@@ -41,8 +47,7 @@ export class PublicationsComponent implements OnInit {
             if (!result || result === 'cancel')
                 return;
 
-            console.log(result);
-            this.publications.push(result);
+            this.pagePublications();
         }, error => {
             console.log('error', error);
         });

@@ -116,6 +116,7 @@ public class PublicationModel implements IDataModel {
         publication.setYear(this.year);
         publication.setJournal(this.journal);
         publication.setLink(this.link);
+        publication.setTitle(this.title);
         publication.setCreated(this.created.getTime());
         publication.setPrivileged(this.privileged);
         return publication;

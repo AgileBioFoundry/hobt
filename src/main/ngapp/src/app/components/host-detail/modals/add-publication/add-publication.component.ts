@@ -1,7 +1,8 @@
-import {Component, Host, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpService} from "../../../../service/http.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Publication} from "../../../../model/publication";
+import {Host} from "../../../../model/host.model";
 
 @Component({
     selector: 'app-add-permission',
@@ -23,7 +24,8 @@ export class AddPublicationComponent implements OnInit {
     }
 
     createPublication(): void {
-        this.http
-        this.activeModal.close(this.publication);
+        this.http.post('hosts/' + this.host.id + '/publications', this.publication).subscribe((result: Publication) => {
+            this.activeModal.close(result);
+        });
     }
 }

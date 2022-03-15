@@ -13,10 +13,21 @@
         No publications available
     </div>
 
+    <div *ngIf="publications && publications.length" class="mt-5">
 
-    <div *ngIf="publications && publications.length" class="mt-2">
-        <ul *ngFor="let publication of publications">
-            <li>{{ publication.title }}</li>
+        <ul class="list-group list-group-flush border-bottom border-top">
+            <li class="list-group-item" *ngFor="let publication of publications">
+                <a [href]="publication.link" target="_blank">{{publication.title}}</a>
+                <div class="text-muted small">{{publication.authors}}</div>
+                <div>{{publication.journal}}, {{publication.year}}</div>
+            </li>
         </ul>
+
+        <div class="mt-4">
+            <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
+                            [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
+                            (pageChange)="pagePublications($event)"></ngb-pagination>
+        </div>
+
     </div>
 </div>

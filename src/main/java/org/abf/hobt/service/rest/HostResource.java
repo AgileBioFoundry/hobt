@@ -107,6 +107,7 @@ public class HostResource extends RestResource {
     @Path("/{id}/publications")
     public Response createHostPublication(@PathParam("id") long organismId, Publication publication) {
         String userId = getUserId();
+        log(userId, "creating new publication");
         HostPublications hostPublications = new HostPublications(organismId, userId);
         return super.respond(hostPublications.create(publication));
     }
