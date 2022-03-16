@@ -40,7 +40,7 @@ export class PublicationsComponent implements OnInit {
     }
 
     showPublicationAddModal(): void {
-        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false, size: 'lg'};
         const modalRef = this.modalService.open(AddPublicationComponent, options);
         modalRef.componentInstance.host = this.host;
         modalRef.result.then((result: any) => {

@@ -24,6 +24,18 @@ export class AddPublicationComponent implements OnInit {
     }
 
     createPublication(): void {
+        // validate
+        this.publication.invalidJournal = !this.publication.journal;
+        this.publication.invalidLink = !this.publication.link;
+        this.publication.invalidTitle = !this.publication.title;
+        this.publication.invalidYear = !this.publication.year;
+        this.publication.invalidAuthors = !this.publication.authors;
+
+        if (this.publication.invalidJournal || this.publication.invalidLink || this.publication.invalidAuthors ||
+            this.publication.invalidYear || this.publication.invalidTitle) {
+            return;
+        }
+
         this.http.post('hosts/' + this.host.id + '/publications', this.publication).subscribe((result: Publication) => {
             this.activeModal.close(result);
         });

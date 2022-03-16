@@ -4,26 +4,29 @@
 </div>
 
 <div class="modal-body" id="modal-body">
-    <form>
+    <form class="p-1">
         <div class="row">
             <div class="col">
-                <label for="link" class="font-80">Author List</label>
-                <input type="text" class="form-control" name="link"
-                       id="link" ngbAutofocus [(ngModel)]="publication.authors">
+                <label for="authors" class="font-80">Author List</label>
+                <input type="text" class="form-control" name="authors"
+                       [ngClass]="{'is-invalid': publication.invalidLink}"
+                       id="authors" ngbAutofocus [(ngModel)]="publication.authors">
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col">
                 <label for="year" class="font-80">Publication Year</label>
-                <input type="text" name="year" class="form-control" id="year" [(ngModel)]="publication.year">
+                <input type="text" name="year" class="form-control" id="year"
+                       [(ngModel)]="publication.year" [ngClass]="{'is-invalid': publication.invalidYear}">
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col">
                 <label for="journal" class="font-80">Journal</label>
-                <input type="text" name="journal" class="form-control" id="journal" [(ngModel)]="publication.journal">
+                <input type="text" name="journal" class="form-control" id="journal"
+                       [(ngModel)]="publication.journal" [ngClass]="{'is-invalid': publication.invalidJournal}">
             </div>
         </div>
 
@@ -31,14 +34,16 @@
             <div class="col">
                 <label for="title" class="font-80">Title</label>
                 <textarea rows="2" name="title" id="title" class="form-control"
-                          [(ngModel)]="publication.title"></textarea>
+                          [(ngModel)]="publication.title"
+                          [ngClass]="{'is-invalid': publication.invalidTitle}"></textarea>
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col">
                 <label for="url" class="font-80">Publication URL</label>
-                <input type="text" name="url" class="form-control" id="url" [(ngModel)]="publication.link">
+                <input type="text" name="url" class="form-control" id="url"
+                       [(ngModel)]="publication.link" [ngClass]="{'is-invalid': publication.invalidLink}">
             </div>
         </div>
 
