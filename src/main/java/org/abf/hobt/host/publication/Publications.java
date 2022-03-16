@@ -32,7 +32,7 @@ public class Publications {
         if (organism == null)
             throw new IllegalArgumentException("Cannot retrieve publications for null organism");
 
-        long count = this.dao.listByOrganismCount(isPrivileged);
+        long count = this.dao.listByOrganismCount(organism, isPrivileged);
         ResultData<Publication> resultData = new ResultData<>();
         resultData.setAvailable(count);
         List<PublicationModel> list = dao.listByOrganism(organism, sort, asc, offset, limit, isPrivileged);

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {HttpService} from "../../service/http.service";
 import {Tier} from "../../model/tier.model";
 import {PermissionService} from "../../service/permission.service";
+import {HostStatistics} from "../../model/host-statistics";
 
 @Component({
     selector: 'app-main-page',
@@ -41,6 +42,12 @@ export class MainPageComponent implements OnInit {
                 return;
 
             this.hosts = result.requested.sort((a: Host, b: Host) => a.id - b.id);
+
+            for (const host of this.hosts) {
+                this.http.get('hosts/' + host.id + '/statistics').subscribe((result: HostStatistics) => {
+                    host.statistics = result;
+                });
+            }
         });
     }
 
@@ -75,22 +82,4 @@ export class MainPageComponent implements OnInit {
     canCreateNewHost(): boolean {
         return this.permissionService.canWrite(this.permissionService.ORGANISMS);
     }
-
-    // hosts = [
-    // new Host(1, "Pseudomonas putida", "Gammaproteobacteria"),
-    // new Host(2, "Rhodosporidium toruloides", "Basidiomycota"),
-    // new Host(3, "Aspergillus niger", "Ascomycota"),
-    // new Host(4, "Corynebacterium glutamicum", "Actinobacteria"),
-    // new Host(5, "Cupriavidus necator", "Betaproteobacteria"),
-    // new Host(6, "Bacillus coagulans", "Firmicutes"),
-    // new Host(7, "Pichia kudriavzevii", "Ascomycota"),
-    // new Host(8, "Clostridium tyrobutyricum", "Firmicutes"),
-    // new Host(9, "Lipomyces starkeyi", "Ascomycota"),
-    // new Host(10, "Rhodobacter sphaeroides", "Alphaproteobacteria"),
-    // new Host(11, "Aspergillus pseudoterreus", "Ascomycota"),
-    // new Host(12, "Zymomonas mobilis", "Alphaproteobacteria"),
-    // new Host(13, "Clostridium ljungdahlii", "Firmicutes"),
-    // new Host(14, "Zygosaccharomyces bailii", "Ascomycota"),
-    // // new Host(15, "Methylomicrobium buryatense", "Gammaproteobacteria")
-    // ];
 }

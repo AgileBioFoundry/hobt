@@ -46,14 +46,20 @@ public class PublicationDAO extends HibernateRepository<PublicationModel> {
         }
     }
 
-    public long listByOrganismCount(Boolean privilegedOnly) {
+    public long listByOrganismCount(OrganismModel organism, Boolean privilegedOnly) {
         try {
             CriteriaQuery<Long> query = getBuilder().createQuery(Long.class);
             Root<PublicationModel> from = query.from(PublicationModel.class);
+            Join<PublicationModel, OrganismModel> organisms = from.join("organisms");
+
             query.select(getBuilder().countDistinct(from.get("id")));
             // filter if privileged value is set
-            if (privilegedOnly != null)
-                query.where(getBuilder().equal(from.get("privileged"), privilegedOnly));
+            if (privilegedOnly == null) {
+                query.where(getBuilder().equal(organisms.get("id"), organism.getId()));
+            } else {
+                query.where(getBuilder().equal(organisms.get("id"), organism.getId()),
+                    getBuilder().equal(from.get("privileged"), privilegedOnly));
+            }
             return currentSession().createQuery(query).uniqueResult();
         } catch (Exception e) {
             Logger.error(e);

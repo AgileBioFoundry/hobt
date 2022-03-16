@@ -31,7 +31,7 @@ public class HostPublications {
         OrganismModel organismModel = DAOFactory.getOrganismDAO().get(this.hostId);
         List<PublicationModel> models = this.dao.listByOrganism(organismModel, "id", asc, start, limit, isPrivileged);
         ResultData<Publication> resultData = new ResultData<>();
-        resultData.setAvailable(this.dao.listByOrganismCount(isPrivileged));
+        resultData.setAvailable(this.dao.listByOrganismCount(organismModel, isPrivileged));
         for (PublicationModel model : models) {
             resultData.getRequested().add(model.toDataTransferObject());
         }

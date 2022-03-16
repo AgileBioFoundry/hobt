@@ -75,10 +75,12 @@
                 </h5>
                 <h6 class="card-subtitle mb-2 text-muted font-italic">{{ host.phylum }}</h6>
                 <p class="card-text pt-3 border-top">
-                    <b class="text-primary">{{ host.publications || 0 }}</b> publications<br>
-                    <b class="text-primary">{{ host.parts || 0 }}</b> associated parts<br>
-                    <b class="text-primary">{{ host.experiments || 0}}</b> experiments<br>
-                    <b class="text-primary">{{ host.protocols || 0 }}</b> protocols<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.publicationCount || 0 }}</b>
+                    publications<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.parts || 0 }}</b> associated parts<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.experimentCount || 0}}</b>
+                    experiments<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.protocols || 0 }}</b> protocols<br>
                 </p>
 
                 <p *ngIf="host.updated" class="small float-left text-muted">Last update: {{ host.updated | date }}</p>

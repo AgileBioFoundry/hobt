@@ -74,7 +74,8 @@
 
         <li [ngbNavItem]="'experiments'">
             <a ngbNavLink class="mr-5 ml-5">EXPERIMENTS
-                <div class="badge badge-light badge-pill p-1 font-90 text-muted">{{host.experiments}}</div>
+                <div class="badge badge-light badge-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>
             </a>
             <ng-template ngbNavContent>
                 <div class="container-fluid font-90 pt-3">

@@ -18,6 +18,15 @@ public class HostResource extends RestResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/statistics")
+    public Response getHostStatistics(@PathParam("id") long organismId) {
+        Organisms organisms = new Organisms();
+        return super.respond(organisms.getStatistics(organismId));
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getHosts(
         @DefaultValue("0") @QueryParam("offset") int offset,
         @DefaultValue("15") @QueryParam("limit") int limit,

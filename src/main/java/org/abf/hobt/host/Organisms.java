@@ -10,6 +10,7 @@ import org.abf.hobt.dao.model.CriteriaModel;
 import org.abf.hobt.dao.model.OrganismCriteriaModel;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.dao.model.TierModel;
+import org.abf.hobt.dto.HostStatistics;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.dto.OrganismCriteria;
 
@@ -121,5 +122,16 @@ public class Organisms {
         for (OrganismCriteriaModel model : organismModel.getOrganismCriterias())
             results.add(model.toDataTransferObject());
         return results;
+    }
+
+    public HostStatistics getStatistics(long organismId) {
+        OrganismModel organismModel = DAOFactory.getOrganismDAO().get(organismId);
+        if (organismModel == null)
+            throw new IllegalArgumentException("Cannot find organism with id " + organismId);
+
+        long count = DAOFactory.getPublicationDAO().listByOrganismCount(organismModel, null);
+        HostStatistics statistics = new HostStatistics();
+        statistics.setPublicationCount(count);
+        return statistics;
     }
 }

@@ -5,7 +5,7 @@ import {Tier} from "../../../model/tier.model";
 import {TierCriteria} from "../../../model/tier-criteria.model";
 import {UserService} from "../../../service/user.service";
 import {User} from "../../../model/user.model";
-import {OrganismCriteria} from "../../../model/organism-criteria";
+import {OrganismCriteria} from "../../../model/organism-criteria.model";
 
 @Component({
     selector: 'app-host-tiers',
