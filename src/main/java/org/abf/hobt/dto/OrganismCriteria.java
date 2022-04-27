@@ -1,9 +1,10 @@
 package org.abf.hobt.dto;
 
+import org.abf.hobt.dao.model.OrganismCriteriaStatusModel;
 import org.abf.hobt.service.ice.IDataTransferObject;
 
 /**
- * DTO for {@link org.abf.hobt.dao.model.OrganismCriteriaModel}
+ * DTO for {@link OrganismCriteriaStatusModel}
  *
  * @author Hector Plahar
  */

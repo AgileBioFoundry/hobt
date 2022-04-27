@@ -22,7 +22,7 @@ public class CriteriaModel implements IDataModel {
 
     @ManyToOne
     @JoinColumn(name = "organism_criteria_id")
-    private OrganismCriteriaModel organismCriteria;
+    private OrganismCriteriaStatusModel organismCriteria;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tier_id")
@@ -56,11 +56,11 @@ public class CriteriaModel implements IDataModel {
         this.tier = tier;
     }
 
-    public OrganismCriteriaModel getOrganismCriteria() {
+    public OrganismCriteriaStatusModel getOrganismCriteria() {
         return organismCriteria;
     }
 
-    public void setOrganismCriteria(OrganismCriteriaModel organismCriteria) {
+    public void setOrganismCriteria(OrganismCriteriaStatusModel organismCriteria) {
         this.organismCriteria = organismCriteria;
     }
 

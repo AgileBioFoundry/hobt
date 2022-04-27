@@ -11,6 +11,7 @@ public class Tier implements IDataTransferObject {
     private long id;
     private int index;
     private String label;
+    private boolean completed;
     private List<Criteria> criteria;
 
     public Tier() {
@@ -43,5 +44,13 @@ public class Tier implements IDataTransferObject {
 
     public List<Criteria> getCriteria() {
         return criteria;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

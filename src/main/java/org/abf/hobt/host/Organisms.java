@@ -7,7 +7,7 @@ import org.abf.hobt.dao.hibernate.CriteriaDAO;
 import org.abf.hobt.dao.hibernate.OrganismCriteriaDAO;
 import org.abf.hobt.dao.hibernate.OrganismDAO;
 import org.abf.hobt.dao.model.CriteriaModel;
-import org.abf.hobt.dao.model.OrganismCriteriaModel;
+import org.abf.hobt.dao.model.OrganismCriteriaStatusModel;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.dao.model.TierModel;
 import org.abf.hobt.dto.HostStatistics;
@@ -95,16 +95,16 @@ public class Organisms {
             throw new IllegalArgumentException("Invalid criteria id " + criteriaId);
 
         OrganismCriteriaDAO organismCriteriaDAO = DAOFactory.getOrganismCriteriaDAO();
-        Optional<OrganismCriteriaModel> optional = organismCriteriaDAO.getByOrganismAndCriteria(organismId, criteriaId);
+        Optional<OrganismCriteriaStatusModel> optional = organismCriteriaDAO.getByOrganismAndCriteria(organismId, criteriaId);
         if (optional.isPresent()) {
             // update
-            OrganismCriteriaModel model = optional.get();
+            OrganismCriteriaStatusModel model = optional.get();
             model.setPercentageComplete(percentComplete);
             model.setUpdated(new Date());
             organismCriteriaDAO.update(model);
         } else {
             // create new
-            OrganismCriteriaModel model = new OrganismCriteriaModel();
+            OrganismCriteriaStatusModel model = new OrganismCriteriaStatusModel();
             model.setCreated(new Date());
             model.setOrganism(organismModel);
             model.setPercentageComplete(percentComplete);
@@ -114,12 +114,10 @@ public class Organisms {
     }
 
     public List<OrganismCriteria> retrieveCriteria(long organismId) {
-//        OrganismCriteriaDAO organismCriteriaDAO = DAOFactory.getOrganismCriteriaDAO();
-//        List<OrganismCriteriaModel> list = organismCriteriaDAO.getByOrganism(organismId);
         OrganismModel organismModel = this.dao.get(organismId);
 
         List<OrganismCriteria> results = new ArrayList<>();
-        for (OrganismCriteriaModel model : organismModel.getOrganismCriterias())
+        for (OrganismCriteriaStatusModel model : organismModel.getOrganismCriterias())
             results.add(model.toDataTransferObject());
         return results;
     }

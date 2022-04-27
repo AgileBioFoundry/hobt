@@ -32,7 +32,7 @@ public class OrganismModel implements IDataModel {
     private Date lastUpdateTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organism", orphanRemoval = true)
-    private final Set<OrganismCriteriaModel> organismCriterias = new LinkedHashSet<>();
+    private final Set<OrganismCriteriaStatusModel> organismCriterias = new LinkedHashSet<>();
 
     @OneToOne
     @JoinColumn(name = "tier_id")
@@ -82,7 +82,7 @@ public class OrganismModel implements IDataModel {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public Set<OrganismCriteriaModel> getOrganismCriterias() {
+    public Set<OrganismCriteriaStatusModel> getOrganismCriterias() {
         return organismCriterias;
     }
 
@@ -95,8 +95,6 @@ public class OrganismModel implements IDataModel {
         organism.setCreated(creationTime.getTime());
         if (lastUpdateTime != null)
             organism.setUpdated(lastUpdateTime.getTime());
-        if (tier != null)
-            organism.setTier(tier.toDataTransferObject());
         return organism;
     }
 }
