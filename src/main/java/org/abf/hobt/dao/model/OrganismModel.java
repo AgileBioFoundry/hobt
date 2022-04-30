@@ -34,6 +34,9 @@ public class OrganismModel implements IDataModel {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organism", orphanRemoval = true)
     private final Set<OrganismCriteriaStatusModel> organismCriterias = new LinkedHashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organism", orphanRemoval = true)
+    private final Set<TierStatusModel> tierStatus = new LinkedHashSet<>();
+
     @OneToOne
     @JoinColumn(name = "tier_id")
     private TierModel tier;
@@ -86,6 +89,10 @@ public class OrganismModel implements IDataModel {
         return organismCriterias;
     }
 
+    public Set<TierStatusModel> getTierStatus() {
+        return tierStatus;
+    }
+
     @Override
     public Organism toDataTransferObject() {
         Organism organism = new Organism();
@@ -95,6 +102,8 @@ public class OrganismModel implements IDataModel {
         organism.setCreated(creationTime.getTime());
         if (lastUpdateTime != null)
             organism.setUpdated(lastUpdateTime.getTime());
+        if (this.tier != null)
+            organism.setTier(this.tier.toDataTransferObject());
         return organism;
     }
 }

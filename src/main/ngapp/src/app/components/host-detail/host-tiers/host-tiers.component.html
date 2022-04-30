@@ -42,7 +42,7 @@
                         <td class="text-muted font-95">{{criteria.description}}</td>
                         <td class="p-2">
 
-                            <div ngbDropdown class="float-right" *ngIf="canEditTiers">
+                            <div ngbDropdown class="float-right" *ngIf="canEditTiers && !tier.completed">
                                 <i class="fa fa-fw" ngbDropdownToggle></i>
                                 <div class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px">
                                     <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, -1)">N/A</a>

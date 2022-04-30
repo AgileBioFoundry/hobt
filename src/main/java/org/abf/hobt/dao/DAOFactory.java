@@ -20,6 +20,7 @@ public class DAOFactory {
     private static TierRuleDAO tierRuleDAO;
     private static PermissionDAO permissionDAO;
     private static PublicationDAO publicationDAO;
+    private static TierStatusDAO tierStatusDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -85,5 +86,11 @@ public class DAOFactory {
         if (publicationDAO == null)
             publicationDAO = new PublicationDAO();
         return publicationDAO;
+    }
+
+    public static TierStatusDAO getTierStatusDAO() {
+        if (tierStatusDAO == null)
+            tierStatusDAO = new TierStatusDAO();
+        return tierStatusDAO;
     }
 }
