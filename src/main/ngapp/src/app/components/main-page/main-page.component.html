@@ -52,7 +52,7 @@
             <td>
                 <span *ngIf="!host.tier" class="badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
                 <span *ngIf="host.tier" style="font-size: 14px" class="p-2 pr-3 pl-3 badge" [ngClass]="{'badge-secondary': (host.tier.index === 0 || host.tier === undefined),
-                    'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">Tier {{ host.tier.index || '1' }}</span>
+                    'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">{{ host.tier.label }}</span>
             </td>
             <td>{{ host.created | date }}</td>
             <td><span *ngIf="host.updated">{{ host.updated | date }}</span></td>
