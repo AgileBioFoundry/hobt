@@ -6,6 +6,7 @@ import {TierCriteria} from "../../../model/tier-criteria.model";
 import {UserService} from "../../../service/user.service";
 import {User} from "../../../model/user.model";
 import {OrganismCriteria} from "../../../model/organism-criteria.model";
+import {TierStatus} from "../../../model/tier-status";
 
 @Component({
     selector: 'app-host-tiers',
@@ -27,6 +28,19 @@ export class HostTiersComponent implements OnInit {
     ngOnInit(): void {
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
+
+            // todo : this whole section is very inefficient
+            this.http.get('hosts/' + this.host.id + '/tiers/status').subscribe((result: TierStatus[]) => {
+                console.log(result);
+                for (const tier of this.tiers) {
+                    for (const status of result) {
+                        if (tier.id === status.tierId) {
+                            tier.completed = status.complete;
+                            tier.collapsed = tier.completed;
+                        }
+                    }
+                }
+            });
 
             this.http.get('hosts/' + this.host.id + '/criterias').subscribe((result: OrganismCriteria[]) => {
                 if (!result.length)
@@ -77,8 +91,13 @@ export class HostTiersComponent implements OnInit {
             return;
 
         // todo : make call to backend
-        tier.completed = true;
-        tier.collapsed = true;
+        const tierStatus: TierStatus = {hostId: this.host.id, tierId: tier.id, complete: !tier.completed}
+        this.http.put('hosts/' + this.host.id + '/tiers/status', tierStatus).subscribe(result => {
+
+        });
+
+        tier.completed = !tier.completed;
+        tier.collapsed = tier.completed;
     }
 
     setTierCriteriaStatus(tier: Tier, criteria: TierCriteria, status: number): void {

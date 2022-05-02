@@ -99,10 +99,10 @@ public class HibernateConfiguration {
         configuration.setProperty("hibernate.connection.username", "sa");
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         configuration.setProperty("hibernate.current_session_context_class",
-            "org.hibernate.context.internal.ThreadLocalSessionContext");
+                "org.hibernate.context.internal.ThreadLocalSessionContext");
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         configuration.setProperty("hibernate.search.default.directory_provider",
-            "org.hibernate.search.store.impl.RAMDirectoryProvider");
+                "org.hibernate.search.store.impl.RAMDirectoryProvider");
     }
 
     private static void addAnnotatedClasses(Configuration configuration) {
@@ -112,12 +112,13 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(TierModel.class);
         configuration.addAnnotatedClass(ConfigurationModel.class);
         configuration.addAnnotatedClass(CriteriaModel.class);
-        configuration.addAnnotatedClass(OrganismCriteriaModel.class);
+        configuration.addAnnotatedClass(OrganismCriteriaStatusModel.class);
         configuration.addAnnotatedClass(RoleModel.class);
         configuration.addAnnotatedClass(UserRoleModel.class);
         configuration.addAnnotatedClass(TierRuleModel.class);
         configuration.addAnnotatedClass(PermissionModel.class);
         configuration.addAnnotatedClass(PublicationModel.class);
+        configuration.addAnnotatedClass(TierStatusModel.class);
     }
 
     /**

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "OrganismCriteriaStatus")
-public class OrganismCriteriaModel implements IDataModel {
+public class OrganismCriteriaStatusModel implements IDataModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "organism_criteria_id")
