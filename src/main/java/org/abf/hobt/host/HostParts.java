@@ -26,7 +26,7 @@ public class HostParts {
         if (strainsOnly) {
             types = new ArrayList<>(List.of(EntryType.STRAIN));
         } else {
-            types = new ArrayList<>(Arrays.asList(EntryType.STRAIN, EntryType.PLASMID, EntryType.PART, EntryType.ARABIDOPSIS));
+            types = new ArrayList<>(Arrays.asList(EntryType.STRAIN, EntryType.PLASMID, EntryType.PART, EntryType.SEED));
         }
         searchQuery.setEntryTypes(types);
         IceParts iceParts = new IceParts();

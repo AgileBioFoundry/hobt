@@ -15,15 +15,13 @@
 .nav-tabs .nav-link.active {
     color: #495057;
     background-color: #fff;
-    border-bottom: 5px solid darkblue;
+    border-bottom: 5px solid #002d72;
     /*border-color: #dee2e6 #dee2e6 #fff;*/
 }
 
 .nav-tabs .nav-link {
     border: 1px solid transparent;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: bold;
+    font-size: 0.95rem;
 }
 
 .nav-link {

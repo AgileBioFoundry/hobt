@@ -30,6 +30,8 @@ export class HostPartsComponent implements OnInit {
             url += "?strainsOnly=true"
 
         this.http.get(url).subscribe((result: any) => {
+            console.log(result);
+
             this.loadingParts = false;
             this.results = result.results;
             this.paging.available = result.resultCount;
