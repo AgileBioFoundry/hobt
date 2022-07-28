@@ -139,9 +139,8 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/tiers/status")
     public Response getTierStatus(@PathParam("id") long hostId) {
-        String userId = getUserId();
-        log(userId, "retrieving organism " + hostId + " tiers status");
-        HostStatus hostStatus = new HostStatus(hostId, userId);
+        log("", "retrieving organism " + hostId + " tiers status");
+        HostStatus hostStatus = new HostStatus(hostId, null);
         return super.respond(hostStatus.get());
     }
 }
