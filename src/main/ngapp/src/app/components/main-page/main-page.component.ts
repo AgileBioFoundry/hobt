@@ -58,7 +58,28 @@ export class MainPageComponent implements OnInit {
             this.params.sort = type;
         }
 
-        this.hosts.sort((a, b) => (a[type] > b[type]) ? 1 : (a[type] === b[type]) ? ((a[type] > b[type]) ? 1 : -1) : -1);
+        const multiplier = this.params.asc ? -1 : 1;
+        switch (type) {
+            default:
+                this.hosts.sort((a, b) => (a[type] > b[type]) ? 1 : (a[type] === b[type]) ? ((a[type] > b[type]) ? 1 : -1) : -1);
+                break;
+
+            case 'tier':
+                this.hosts.sort((a, b) => multiplier * this.sortTiers(a, b));
+                break;
+
+            case 'taxonomy':
+                this.hosts.sort((a, b) => multiplier * (a.phylum.localeCompare(b.phylum)));
+                break;
+        }
+    }
+
+    private sortTiers(a: Host, b: Host): number {
+        // this sort function assumes that missing .tier is equivalent to a.tier.index === 0 is true
+        if (!a.tier) return -1;
+        if (!b.tier) return 1;
+
+        return a.tier.index - b.tier.index;
     }
 
     goToHost(host: Host): void {
