@@ -46,6 +46,7 @@ public class HostStatus {
         TierStatusModel tierStatusModel = new TierStatusModel();
         tierStatusModel.setTier(tierModel);
         tierStatusModel.setComplete(tierStatus.isComplete());
+        tierStatusModel.setCreationTime(new Date());
         tierStatusModel.setOrganism(organismModel);
         tierStatusModel = DAOFactory.getTierStatusDAO().create(tierStatusModel);
 

@@ -8,6 +8,7 @@ public class TierStatus implements IDataTransferObject {
     private long tierId;
     private boolean complete;
     private long hostId;
+    private long created;
 
     public long getTierId() {
         return tierId;
@@ -39,5 +40,13 @@ public class TierStatus implements IDataTransferObject {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
     }
 }
