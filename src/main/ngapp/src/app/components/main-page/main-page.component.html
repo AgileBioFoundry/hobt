@@ -50,7 +50,7 @@
             <td class="font-italic text-primary">{{ host.name }}</td>
             <td class="font-italic text-muted">{{ host.phylum }}</td>
             <td>
-                <span *ngIf="!host.tier" class="badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
+                <span *ngIf="!host.tier" class="badge p-2 pr-3 pl-3 badge-light">Tier 0</span>
                 <span *ngIf="host.tier" style="font-size: 14px" class="p-2 pr-3 pl-3 badge" [ngClass]="{'badge-secondary': (host.tier.index === 0 || host.tier === undefined),
                     'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">{{ host.tier.label }}</span>
             </td>
@@ -65,7 +65,7 @@
             <div class="card-body pb-1">
                 <h5 class="card-title">
                     <span class="cursor-pointer font-italic" (click)="goToHost(host)">{{ host.name }}</span>
-                    <span *ngIf="!host.tier" class="float-right badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
+                    <span *ngIf="!host.tier" class="float-right badge p-2 pr-3 pl-3 badge-light">Tier 0</span>
                     <span *ngIf="host.tier" style="font-size: 14px" class="p-2 pr-3 pl-3 float-right badge" [ngClass]="{'badge-secondary': host.tier.index === 0,
                     'badge-primary': host.tier.index === 1, 'badge-info': host.tier.index === 2, 'badge-success': host.tier.index === 3}">{{ host.tier.label }}</span>
 
@@ -105,7 +105,7 @@
                     <div class="row mb-1">
                         <div class="col-sm-5 offset-7">
                             <span *ngIf="!availableTiers"
-                                  class="float-right badge p-2 pr-3 pl-3 badge-secondary">Tier 0</span>
+                                  class="float-right badge p-2 pr-3 pl-3 badge-light">Tier 0</span>
 
                             <select class="form-control float-right" id="tier" name="hostTierSelect"
                                     *ngIf="availableTiers && availableTiers.length" [(ngModel)]="newHost.tier">

@@ -28,6 +28,7 @@ export class HostTiersComponent implements OnInit {
     ngOnInit(): void {
         this.http.get('tiers').subscribe((tiers: Tier[]) => {
             this.tiers = tiers;
+            console.log(tiers);
 
             // todo : this whole section is very inefficient
             this.http.get('hosts/' + this.host.id + '/tiers/status').subscribe((result: TierStatus[]) => {
@@ -49,7 +50,7 @@ export class HostTiersComponent implements OnInit {
                 // for each tier in list of tiers for this organism
                 for (const tier of this.tiers) {
 
-                    // for each criteria in each tier
+                    // for each criterion in each tier
                     for (const criteria of tier.criteria) {
 
                         // go through returned criteria and set

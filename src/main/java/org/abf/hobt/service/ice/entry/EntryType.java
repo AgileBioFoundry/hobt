@@ -7,7 +7,8 @@ public enum EntryType implements IDataTransferObject {
     STRAIN("Strain", "strain"),
     PLASMID("Plasmid", "plasmid"),
     PART("Part", "part"),
-    ARABIDOPSIS("Arabidopsis", "arabidopsis");
+    SEED("Seed", "seed"),
+    PROTEIN("Protein", "protein");
 
     private String name;
     private String display;

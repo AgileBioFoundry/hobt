@@ -46,6 +46,7 @@ public class HostStatus {
         TierStatusModel tierStatusModel = new TierStatusModel();
         tierStatusModel.setTier(tierModel);
         tierStatusModel.setComplete(tierStatus.isComplete());
+        tierStatusModel.setCreationTime(new Date());
         tierStatusModel.setOrganism(organismModel);
         tierStatusModel = DAOFactory.getTierStatusDAO().create(tierStatusModel);
 
@@ -76,7 +77,8 @@ public class HostStatus {
     }
 
     public List<TierStatus> get() {
-        this.accountAuthorization.expectAdmin(this.userId); // todo : use custom permissions
+        // todo : assuming tier status retrieval doesn't need permissions
+//        this.accountAuthorization.expectAdmin(this.userId); // todo : use custom permissions
 
         List<TierStatus> list = new ArrayList<>();
 

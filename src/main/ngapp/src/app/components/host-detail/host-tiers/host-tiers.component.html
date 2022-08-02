@@ -8,13 +8,27 @@
                     class="fa fa-fw fa-caret-right" *ngIf="tier.collapsed"></i> <i
                     class="fa fa-fw fa-caret-down" *ngIf="!tier.collapsed"></i>{{tier.label}}</h5>
 
-                <div [ngClass]="{'opacity-hover': !tier.completed && canEditTiers}" (click)="markTierCompleted(tier)"
-                     *ngIf="!tier.completed" class="opacity-4">Complete
-                    <i class="fa fa-fw font-14 mt-1 fa-toggle-off"></i>
+                <div *ngIf="!tier.completed">
+                    <div *ngIf="canEditTiers" (click)="markTierCompleted(tier)" class="opacity-4 opacity-hover">Complete
+                        <i class="fa fa-fw font-14 mt-1 fa-toggle-off"></i>
+                    </div>
+
+                    <div *ngIf="!canEditTiers" class="text-muted font-italic font-weight-bold">
+                        In progress
+                    </div>
                 </div>
 
-                <div *ngIf="tier.completed">Tier Completed
-                    <i class="fa fa-fw font-14 fa-toggle-on green"></i>
+
+                <div *ngIf="tier.completed">
+                    <div *ngIf="canEditTiers">Tier Completed
+                        <i class="fa fa-fw font-14 fa-toggle-on green"></i>
+                    </div>
+
+                    <div *ngIf="!canEditTiers">
+                        <span class="text-success font-italic font-weight-bold">
+                           <i class="fa fa-check"></i> Completed
+                        </span>
+                    </div>
                 </div>
 
             </div>
