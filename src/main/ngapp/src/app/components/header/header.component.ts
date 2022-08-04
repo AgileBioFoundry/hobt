@@ -16,10 +16,10 @@ export class HeaderComponent implements OnInit {
     loggedInUser: User;
 
     constructor(private modalService: NgbModal, private router: Router, private userService: UserService) {
-        this.loggedInUser = this.userService.getUser();
     }
 
     ngOnInit(): void {
+        this.loggedInUser = this.userService.getUser();
     }
 
     loginUser(): void {
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
         const modalRef = this.modalService.open(LoginComponent, options);
         modalRef.result.then((loggedInUser: User) => {
             this.loggedInUser = loggedInUser;
-            console.log(loggedInUser);
+            this.router.navigate([this.router.url])
         }, () => {
             // console.log('delete modal cancel');
         });
