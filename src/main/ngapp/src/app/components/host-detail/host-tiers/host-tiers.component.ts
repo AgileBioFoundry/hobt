@@ -21,7 +21,7 @@ export class HostTiersComponent implements OnInit {
     canEditTiers: boolean;
 
     constructor(private http: HttpService, private users: UserService) {
-        this.user = this.users.getUser(false);
+        this.user = this.users.getUser();
         this.canEditTiers = this.checkCanEditTiers();
     }
 

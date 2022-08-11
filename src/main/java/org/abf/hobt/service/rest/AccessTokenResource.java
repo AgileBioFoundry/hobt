@@ -1,6 +1,7 @@
 package org.abf.hobt.service.rest;
 
 import org.abf.hobt.account.Authenticator;
+import org.abf.hobt.account.SessionHandler;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dto.Account;
 
@@ -61,7 +62,9 @@ public class AccessTokenResource extends RestResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response get() {
-        return super.respond(false);
+        if (SessionHandler.isValidSession(sessionId))
+            return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 }
 

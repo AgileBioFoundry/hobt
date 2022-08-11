@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {User} from "../../model/user.model";
 import {UserService} from "../../service/user.service";
 import {RegisterComponent} from "../register/register.component";
+import {HttpService} from "../../service/http.service";
 
 @Component({
     selector: 'app-header',
@@ -15,11 +16,20 @@ export class HeaderComponent implements OnInit {
 
     loggedInUser: User;
 
-    constructor(private modalService: NgbModal, private router: Router, private userService: UserService) {
+    constructor(private modalService: NgbModal, private router: Router, private userService: UserService,
+                private http: HttpService) {
     }
 
     ngOnInit(): void {
         this.loggedInUser = this.userService.getUser();
+        if (this.loggedInUser) {
+            // verify
+            this.http.get('accesstokens').subscribe(() => {
+            }, error => {
+                // invalid session id so log user out
+                this.userService.clearUser();
+            })
+        }
     }
 
     loginUser(): void {

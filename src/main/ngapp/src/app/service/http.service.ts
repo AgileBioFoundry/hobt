@@ -22,8 +22,8 @@ export class HttpService {
         this.apiUrl = environment.apiUrl;
     }
 
-    private setHeaders(redirect?: boolean): void {
-        if (this.userService.getUser(redirect)) {
+    private setHeaders(): void {
+        if (this.userService.getUser()) {
             const sid = this.userService.getUser().sessionId;
             this.httpOptions.headers = new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -32,9 +32,9 @@ export class HttpService {
         }
     }
 
-    get<T>(api: string, options?, redirect?): Observable<T> {
+    get<T>(api: string, options?): Observable<T> {
         this.setOptions(options);
-        this.setHeaders(redirect);
+        this.setHeaders();
         const url = `${this.apiUrl}/${api}`;
         return this.http.get<T>(url, this.httpOptions)
             .pipe(
@@ -44,21 +44,21 @@ export class HttpService {
 
     post<T>(api: string, payload: T, options?): Observable<any> {
         this.setOptions(options);
-        this.setHeaders(false);
+        this.setHeaders();
         const url = `${this.apiUrl}/${api}`;
         return this.http.post<T>(url, payload, this.httpOptions);
     }
 
     delete<T>(api: string): Observable<any> {
         this.setOptions(undefined);
-        this.setHeaders(false);
+        this.setHeaders();
         const url = `${this.apiUrl}/${api}`;
         return this.http.delete(url, this.httpOptions);
     }
 
     put<T>(api: string, payload: T, options?): Observable<any> {
         this.setOptions(options);
-        this.setHeaders(false);
+        this.setHeaders();
         const url = `${this.apiUrl}/${api}`;
         return this.http.put(url, payload, this.httpOptions);
     }
