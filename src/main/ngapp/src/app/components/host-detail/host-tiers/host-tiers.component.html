@@ -1,10 +1,10 @@
 <div *ngFor="let tier of tiers" class="pt-3 bg-light">
 
-    <div class="card ml-3 mr-3" [ngClass]="{'shadow-sm': tier.collapsed}">
+    <div class="card ms-3 me-3" [ngClass]="{'shadow-sm': tier.collapsed}">
 
         <div class="card-body">
             <div class="d-flex justify-content-between" [ngClass]="{'border-bottom': tier.collapsed}">
-                <h5 class="cursor-pointer pb-2 font-weight-bold" (click)="tier.collapsed = !tier.collapsed"><i
+                <h5 class="cursor-pointer pb-2 fw-bold" (click)="tier.collapsed = !tier.collapsed"><i
                     class="fa fa-fw fa-caret-right" *ngIf="tier.collapsed"></i> <i
                     class="fa fa-fw fa-caret-down" *ngIf="!tier.collapsed"></i>{{tier.label}}</h5>
 
@@ -13,7 +13,7 @@
                         <i class="fa fa-fw font-14 mt-1 fa-toggle-off"></i>
                     </div>
 
-                    <div *ngIf="!canEditTiers" class="text-muted font-italic font-weight-bold">
+                    <div *ngIf="!canEditTiers" class="text-muted fst-italic fw-bold">
                         In progress
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     </div>
 
                     <div *ngIf="!canEditTiers">
-                        <span class="text-success font-italic font-weight-bold">
+                        <span class="text-success fst-italic fw-bold">
                            <i class="fa fa-check"></i> Completed
                         </span>
                     </div>
@@ -38,7 +38,7 @@
                 <table class="table table-responsive-sm border-bottom font-90" *ngIf="!tier.collapsed">
                     <thead class="font-85 text-uppercase">
                     <tr>
-                        <th class="w-auto pl-5 text-dark">Criteria</th>
+                        <th class="w-auto ps-5 text-dark">Criteria</th>
                         <th class="w-50">Details</th>
                         <th class="w-25">Status</th>
                     </tr>
@@ -46,17 +46,17 @@
 
                     <tbody *ngIf="!tier.criteria.length">
                     <tr>
-                        <td colspan="3" class="text-muted font-italic">No criteria created for this tier</td>
+                        <td colspan="3" class="text-muted fst-italic">No criteria created for this tier</td>
                     </tr>
                     </tbody>
 
                     <tbody *ngIf="tier.criteria.length">
                     <tr *ngFor="let criteria of sortBy(tier.criteria, 'id')">
-                        <td class="pl-5">{{criteria.label}}</td>
+                        <td class="ps-5">{{criteria.label}}</td>
                         <td class="text-muted font-95">{{criteria.description}}</td>
                         <td class="p-2">
 
-                            <div ngbDropdown class="float-right" *ngIf="canEditTiers">
+                            <div ngbDropdown class="float-end" *ngIf="canEditTiers">
                                 <i class="fa fa-fw" ngbDropdownToggle></i>
                                 <div class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px">
                                     <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, -1)">N/A</a>

@@ -5,12 +5,12 @@
             <img src="assets/loader.gif"> &nbsp;<i class="text-muted">Fetching parts...</i>
         </div>
 
-        <div *ngIf="!loadingParts && results && !results.length" class="p-4 font-italic text-black-50">
+        <div *ngIf="!loadingParts && results && !results.length" class="p-4 fst-italic text-black-50">
             No matching parts available
         </div>
 
         <table class="table table-hover table-bordered border-bottom-0 font-90" *ngIf="results && results.length">
-            <thead class="font-weight-bold text-secondary">
+            <thead class="fw-bold text-secondary">
             <tr>
                 <td style="width: 100px">Type</td>
                 <td>Name</td>
@@ -23,7 +23,7 @@
 
             <tbody>
             <tr *ngFor="let result of results">
-                <td style="width: 100px" class="font-weight-bold small text-secondary">{{result.entryInfo.type}}</td>
+                <td style="width: 100px" class="fw-bold small text-secondary">{{result.entryInfo.type}}</td>
                 <td class="w-25 text-truncate">{{result.entryInfo.name}}<br>
                     <div class="small text-muted">{{result.entryInfo.shortDescription}}</div>
                 </td>

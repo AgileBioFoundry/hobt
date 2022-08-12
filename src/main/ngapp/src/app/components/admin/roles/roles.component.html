@@ -5,7 +5,7 @@
         </button>
     </div>
 
-    <div *ngIf="!roles || !roles.length" class="p-3 text-muted font-italic">
+    <div *ngIf="!roles || !roles.length" class="p-3 text-muted fst-italic">
         No roles available
     </div>
 
@@ -26,7 +26,7 @@
 
             <td class="w-25">
                 <div *ngIf="!role.showAddPermissions">
-                    <button class="btn btn-link font-90 pull-right" (click)="role.showAddPermissions = true">
+                    <button class="btn btn-link font-90 pull-end" (click)="role.showAddPermissions = true">
                         +add
                     </button>
                     <br>
@@ -41,13 +41,13 @@
                         </select>
                     </div>
 
-                    <div class="form-check form-check-inline pl-4">
+                    <div class="form-check form-check-inline ps-4">
                         <input class="form-check-input" type="checkbox" id="isRead" [value]="false"
                                [(ngModel)]="newPermission.isRead">
                         <label class="form-check-label font-90" for="isRead">Read</label>
                     </div>
 
-                    <div class="form-check form-check-inline pl-4">
+                    <div class="form-check form-check-inline ps-4">
                         <input class="form-check-input" type="checkbox" id="isWrite" [value]="true"
                                [(ngModel)]="newPermission.isWrite">
                         <label class="form-check-label font-90" for="isWrite">Write</label>
@@ -55,7 +55,7 @@
 
                     <hr>
 
-                    <div class="pull-right">
+                    <div class="float-end">
                         <button class="btn btn-link btn-sm" (click)="role.showAddPermissions = false">Cancel</button>
                         <button class="btn btn-primary btn-sm" [disabled]="!newPermission.resource && (!newPermission.isRead
                         || !newPermission.isWrite)" (click)="savePermission(role)">Save
@@ -66,7 +66,7 @@
                 <hr>
 
                 <div *ngIf="!role.permissions || !role.permissions.length">
-                    <span class="text-muted font-italic font-90">No permissions added to this role</span>
+                    <span class="text-muted fst-italic font-90">No permissions added to this role</span>
                 </div>
 
                 <ul class="list-group list-group-flush" *ngIf="role.permissions && role.permissions.length">
@@ -84,7 +84,7 @@
 
                 <div class="shadow-sm p-3 bg-light border mb-2" *ngIf="role.showAddMembers">
 
-                    <span class="text-muted font-70 text-uppercase font-weight-bold">Username or email</span>
+                    <span class="text-muted font-70 text-uppercase fw-bold">Username or email</span>
 
                     <ng-template #rt let-r="result" let-t="term">
                         <ngb-highlight [result]="r.firstName + ' ' + r.lastName" [term]="t"></ngb-highlight>
@@ -105,10 +105,10 @@
                 <hr>
 
                 <div *ngIf="!role.members || !role.members.length">
-                    <span class="text-muted font-italic font-90">No users added to this role</span>
+                    <span class="text-muted fst-italic font-90">No users added to this role</span>
                 </div>
 
-                <div class="font-75 font-weight-bold text-right"
+                <div class="font-75 fw-bold text-end"
                      *ngIf="role.members && role.members.length">{{role.members.length}} members
                 </div>
 
