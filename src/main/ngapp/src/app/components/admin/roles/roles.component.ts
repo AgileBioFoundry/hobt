@@ -7,6 +7,7 @@ import {Permission} from "../../../model/permission.model";
 import {Observable, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 import {PermissionService} from "../../../service/permission.service";
+import {User} from "../../../model/user.model";
 
 @Component({
     selector: 'app-roles',
@@ -31,6 +32,12 @@ export class RolesComponent implements OnInit {
     ngOnInit(): void {
         this.http.get('roles').subscribe((result: Role[]) => {
             this.roles = result;
+            for (let role of this.roles) {
+                // retrieve role members
+                this.http.get('roles/' + role.id + '/members').subscribe((result: User[]) => {
+                    role.members = result;
+                })
+            }
         });
     }
 

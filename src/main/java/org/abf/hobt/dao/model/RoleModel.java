@@ -5,7 +5,9 @@ import org.abf.hobt.dto.Role;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Role")
@@ -21,6 +23,9 @@ public class RoleModel implements IDataModel {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<AccountModel> members = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role", orphanRemoval = true)
     private final List<PermissionModel> permissions = new ArrayList<>();
@@ -47,6 +52,10 @@ public class RoleModel implements IDataModel {
 
     public List<PermissionModel> getPermissions() {
         return permissions;
+    }
+
+    public Set<AccountModel> getMembers() {
+        return members;
     }
 
     @Override

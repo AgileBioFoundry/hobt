@@ -18,6 +18,7 @@
             <th></th>
         </tr>
         </thead>
+        <tbody>
         <tr *ngFor="let role of roles">
             <td style="width: 30% !important;">
                 {{role.label}}<br>
@@ -26,7 +27,7 @@
 
             <td class="w-25">
                 <div *ngIf="!role.showAddPermissions">
-                    <button class="btn btn-link font-90 pull-end" (click)="role.showAddPermissions = true">
+                    <button class="btn btn-link font-90 float-end" (click)="role.showAddPermissions = true">
                         +add
                     </button>
                     <br>
@@ -128,5 +129,6 @@
                 <i class="fa fa-fw fa-pencil font-14 opacity-hover"></i>
             </td>
         </tr>
+        </tbody>
     </table>
 </div>

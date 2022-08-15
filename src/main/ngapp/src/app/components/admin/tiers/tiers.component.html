@@ -76,7 +76,7 @@
 
     <table class="table table-bordered mt-3" *ngIf="tiers && tiers.length">
         <tr *ngFor="let tier of tiers">
-            <td class="w-25 font-12">
+            <td class="font-12 align-text-top">
                 <i class="fa fa-fw fa-reorder"></i> {{tier.label}}
             </td>
 
@@ -194,7 +194,7 @@
 
             </td>
 
-            <td class="w-25 p-0">
+            <td class="w-25 p-0 align-text-top">
                 <div class="p-4 bg-light-blue" *ngIf="tier.showAddRules">
                     <form name="createSpecificationForm">
                         <div class="form-row">
