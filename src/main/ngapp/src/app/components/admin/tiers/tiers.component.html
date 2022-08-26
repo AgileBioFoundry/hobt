@@ -62,7 +62,7 @@
         </div>
 
         <div class="w-50">
-            <div class="alert alert-info w-75 float-right" role="alert">
+            <div class="alert alert-info w-75 float-end" role="alert">
                 Create a new tier by entering a unique label. Once the tier is successfully created,
                 you will have the opportunity to add criteria.
             </div>
@@ -71,24 +71,24 @@
     </div>
 
     <div *ngIf="!tiers || !tiers.length" class="m-4">
-        <span class="text-muted font-italic">No tiers available</span>
+        <span class="text-muted fst-italic">No tiers available</span>
     </div>
 
     <table class="table table-bordered mt-3" *ngIf="tiers && tiers.length">
         <tr *ngFor="let tier of tiers">
-            <td class="w-25 font-12">
+            <td class="font-12 align-text-top">
                 <i class="fa fa-fw fa-reorder"></i> {{tier.label}}
             </td>
 
             <td class="w-50 p-0">
 
-                <div class="pl-3 pt-3" *ngIf="!tier.showAddCriteria">
+                <div class="ps-3 pt-3" *ngIf="!tier.showAddCriteria">
                     <button class="btn btn-outline-primary btn-sm" (click)="tier.showAddCriteria = true">
                         Add Criteria
                     </button>
                 </div>
 
-                <div class="text-muted font-italic p-3"
+                <div class="text-muted fst-italic p-3"
                      *ngIf="!tier.showAddCriteria && (!tier.criteria || !tier.criteria.length)">
                     No criteria specified for this tier
                 </div>
@@ -140,12 +140,12 @@
                     <li class="list-group-item" *ngFor="let criteria of tier.criteria; let index = index">
 
                         <div [ngClass]="{'d-none': editIndex === index}">
-                            <div class="float-right">
+                            <div class="float-end">
                                 <i class="fa fa-fw fa-pencil text-muted opacity-hover" ngbTooltip="Edit"
                                    (click)="updateCriteria(index, criteria)"></i> <i
                                 class="fa fa-fw fa-trash-o text-muted opacity-hover" ngbTooltip="Delete"
                                 (click)="deleteCriteria(tier, criteria)"></i></div>
-                            <div class="font-weight-bold">{{criteria.label}}</div>
+                            <div class="fw-bold">{{criteria.label}}</div>
                             <p class="text-muted">{{criteria.description || 'No description provided'}}</p>
                         </div>
 
@@ -194,7 +194,7 @@
 
             </td>
 
-            <td class="w-25 p-0">
+            <td class="w-25 p-0 align-text-top">
                 <div class="p-4 bg-light-blue" *ngIf="tier.showAddRules">
                     <form name="createSpecificationForm">
                         <div class="form-row">
@@ -237,14 +237,14 @@
                     </form>
                 </div>
 
-                <div class="pl-3 pt-3" *ngIf="!tier.showAddRules">
+                <div class="ps-3 pt-3" *ngIf="!tier.showAddRules">
                     <button class="btn btn-sm btn-outline-primary" (click)="tier.showAddRules = true">Add Rules</button>
                 </div>
 
                 <div class="p-3">
 
-                    <div class="font-weight-bold">Tier completion rules</div>
-                    <p class="text-muted font-italic" *ngIf="!tier.rules || !tier.rules.length">No rules specified for
+                    <div class="fw-bold">Tier completion rules</div>
+                    <p class="text-muted fst-italic" *ngIf="!tier.rules || !tier.rules.length">No rules specified for
                         this tier</p>
 
                     <ul *ngIf="tier.rules && tier.rules.length">

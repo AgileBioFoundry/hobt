@@ -1,17 +1,20 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-title">Create Attribute</h5>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
+    <h5 class="modal-title" id="modal-title">Add Attribute</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
 </div>
 
 <div class="modal-body" id="modal-body">
-    <div class="form-group">
-        <label for="link" class="font-weight-bold font-80 text-uppercase">Label</label>
-        <input type="email" class="form-control" id="link" ngbAutofocus>
-    </div>
+<!--    <div class="form-group">-->
+<!--        <label for="link" class="fw-bold font-80 text-uppercase">Label</label>-->
+<!--        <input type="email" class="form-control" id="link" ngbAutofocus>-->
+<!--    </div>-->
 
-    <div class="form-group">
-        <label for="display" class="font-weight-bold font-80 text-uppercase">Type</label>
-        <input class="form-control" id="display">
+<!--    <div class="form-group">-->
+<!--        <label for="display" class="fw-bold font-80 text-uppercase">Type</label>-->
+<!--        <input class="form-control" id="display">-->
+<!--    </div>-->
+    <div class="p-3 fst-italic text-muted">
+        No pre-defined attributes available
     </div>
 </div>
 
@@ -23,7 +26,7 @@
     </div>
 
     <div class="pull-right">
-        <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
-        <button class="btn btn-primary" (click)="createAttribute()">Create</button>
+        <button class="btn btn-link btn-sm" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-primary btn-sm" (click)="createAttribute()">Create</button>
     </div>
 </div>

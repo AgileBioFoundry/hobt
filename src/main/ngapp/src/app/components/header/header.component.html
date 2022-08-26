@@ -3,7 +3,7 @@
         <nav class="navbar">
             <div class="col d-inline-block align-middle">
                 <!--                                <img src="assets/hobt1.png" style="height: 70px">-->
-                <strong class="font-weight-bold cursor-pointer" (click)="goHome()" style="font-size: 35px">HObT</strong>
+                <strong class="fw-bold cursor-pointer" (click)="goHome()" style="font-size: 35px">HObT</strong>
             </div>
 
             <div class="col">
@@ -11,7 +11,7 @@
             </div>
 
             <div class="col">
-                <div *ngIf="loggedInUser" class="float-right text-black-50 p-3">
+                <div *ngIf="loggedInUser" class="float-end text-black-50 p-3">
                     <i class="fa fa-fw fa-user-circle-o"></i> {{loggedInUser.firstName}} {{loggedInUser.lastName}}
 
                     &nbsp;|&nbsp;
@@ -21,7 +21,7 @@
 
                 </div>
 
-                <div *ngIf="!loggedInUser" class="float-right text-black-50">
+                <div *ngIf="!loggedInUser" class="float-end text-black-50">
                     <button class="btn btn-link" (click)="loginUser()">
                         <i class="fa fa-fw fa-sign-in"></i> Login
                     </button>
@@ -29,7 +29,7 @@
                     <!--                    <span class="cursor-pointer" (click)="loginUser()">Login</span>-->
                     <!---->
                     <!--                    &nbsp;|&nbsp;-->
-                    <button class="btn btn-primary ml-2" (click)="registerUser()">Register</button>
+                    <button class="btn btn-primary ms-2" (click)="registerUser()">Register</button>
 
                     <!--                    <span class="cursor-pointer">Register</span>-->
                 </div>

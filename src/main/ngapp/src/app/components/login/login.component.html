@@ -4,7 +4,7 @@
         <div id="fields" class="form-groupModel">
             <div class="d-flex justify-content-between">
                 <span class="form-label">User ID</span><br>
-                <a routerLink="/register" class="pr-0 font-80" *ngIf="canRegister">Register</a>
+                <a routerLink="/register" class="pe-0 font-80" *ngIf="canRegister">Register</a>
             </div>
             <input type="text" placeholder="User ID" class="form-control" [(ngModel)]="loggedInUser.userId"
                    name="userId" [ngClass]="{'is-invalid': !validation.validId}" required>
@@ -12,7 +12,7 @@
             <br>
             <div class="d-flex justify-content-between">
                 <span class="form-label">Password</span>
-                <a routerLink="/forgotPassword" class="font-80 pr-0">Forgot?</a>
+                <a routerLink="/forgotPassword" class="font-80 pe-0">Forgot?</a>
             </div>
 
             <input type="password" placeholder="Password" class="form-control" [(ngModel)]="loggedInUser.password"

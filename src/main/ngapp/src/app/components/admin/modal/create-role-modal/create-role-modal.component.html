@@ -1,22 +1,20 @@
 <div class="modal-header">
     <h5 class="modal-title" id="modal-title">Create New Role</h5>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 
 <div class="modal-body" id="modal-body">
-    <div class="form-group">
-        <label for="link" class="font-weight-bold font-90">Label:</label>
-        <input type="email" class="form-control" id="link" ngbAutofocus [(ngModel)]="newRole.label"
-               [ngClass]="{'is-invalid': existingLabel}" (ngModelChange)="existingLabel = false"
-               placeholder="Enter a unique label for this role" required>
-        <div class="invalid-feedback">
-            Please enter a unique role label
-        </div>
+    <label for="link" class="small">Label</label>
+    <input type="email" class="form-control form-control-sm" id="link" ngbAutofocus [(ngModel)]="newRole.label"
+           [ngClass]="{'is-invalid': existingLabel}" (ngModelChange)="existingLabel = false"
+           placeholder="Enter a unique label for this role" required>
+    <div class="invalid-feedback">
+        Please enter a unique role label
     </div>
-    <div class="form-group">
-        <label for="display" class="font-weight-bold font-90">Description:</label>
-        <textarea class="form-control" id="display" rows="3" [(ngModel)]="newRole.description" required></textarea>
-    </div>
+
+    <br>
+    <label for="display" class="small">Description</label>
+    <textarea class="form-control" id="display" rows="3" [(ngModel)]="newRole.description" required></textarea>
 </div>
 
 <div class="modal-footer" [ngClass]="{'d-flex justify-content-between': serverError}">
@@ -24,7 +22,7 @@
         <i class="fa fa-exclamation-triangle"></i> Server error creating new role
     </div>
 
-    <div class="text-right">
+    <div class="text-end">
         <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
         <button class="btn btn-primary" (click)="createNewRole()" [disabled]="!newRole.label || !newRole.description">
             Create Role

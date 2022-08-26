@@ -1,11 +1,11 @@
 <div class="modal-header">
     <h5 class="modal-title" id="modal-title">Add Role</h5>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
 </div>
 
 <div class="modal-body" id="modal-body">
     <div class="form-group">
-        <label for="role" class="font-weight-bold font-90">Select Role:</label>
+        <label for="role" class="fw-bold font-90">Select Role:</label>
 
         <select class="form-control" id="role" name="roleSelect" [(ngModel)]="selectedRole">
             <option [ngValue]="undefined">Select</option>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group" *ngIf="selectedRole">
-        <label for="display" class="font-weight-bold font-90">Description:</label>
+        <label for="display" class="fw-bold font-90">Description:</label>
         <textarea class="form-control" id="display" rows="3" [(ngModel)]="selectedRole.description" disabled></textarea>
     </div>
 </div>
@@ -24,7 +24,7 @@
         <i class="fa fa-exclamation-triangle"></i> Server error creating add new role
     </div>
 
-    <div class="text-right">
+    <div class="text-end">
         <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
         <button class="btn btn-primary" (click)="createNewRole()" [disabled]="!selectedRole">
             Assign Role

@@ -14,7 +14,7 @@ import {HostStatistics} from "../../model/host-statistics";
 export class MainPageComponent implements OnInit {
 
     gridMode: boolean = true;
-    params = {asc: false, sort: "id", limit: 15};
+    params = {asc: false, sort: "id", limit: 100};
     newHost: Host;
     hosts: Host[];
     showCreateNewHost = false;
@@ -101,6 +101,6 @@ export class MainPageComponent implements OnInit {
     }
 
     canCreateNewHost(): boolean {
-        return this.permissionService.canWrite(this.permissionService.ORGANISMS);
+        return this.permissionService.canWrite(this.permissionService.HOSTS);
     }
 }

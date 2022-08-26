@@ -6,7 +6,7 @@
 
     <groupId>org.abf</groupId>
     <artifactId>hobt</artifactId>
-    <version>3.0.5</version>
+    <version>3.3.0</version>
     <packaging>war</packaging>
 
     <name>hobt</name>

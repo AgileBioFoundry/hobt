@@ -26,13 +26,13 @@ export class UserService {
         return user.isAdmin;
     }
 
-    getUser(redirectToLogin: boolean = false): User {
+    getUser(): User {
         // if user is not set, then attempt to retrieve from local storage
         if (!this.user) {
             this.user = JSON.parse(sessionStorage.getItem(this.USER_KEY));
         }
 
-        if (!this.user && redirectToLogin) {
+        if (!this.user) {
             this.clearUser();
         }
 

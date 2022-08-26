@@ -19,6 +19,7 @@ public class RoleResource extends RestResource {
         @DefaultValue("15") @QueryParam("limit") int limit,
         @DefaultValue("id") @QueryParam("sort") String sort,
         @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        String userId = getUserId();
         Roles roles = new Roles();
         return super.respond(roles.list(offset, limit, sort, asc));
     }
@@ -30,6 +31,17 @@ public class RoleResource extends RestResource {
     public Response getRole(@PathParam("id") long roleId) {
         Roles roles = new Roles();
         return super.respond(roles.retrieve(roleId));
+    }
+
+    @GET
+    @Path("/{id}/members")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getRoleMembers(@PathParam("id") long roleId) {
+        String userId = getUserId();
+        log(userId, "get role members");
+        Roles roles = new Roles();
+        return super.respond(roles.getRoleMembers(roleId));
     }
 
     @POST

@@ -11,6 +11,7 @@ public class Role implements IDataTransferObject {
     private String label;
     private String description;
     private final List<Permission> permissions = new ArrayList<>();
+    private final List<Account> members = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -38,5 +39,9 @@ public class Role implements IDataTransferObject {
 
     public List<Permission> getPermissions() {
         return permissions;
+    }
+
+    public List<Account> getMembers() {
+        return members;
     }
 }

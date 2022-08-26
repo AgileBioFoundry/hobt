@@ -7,6 +7,9 @@ import {Permission} from "../../../model/permission.model";
 import {Observable, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 import {PermissionService} from "../../../service/permission.service";
+import {User} from "../../../model/user.model";
+import {SubResource} from "../../../model/sub-resource";
+import {Result} from "../../../model/result";
 
 @Component({
     selector: 'app-roles',
@@ -18,11 +21,12 @@ export class RolesComponent implements OnInit {
     roles: Role[];
     newPermission: Permission;
     availableResources: string[];
+    availableSubResources: SubResource[];
     searching: boolean;
     searchFailed: boolean;
 
     constructor(private http: HttpService, private modalService: NgbModal, private permissions: PermissionService) {
-        this.availableResources = ['All', this.permissions.TIERS, this.permissions.ORGANISMS];
+        this.availableResources = ['All', this.permissions.TIERS, this.permissions.HOSTS]; // todo : retrieve from backend
         this.newPermission = new Permission();
         this.searching = false;
         this.searchFailed = false;
@@ -31,6 +35,30 @@ export class RolesComponent implements OnInit {
     ngOnInit(): void {
         this.http.get('roles').subscribe((result: Role[]) => {
             this.roles = result;
+            for (let role of this.roles) {
+                // retrieve role members
+                this.http.get('roles/' + role.id + '/members').subscribe((result: User[]) => {
+                    role.members = result;
+                })
+            }
+        });
+    }
+
+    showAddRolePermissions(role: Role): void {
+        role.showAddPermissions = true;
+        // fetch sub resource list
+
+    }
+
+    // retrieves sub-resources for the selected resource
+    // "all" is the only exception
+    fetchSubResources(): void {
+        const resource = this.newPermission.resource.toLowerCase();
+        if (resource === 'all')
+            return;
+
+        this.http.get(resource).subscribe((result: Result<SubResource>) => {
+            this.availableSubResources = result.requested;
         });
     }
 
