@@ -6,6 +6,8 @@ public class Permission implements IDataTransferObject {
 
     private long id;
     private String resource;
+    private String subResource;
+    private String subResourceDisplay;
     private boolean isRead;
     private boolean isWrite;
 
@@ -39,5 +41,21 @@ public class Permission implements IDataTransferObject {
 
     public void setResource(String resource) {
         this.resource = resource;
+    }
+
+    public String getSubResource() {
+        return subResource;
+    }
+
+    public void setSubResource(String subResource) {
+        this.subResource = subResource;
+    }
+
+    public String getSubResourceDisplay() {
+        return subResourceDisplay;
+    }
+
+    public void setSubResourceDisplay(String subResourceDisplay) {
+        this.subResourceDisplay = subResourceDisplay;
     }
 }

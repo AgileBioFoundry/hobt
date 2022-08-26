@@ -101,6 +101,6 @@ export class MainPageComponent implements OnInit {
     }
 
     canCreateNewHost(): boolean {
-        return this.permissionService.canWrite(this.permissionService.ORGANISMS);
+        return this.permissionService.canWrite(this.permissionService.HOSTS);
     }
 }

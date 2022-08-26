@@ -24,6 +24,9 @@ public class PermissionModel implements IDataModel {
     @Column(name = "resource")
     private String resource;
 
+    @Column(name = "subResource")
+    private String subResource;
+
     public long getId() {
         return id;
     }
@@ -52,6 +55,14 @@ public class PermissionModel implements IDataModel {
         this.resource = resource;
     }
 
+    public String getSubResource() {
+        return subResource;
+    }
+
+    public void setSubResource(String subResource) {
+        this.subResource = subResource;
+    }
+
     @Override
     public Permission toDataTransferObject() {
         Permission permission = new Permission();
@@ -59,6 +70,7 @@ public class PermissionModel implements IDataModel {
         permission.setResource(this.resource);
         permission.setWrite(isWrite);
         permission.setRead(!isWrite);
+        permission.setSubResource(this.subResource);
         return permission;
     }
 }

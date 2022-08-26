@@ -29,6 +29,7 @@ public class RolePermissions {
         permissionModel.setWrite(permission.isWrite());
         permissionModel.setRole(roleModel);
         permissionModel.setResource(permission.getResource());
+        permissionModel.setSubResource(permission.getSubResource());
         return this.dao.create(permissionModel).toDataTransferObject();
     }
 }

@@ -25,9 +25,9 @@
                 <span class="text-muted font-90">{{role.description}}</span>
             </td>
 
-            <td class="w-25">
+            <td style="width: 30%">
                 <div *ngIf="!role.showAddPermissions">
-                    <button class="btn btn-link font-90 float-end" (click)="role.showAddPermissions = true">
+                    <button class="btn btn-link font-90 float-end" (click)="showAddRolePermissions(role)">
                         +add
                     </button>
                     <br>
@@ -35,10 +35,16 @@
 
                 <div class="shadow-sm p-3 bg-light border pb-5" *ngIf="role.showAddPermissions">
                     <div class="pb-3">
-                        <select class="form-control" id="tier" name="hostTierSelect"
-                                [(ngModel)]="newPermission.resource">
-                            <option [ngValue]="undefined">Select</option>
+                        <select class="form-select form-select-sm" id="tier" name="rolePermissionResourceSelect"
+                                [(ngModel)]="newPermission.resource" (change)="fetchSubResources()">
+                            <option [ngValue]="undefined">Select resource</option>
                             <option [ngValue]="perm" *ngFor="let perm of availableResources">{{perm}}</option>
+                        </select>
+
+                        <select class="form-select-sm form-select mt-2" name="rolePermissionSubResourceSelect"
+                                [(ngModel)]="newPermission.subResource" [disabled]="!newPermission.resource">
+                            <option [ngValue]="undefined">Specify optional sub-resource</option>
+                            <option [ngValue]="sub.id" *ngFor="let sub of availableSubResources">{{sub.name}}</option>
                         </select>
                     </div>
 
@@ -72,12 +78,14 @@
 
                 <ul class="list-group list-group-flush" *ngIf="role.permissions && role.permissions.length">
                     <li class="list-group-item" style="line-height: 1.0" *ngFor="let permission of role.permissions">
-                        {{permission.resource}}<br><small class="text-muted" *ngIf="permission.isWrite">Write</small>
+                        {{permission.resource}} <span
+                        class="float-end font-italic text-muted small">{{permission.subResourceDisplay}}</span>
+                        <br><small class="text-muted" *ngIf="permission.isWrite">Write</small>
                         <small class="text-muted" *ngIf="!permission.isWrite">Read</small>
                     </li>
                 </ul>
             </td>
-            <td class="w-25">
+            <td style="width: 30%">
                 <div *ngIf="!role.showAddMembers">
                     <button class="btn btn-link font-90 pull-right" (click)="role.showAddMembers = true">+add</button>
                     <br>

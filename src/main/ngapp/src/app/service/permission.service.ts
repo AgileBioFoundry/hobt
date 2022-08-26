@@ -9,7 +9,7 @@ export class PermissionService {
 
     private permissions: Permission[];
     TIERS: string = 'Tiers';
-    ORGANISMS: string = 'Organisms';
+    HOSTS: string = 'Hosts';
 
     constructor(private userService: UserService) {
         this.permissions = [];
