@@ -5,13 +5,18 @@
 <div class="container-fluid">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link" [ngClass]="{'active': active === 'tiers'}" aria-current="page" href="admin/tiers">Tier Settings</a>
+            <a class="nav-link" [ngClass]="{'active': active === 'tiers'}" aria-current="page" href="admin/tiers">
+                Tier Settings
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" [ngClass]="{'active': active === 'users'}" href="admin/users">Users</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" [ngClass]="{'active': active === 'roles'}" href="admin/roles">Roles</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': active === 'auth'}" href="admin/auth">Authentication</a>
         </li>
     </ul>
 </div>

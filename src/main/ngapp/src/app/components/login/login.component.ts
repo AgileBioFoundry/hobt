@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
             // save to session
             this.loggedInUser = result;
             this.userService.setUser(result);
+            this.permissionService.setAdmin(this.loggedInUser.isAdmin);
 
             // check for explicit permissions only if this user is not an administrator
             if (!this.loggedInUser.isAdmin) {

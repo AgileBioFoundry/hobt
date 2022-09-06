@@ -1,0 +1,13 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-3 offset-3">Authentication Method</div>
+        <div class="col pull-left">
+            <select class="form-select form-select-sm w-25" id="tier" name="rolePermissionResourceSelect"
+                    [(ngModel)]="authenticationSelection" (change)="selectionChange()" [disabled]="processing">
+                <option [ngValue]="undefined">Select</option>
+                <option [ngValue]="perm" *ngFor="let perm of options">{{perm}}</option>
+            </select>
+
+        </div>
+    </div>
+</div>
