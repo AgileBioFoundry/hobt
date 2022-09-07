@@ -29,6 +29,7 @@ import {HostPartsComponent} from './components/host-detail/host-parts/host-parts
 import {ConfirmActionComponent} from './components/common/confirm-action/confirm-action.component';
 import {PublicationsComponent} from './components/host-detail/publications/publications.component';
 import { AuthenticationComponent } from './components/admin/authentication/authentication.component';
+import { ExperimentsComponent } from './components/host-detail/experiments/experiments.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { AuthenticationComponent } from './components/admin/authentication/authe
         HostPartsComponent,
         ConfirmActionComponent,
         PublicationsComponent,
-        AuthenticationComponent
+        AuthenticationComponent,
+        ExperimentsComponent
     ],
     imports: [
         BrowserModule,
