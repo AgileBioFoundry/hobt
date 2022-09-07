@@ -3,6 +3,7 @@ package org.abf.hobt.service.rest;
 import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.dto.TierStatus;
+import org.abf.hobt.host.HostExperiments;
 import org.abf.hobt.host.HostParts;
 import org.abf.hobt.host.Organisms;
 import org.abf.hobt.host.publication.HostPublications;
@@ -30,10 +31,10 @@ public class HostResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getHosts(
-            @DefaultValue("0") @QueryParam("offset") int offset,
-            @DefaultValue("15") @QueryParam("limit") int limit,
-            @DefaultValue("id") @QueryParam("sort") String sort,
-            @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc) {
         Organisms organisms = new Organisms();
         return super.respond(organisms.retrieveList(offset, limit, sort, asc));
     }
@@ -43,11 +44,11 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/criterias")
     public Response getHostCriterias(
-            @PathParam("id") long organismId,
-            @DefaultValue("0") @QueryParam("offset") int offset,
-            @DefaultValue("15") @QueryParam("limit") int limit,
-            @DefaultValue("id") @QueryParam("sort") String sort,
-            @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        @PathParam("id") long organismId,
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc) {
         Organisms organisms = new Organisms();
         return super.respond(organisms.retrieveCriteria(organismId));
     }
@@ -69,6 +70,15 @@ public class HostResource extends RestResource {
                                  @PathParam("id") long organismId) {
         HostParts parts = new HostParts();
         return super.respond(parts.get(organismId, strainsOnly));
+    }
+
+    @GET
+    @Path("/{id}/experiments")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getHostExperiments(@PathParam("id") long organismId) {
+        HostExperiments experiments = new HostExperiments();
+        return super.respond(experiments.get(organismId));
     }
 
     @POST
@@ -102,12 +112,12 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/publications")
     public Response getHostPublications(
-            @PathParam("id") long organismId,
-            @DefaultValue("0") @QueryParam("offset") int offset,
-            @DefaultValue("15") @QueryParam("limit") int limit,
-            @DefaultValue("id") @QueryParam("sort") String sort,
-            @DefaultValue("false") @QueryParam("asc") boolean asc,
-            @QueryParam("privileged") Boolean privileged) {
+        @PathParam("id") long organismId,
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc,
+        @QueryParam("privileged") Boolean privileged) {
         Publications publications = new Publications();
         return super.respond(publications.getByOrganism(organismId, offset, limit, sort, asc, privileged));
     }

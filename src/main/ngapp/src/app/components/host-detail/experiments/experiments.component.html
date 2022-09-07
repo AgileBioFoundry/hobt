@@ -1,0 +1,20 @@
+<div class="container-fluid font-90 pt-3">
+    <div class="row">
+        <div class="col" *ngIf="!processing && (!studies || !studies.length)">
+            <i class="text-muted">No information available</i>
+        </div>
+
+        <div class="col" *ngIf="processing">
+            <i class="text-muted fst-italic"><img src="assets/loader.gif"> retrieving experiments</i>
+        </div>
+
+        <div class="col" *ngIf="!processing && studies">
+            <ol class="list-group list-group-numbered list-group-flush">
+                <li class="list-group-item" *ngFor="let study of studies">
+                    <a [href]="study.url">{{study.label}}</a> &nbsp;
+                    <small class="text-muted">added on {{study.created | date}}</small>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>

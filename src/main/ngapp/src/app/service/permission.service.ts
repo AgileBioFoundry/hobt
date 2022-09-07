@@ -10,6 +10,7 @@ export class PermissionService {
     private permissions: Permission[];
     TIERS: string = 'Tiers';
     HOSTS: string = 'Hosts';
+    admin: boolean;
 
     constructor(private userService: UserService) {
         this.permissions = [];
@@ -17,6 +18,14 @@ export class PermissionService {
 
     setPermissions(permissions: Permission[]): void {
         this.permissions = permissions;
+    }
+
+    setAdmin(isAdmin: boolean): void {
+        this.admin = isAdmin;
+    }
+
+    isAdmin(): boolean {
+        return this.admin;
     }
 
     canRead(resource: string): boolean {

@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
             }, error => {
                 // invalid session id so log user out
                 this.userService.clearUser();
+                this.loggedInUser = undefined;
             })
         }
     }

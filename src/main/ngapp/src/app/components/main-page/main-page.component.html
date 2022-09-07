@@ -76,30 +76,7 @@
             </div>
         </div>
 
-        <div class="card ms-4 mb-4 shadow-sm" style="width: 28rem" *ngFor="let host of hosts">
-            <div class="card-body pb-1">
-                <h5 class="card-title">
-                    <span class="cursor-pointer fst-italic" (click)="goToHost(host)">{{ host.name }}</span>
-                    <span *ngIf="!host.tier" class="pull-right badge p-2 bg-light text-black-50">Tier 0</span>
-                    <span *ngIf="host.tier" style="font-size: 12px" class="p-2 pull-right badge" [ngClass]="{'bg-secondary': host.tier.index === 0,
-                    'bg-primary': host.tier.index === 1, 'bg-info': host.tier.index === 2, 'bg-success': host.tier.index === 3}">{{ host.tier.label }}</span>
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted fst-italic">{{ host.phylum }}</h6>
-                <p class="card-text pt-3 border-top">
-                    <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.publicationCount || 0 }}</b>
-                    publications<br>
-                    <b class="text-primary" *ngIf="host.statistics">{{ host.parts || 0 }}</b> associated parts<br>
-                    <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.experimentCount || 0}}</b>
-                    experiments<br>
-                    <b class="text-primary" *ngIf="host.statistics">{{ host.protocols || 0 }}</b> protocols<br>
-                </p>
-
-                <p *ngIf="host.updated" class="small float-start text-muted">Last update: {{ host.updated | date }}</p>
-                <a routerLink="/host/{{ host.id }}" class="card-link float-end small">details &raquo;</a>
-            </div>
-        </div>
-
-        <div class="card ms-4 mb-4 border-0 shadow-sm" style="width: 28rem" *ngIf="showCreateNewHost">
+        <div class="card ms-4 mb-4 shadow-sm" style="width: 28rem" *ngIf="showCreateNewHost">
             <div class="card-body pb-1">
                 <form (submit)="createOrganism()" id="createOrganismForm">
                     <h5 class="border-bottom">Create new organism</h5>
@@ -127,6 +104,29 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <div class="card ms-4 mb-4 shadow-sm" style="width: 28rem" *ngFor="let host of hosts">
+            <div class="card-body pb-1">
+                <h5 class="card-title">
+                    <span class="cursor-pointer fst-italic" (click)="goToHost(host)">{{ host.name }}</span>
+                    <span *ngIf="!host.tier" class="pull-right badge p-2 bg-light text-black-50">Tier 0</span>
+                    <span *ngIf="host.tier" style="font-size: 12px" class="p-2 pull-right badge" [ngClass]="{'bg-secondary': host.tier.index === 0,
+                    'bg-primary': host.tier.index === 1, 'bg-info': host.tier.index === 2, 'bg-success': host.tier.index === 3}">{{ host.tier.label }}</span>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted fst-italic">{{ host.phylum }}</h6>
+                <p class="card-text pt-3 border-top">
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.publicationCount || 0 }}</b>
+                    publications<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.parts || 0 }}</b> associated parts<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.experimentCount || 0}}</b>
+                    experiments<br>
+                    <b class="text-primary" *ngIf="host.statistics">{{ host.protocols || 0 }}</b> protocols<br>
+                </p>
+
+                <p *ngIf="host.updated" class="small float-start text-muted">Last update: {{ host.updated | date }}</p>
+                <a routerLink="/host/{{ host.id }}" class="card-link float-end small">details &raquo;</a>
             </div>
         </div>
 

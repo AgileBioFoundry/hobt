@@ -20,6 +20,8 @@ public class IceParts {
     public SearchResults search(SearchQuery query) {
         return this.client.post("/rest/search", query, SearchResults.class);
     }
+
+
 }
 
 
