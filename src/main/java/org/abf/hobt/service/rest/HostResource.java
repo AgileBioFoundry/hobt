@@ -67,9 +67,13 @@ public class HostResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getHostParts(@DefaultValue("false") @QueryParam("strainsOnly") boolean strainsOnly,
+                                 @DefaultValue("0") @QueryParam("start") int offset,
+                                 @DefaultValue("15") @QueryParam("limit") int limit,
+                                 @DefaultValue("id") @QueryParam("sort") String sort,
+                                 @DefaultValue("false") @QueryParam("asc") boolean asc,
                                  @PathParam("id") long organismId) {
         HostParts parts = new HostParts();
-        return super.respond(parts.get(organismId, strainsOnly));
+        return super.respond(parts.get(organismId, strainsOnly, offset, limit, asc));
     }
 
     @GET
