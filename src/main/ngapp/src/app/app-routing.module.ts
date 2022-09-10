@@ -10,6 +10,7 @@ import {TiersComponent} from "./components/admin/tiers/tiers.component";
 import {UsersComponent} from "./components/admin/users/users.component";
 import {RolesComponent} from "./components/admin/roles/roles.component";
 import {AuthenticationComponent} from "./components/admin/authentication/authentication.component";
+import {AttributesComponent} from "./components/admin/attributes/attributes.component";
 
 const routes: Routes = [
     {path: '', component: MainPageComponent},
@@ -28,6 +29,9 @@ const routes: Routes = [
             }, {
                 path: 'roles',
                 component: RolesComponent
+            }, {
+                path: 'attributes',
+                component: AttributesComponent
             }, {
                 path: 'auth',
                 component: AuthenticationComponent

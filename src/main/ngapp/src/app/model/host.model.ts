@@ -17,4 +17,7 @@ export class Host {
 
     created: number = 0;
     updated: number = 0;
+
+    // ui controls
+    selected: boolean;
 }

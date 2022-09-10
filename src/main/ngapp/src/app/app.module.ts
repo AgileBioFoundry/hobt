@@ -30,6 +30,8 @@ import {ConfirmActionComponent} from './components/common/confirm-action/confirm
 import {PublicationsComponent} from './components/host-detail/publications/publications.component';
 import { AuthenticationComponent } from './components/admin/authentication/authentication.component';
 import { ExperimentsComponent } from './components/host-detail/experiments/experiments.component';
+import { AttributesComponent } from './components/admin/attributes/attributes.component';
+import { CreateNewAttributeModalComponent } from './components/admin/modal/create-new-attribute-modal/create-new-attribute-modal.component';
 
 @NgModule({
     declarations: [
@@ -56,7 +58,9 @@ import { ExperimentsComponent } from './components/host-detail/experiments/exper
         ConfirmActionComponent,
         PublicationsComponent,
         AuthenticationComponent,
-        ExperimentsComponent
+        ExperimentsComponent,
+        AttributesComponent,
+        CreateNewAttributeModalComponent
     ],
     imports: [
         BrowserModule,
