@@ -24,7 +24,7 @@ public class HostExperiments {
         // get parts for this host
         HostParts hostParts = new HostParts();
         SearchResults searchResults = hostParts.get(hostId, false, 0, Integer.MAX_VALUE, false);
-        if (searchResults == null || searchResults.getResultCount() == 0)
+        if (searchResults == null)
             return studies;
 
         new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, searchResults.getResultCount());
