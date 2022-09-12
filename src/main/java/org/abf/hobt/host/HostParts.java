@@ -37,8 +37,6 @@ public class HostParts {
         searchQuery.setEntryTypes(types);
         IceParts iceParts = new IceParts();
         SearchResults results = iceParts.search(searchQuery);
-        if (results.getResultCount() == 0)
-            return results;
 
         // update stats
         ElementCacheType type = strainsOnly ? ElementCacheType.STRAIN : ElementCacheType.PART;
