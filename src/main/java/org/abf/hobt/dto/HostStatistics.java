@@ -10,6 +10,42 @@ import org.abf.hobt.service.ice.IDataTransferObject;
 public class HostStatistics implements IDataTransferObject {
 
     private long publicationCount;
+    private long partCount;
+    private long strainCount;
+    private long protocolCount;
+    private long experimentCount;
+
+    public long getPartCount() {
+        return partCount;
+    }
+
+    public void setPartCount(long partCount) {
+        this.partCount = partCount;
+    }
+
+    public long getStrainCount() {
+        return strainCount;
+    }
+
+    public void setStrainCount(long strainCount) {
+        this.strainCount = strainCount;
+    }
+
+    public long getProtocolCount() {
+        return protocolCount;
+    }
+
+    public void setProtocolCount(long protocolCount) {
+        this.protocolCount = protocolCount;
+    }
+
+    public long getExperimentCount() {
+        return experimentCount;
+    }
+
+    public void setExperimentCount(long experimentCount) {
+        this.experimentCount = experimentCount;
+    }
 
     public long getPublicationCount() {
         return publicationCount;
