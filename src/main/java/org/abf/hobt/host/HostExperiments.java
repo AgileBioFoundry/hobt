@@ -1,6 +1,8 @@
 package org.abf.hobt.host;
 
 import org.abf.hobt.IceApiClient;
+import org.abf.hobt.cache.ElementCacheType;
+import org.abf.hobt.cache.ElementCaches;
 import org.abf.hobt.dto.PartStudy;
 import org.abf.hobt.service.ice.entry.PartData;
 import org.abf.hobt.service.ice.search.SearchResult;
@@ -25,6 +27,7 @@ public class HostExperiments {
         if (searchResults == null || searchResults.getResultCount() == 0)
             return studies;
 
+        new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, searchResults.getResultCount());
 
         // get experiments for each ice entry
         for (SearchResult result : searchResults.getResults()) {

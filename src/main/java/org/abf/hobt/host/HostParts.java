@@ -1,5 +1,7 @@
 package org.abf.hobt.host;
 
+import org.abf.hobt.cache.ElementCacheType;
+import org.abf.hobt.cache.ElementCaches;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.service.ice.IceParts;
@@ -34,6 +36,13 @@ public class HostParts {
         }
         searchQuery.setEntryTypes(types);
         IceParts iceParts = new IceParts();
-        return iceParts.search(searchQuery);
+        SearchResults results = iceParts.search(searchQuery);
+        if (results.getResultCount() == 0)
+            return results;
+
+        // update stats
+        ElementCacheType type = strainsOnly ? ElementCacheType.STRAIN : ElementCacheType.PART;
+        new ElementCaches(orgId).updateStatistics(type, results.getResultCount());
+        return results;
     }
 }

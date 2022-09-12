@@ -122,6 +122,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(OrganismAttributeModel.class);
         configuration.addAnnotatedClass(OrganismAttributeOptionModel.class);
         configuration.addAnnotatedClass(OrganismAttributeValueModel.class);
+        configuration.addAnnotatedClass(OrganismElementCacheModel.class);
     }
 
     /**
