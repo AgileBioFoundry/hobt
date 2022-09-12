@@ -119,6 +119,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(PermissionModel.class);
         configuration.addAnnotatedClass(PublicationModel.class);
         configuration.addAnnotatedClass(TierStatusModel.class);
+        configuration.addAnnotatedClass(OrganismElementCacheModel.class);
     }
 
     /**

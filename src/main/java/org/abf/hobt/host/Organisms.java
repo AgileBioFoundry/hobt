@@ -1,15 +1,13 @@
 package org.abf.hobt.host;
 
+import org.abf.hobt.cache.ElementCacheType;
 import org.abf.hobt.common.ResultData;
 import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.CriteriaDAO;
 import org.abf.hobt.dao.hibernate.OrganismCriteriaDAO;
 import org.abf.hobt.dao.hibernate.OrganismDAO;
-import org.abf.hobt.dao.model.CriteriaModel;
-import org.abf.hobt.dao.model.OrganismCriteriaStatusModel;
-import org.abf.hobt.dao.model.OrganismModel;
-import org.abf.hobt.dao.model.TierModel;
+import org.abf.hobt.dao.model.*;
 import org.abf.hobt.dto.HostStatistics;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.dto.OrganismCriteria;
@@ -130,6 +128,18 @@ public class Organisms {
         long count = DAOFactory.getPublicationDAO().listByOrganismCount(organismModel, null);
         HostStatistics statistics = new HostStatistics();
         statistics.setPublicationCount(count);
+        statistics.setExperimentCount(getCacheCount(organismModel, ElementCacheType.EXPERIMENT));
+        statistics.setPartCount(getCacheCount(organismModel, ElementCacheType.PART));
+        statistics.setStrainCount(getCacheCount(organismModel, ElementCacheType.STRAIN));
+        statistics.setProtocolCount(getCacheCount(organismModel, ElementCacheType.PROTOCOL));
         return statistics;
+    }
+
+    private long getCacheCount(OrganismModel organismModel, ElementCacheType type) {
+        Optional<OrganismElementCacheModel> optional = DAOFactory.getOrganismElementCacheDAO().getByType(organismModel, type);
+        if (optional.isEmpty())
+            return 0;
+        return optional.get().getCount();
+
     }
 }
