@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col pt-3 pb-3">
+            <button class="btn btn-secondary" (click)="showCreateAttributeModal()">
+                <i class="fa fa-fw fa-plus"></i> Create New Attribute
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead class="small">
+                <tr>
+                    <th>Type</th>
+                    <th>Label</th>
+                    <th>Hosts</th>
+                    <th>Required</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let attribute of attributes">
+                    <td>{{attribute.type}}</td>
+                    <td>{{attribute.label}}</td>
+                    <td>
+                        <div *ngIf="attribute.allOrganisms">All</div>
+                        <div *ngIf="!attribute.allOrganisms">
+                            Subset
+                        </div>
+                    </td>
+                    <td>{{attribute.required}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
+                            [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
+                            (pageChange)="pageAttributes($event)"></ngb-pagination>
+        </div>
+
+        <div class="col"><strong>{{pageCounts()}}</strong></div>
+    </div>
+</div>
+

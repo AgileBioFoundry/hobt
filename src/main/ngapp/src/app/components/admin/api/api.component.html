@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-5">
+        <strong class="small text-muted">Access Token</strong>
+        <textarea [disabled]="!editMode" class="form-control" rows="3" cols="5" [(ngModel)]="apiToken"></textarea>
+        <div *ngIf="editMode" class="mt-2 pull-right">
+            <button class="btn btn-link btn-sm" (click)="editMode=false">Cancel</button>
+            <button class="btn btn-primary btn-sm" (click)="updateToken()">Update</button>
+        </div>
+        <i *ngIf="!editMode" class="fa fa-pencil opacity-hover" [ngbTooltip]="'Edit Token'" (click)="editMode=true"></i>
+    </div>
+</div>

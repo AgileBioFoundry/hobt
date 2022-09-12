@@ -2,22 +2,22 @@
     <div class="row">
         <div class="col">
 
-            <div class="p-4" *ngIf="loadingParts && !results">
+            <div class="p-4" *ngIf="this.paging.processing && !results">
                 <img src="assets/loader.gif"> &nbsp;<i class="text-muted">Fetching parts...</i>
             </div>
 
-            <div *ngIf="!loadingParts && results && !results.length" class="p-4 fst-italic text-black-50">
+            <div *ngIf="!this.paging.processing && results && !results.length" class="p-4 fst-italic text-black-50">
                 No matching parts available
             </div>
 
-            <table class="table table-hover font-90" *ngIf="results && results.length">
+            <table class="table table-hover font-90" *ngIf="results && results.length"
+                   [ngClass]="{'opacity-25': this.paging.processing}">
                 <thead class="fw-bold text-uppercase small">
                 <tr>
                     <td>Type</td>
                     <td>Name</td>
                     <td>Owner</td>
                     <td>PartID</td>
-<!--                    <td>BioSafety</td>-->
                     <td>Created</td>
                 </tr>
                 </thead>
@@ -25,18 +25,28 @@
                 <tbody>
                 <tr *ngFor="let result of results">
                     <td style="width: 100px" class="fw-bold small text-secondary">{{result.entryInfo.type}}</td>
-                    <td class="text-truncate">{{result.entryInfo.name}}<br>
-                        <div  style="width: 350px" class="small text-muted">{{result.entryInfo.shortDescription}}</div>
+                    <td class="text-truncate">
+                        {{result.entryInfo.name}}
+                        <div style="width: 320px" class="small text-muted">{{result.entryInfo.shortDescription}}</div>
                     </td>
-                    <td style="width: 130px" class="text-truncate">{{result.entryInfo.owner}}</td>
-                    <td style="width: 180px"><a [href]="'https://registry.agilebiofoundry.org/entry/' + result.entryInfo.partId" target="_blank">{{result.entryInfo.partId}}</a></td>
-<!--                    <td style="width: 120px">-->
-<!--                        Level {{result.entryInfo.bioSafetyLevel}}-->
-<!--                    </td>-->
-                    <td style="width: 280px">{{result.entryInfo.creationTime | date: 'MMM d, y'}}</td>
+                    <td style="width: 200px" class="text-truncate">{{result.entryInfo.owner}}</td>
+                    <td style="width: 180px"><a
+                        [href]="'https://registry.agilebiofoundry.org/entry/' + result.entryInfo.partId"
+                        target="_blank">{{result.entryInfo.partId}}</a></td>
+                    <td style="width: 180px">{{result.entryInfo.creationTime | date: 'MMM d, y'}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="row pb-2">
+        <div class="col">
+            <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
+                            [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
+                            (pageChange)="pageParts($event)"></ngb-pagination>
+        </div>
+
+        <div class="col"><strong>{{pageCounts()}}</strong></div>
     </div>
 </div>

@@ -11,6 +11,7 @@ export class AuthenticationComponent implements OnInit {
     authenticationSelection: string;
     processing: boolean;
     options: string[] = ['DEFAULT', 'LDAP', 'OPEN'];
+    enableEdit: boolean;
 
     constructor(private http: HttpService) {
     }
@@ -32,7 +33,6 @@ export class AuthenticationComponent implements OnInit {
     }
 
     selectionChange(): void {
-        console.log(this.authenticationSelection);
         if (!this.authenticationSelection)
             return;
 
@@ -40,7 +40,9 @@ export class AuthenticationComponent implements OnInit {
             key: 'AUTHENTICATION_METHOD',
             value: this.authenticationSelection
         }).subscribe(result => {
-            console.log(result);
+            this.enableEdit = false;
+        }, error => {
+            this.enableEdit = false;
         })
     }
 }

@@ -36,5 +36,7 @@ public enum ConfigurationValue {
     ENABLE_ACCOUNT_VETTING,  // requires that new registered users have to be vetted before they can use the account
     ENABLE_DEFAULT_DIVA_TEAM, // allows the diva team field of projects to be empty (if set to true)
     RESTRICT_PROJECT_CREATION, // permit only users with principal investigator privileges to create projects
-    AUTHENTICATION_METHOD
+    AUTHENTICATION_METHOD,
+
+    PROTOCOL_IO_API_TOKEN
 }

@@ -21,6 +21,7 @@ public class DAOFactory {
     private static PermissionDAO permissionDAO;
     private static PublicationDAO publicationDAO;
     private static TierStatusDAO tierStatusDAO;
+    private static OrganismAttributeDAO organismAttributeDAO;
     private static OrganismElementCacheDAO organismElementCacheDAO;
 
     public static AccountDAO getAccountDAO() {
@@ -93,6 +94,12 @@ public class DAOFactory {
         if (tierStatusDAO == null)
             tierStatusDAO = new TierStatusDAO();
         return tierStatusDAO;
+    }
+
+    public static OrganismAttributeDAO getOrganismAttributeDAO() {
+        if (organismAttributeDAO == null)
+            organismAttributeDAO = new OrganismAttributeDAO();
+        return organismAttributeDAO;
     }
 
     public static OrganismElementCacheDAO getOrganismElementCacheDAO() {

@@ -23,7 +23,7 @@ public class HostExperiments {
         List<PartStudy> studies = new ArrayList<>();
         // get parts for this host
         HostParts hostParts = new HostParts();
-        SearchResults searchResults = hostParts.get(hostId, false);
+        SearchResults searchResults = hostParts.get(hostId, false, 0, Integer.MAX_VALUE, false);
         if (searchResults == null || searchResults.getResultCount() == 0)
             return studies;
 

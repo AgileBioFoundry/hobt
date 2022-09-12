@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-title">Create New Attribute</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+
+        <div class="row">
+            <div class="col">Select Type</div>
+            <div class="col">
+                <select class="form-select form-select-sm" id="attribute_type" name="attributeTypeSelection"
+                        [(ngModel)]="newAttribute.type" (change)="typeSelectionChange()">
+                    <option [ngValue]="undefined">Select</option>
+                    <option [ngValue]="availableType.value"
+                            *ngFor="let availableType of availableTypes">{{availableType.label}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row pt-1">
+            <div class="col">Attribute Label</div>
+            <div class="col">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="newAttribute.label">
+            </div>
+        </div>
+
+        <div class="row pt-1">
+            <div class="col pull-right">Host Restriction</div>
+            <div class="col">
+                <div class="small border-bottom">
+                    <input type="checkbox" class="form-check-input" id="check-all" name="check-host"
+                           (change)="selectAllHosts($event)" [(ngModel)]="this.newAttribute.allOrganisms"> &nbsp;
+                    <label class="form-check-label" for="check-all">Apply to all</label>
+                </div>
+
+                <div style="width: 100%; height: 120px; overflow-y: scroll" class="border">
+                    <div *ngFor="let host of hosts" class="small">
+                        &nbsp;
+                        <input type="checkbox" class="form-check-input" name="check-host" (change)="checkAllSelected()"
+                               [(ngModel)]="host.selected"> &nbsp;
+                        <label class="form-check-label">{{host.name}}</label>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row pt-1">
+            <div class="col">Is this attribute required?</div>
+            <div class="col">
+                <input type="radio" class="form-check-input" id="radio-yes" name="radio-stacked"
+                       [value]="newAttribute.required"
+                       required>&nbsp;
+                <label class="form-check-label" for="radio-yes"> Yes</label>
+                &nbsp;
+                <input type="radio" class="form-check-input" id="radio-no" name="radio-stacked"
+                       [value]="newAttribute.required"
+                       required>&nbsp;
+                <label class="form-check-label" for="radio-no">No</label>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-footer" [ngClass]="{'d-flex justify-content-between': serverError}">
+    <div class="alert alert-danger font-85 p-2" *ngIf="serverError">
+        <i class="fa fa-exclamation-triangle"></i> Server error creating new role
+    </div>
+
+    <div class="text-end">
+        <button class="btn btn-link" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-primary" (click)="createAttribute()">
+            Create Attribute
+        </button>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="container-fluid font-90 pt-3">
+    <div class="row" *ngIf="!protocols">
+        <div class="col">
+            <div *ngIf="paging.processing">
+                <img src="assets/loader.gif"> &nbsp; <i class="text-muted">retrieving data from protocols.io...</i>
+            </div>
+        </div>
+    </div>
+    <!--    <i class="text-muted">No information available</i>-->
+
+    <div class="row" *ngIf="protocols" [ngClass]="{'opacity-25': paging.processing}">
+        <div class="col" *ngIf="protocols.length">
+            <ol class="list-group list-group-flush list-group-numbered border-bottom">
+                <li class="list-group-item d-flex justify-content-between align-items-start"
+                    *ngFor="let protocol of protocols">
+                    <div class="ms-2 me-auto">
+                        <a [href]="protocol.url" target="_blank">{{protocol.title}}</a>
+                        <div class="small"><i class="fa fa-user text-muted"></i> {{protocol.creator.name}}</div>
+                        <div class="small text-muted">
+                            {{(protocol.created_on * 1000) | date}}
+                        </div>
+                        <div class="mt-2">
+                            {{protocol.description}}
+                        </div>
+                    </div>
+                    <div *ngIf="protocol.image">
+                        <img [src]="protocol.image.source">
+                    </div>
+                </li>
+            </ol>
+
+            <div class="row pb-2 mt-2">
+                <div class="col">
+                    <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
+                                    [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
+                                    (pageChange)="pageProtocols($event)"></ngb-pagination>
+                </div>
+
+                <div class="col"><strong>{{pageCounts()}}</strong></div>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="!protocols.length">
+            <i class="text-muted">No information available</i>
+        </div>
+
+    </div>
+</div>
