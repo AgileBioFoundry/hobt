@@ -120,13 +120,13 @@
                     <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.publicationCount || 0 }}</b>
                     publications<br>
                     <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.partCount || 0 }}</b> associated
-                    part<span *ngIf="host.statistics.partCount !== 1">s</span><br>
+                    part<span *ngIf="host.statistics && host.statistics.partCount !== 1">s</span><br>
                     <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.strainCount || 0 }}</b> associated
-                    strain<span *ngIf="host.statistics.strainCount !== 1">s</span><br>
+                    strain<span *ngIf="host.statistics && host.statistics.strainCount !== 1">s</span><br>
                     <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.experimentCount || 0}}</b>
-                    experiment<span *ngIf="host.statistics.experimentCount !== 1">s</span><br>
+                    experiment<span *ngIf="host.statistics && host.statistics.experimentCount !== 1">s</span><br>
                     <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.protocolCount || 0 }}</b>
-                    protocol<span *ngIf="host.statistics.protocolCount !== 1">s</span><br>
+                    protocol<span *ngIf="host.statistics && host.statistics.protocolCount !== 1">s</span><br>
                 </p>
 
                 <p *ngIf="host.updated" class="small float-start text-muted">Last update: {{ host.updated | date }}</p>
