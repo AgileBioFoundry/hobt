@@ -5,7 +5,6 @@ import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.config.ConfigurationValue;
 import org.abf.hobt.config.Settings;
 import org.abf.hobt.dto.Protocol;
-import org.abf.hobt.dto.Setting;
 import org.abf.hobt.service.rest.ArrayDataJSONHandler;
 import org.abf.hobt.service.rest.DataTransferObjectJSONHandler;
 import org.glassfish.jersey.client.ClientConfig;

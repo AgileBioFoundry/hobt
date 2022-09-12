@@ -27,20 +27,20 @@ public class HostExperiments {
         if (searchResults == null)
             return studies;
 
-        new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, searchResults.getResultCount());
-
         // get experiments for each ice entry
         for (SearchResult result : searchResults.getResults()) {
             PartData partData = result.getEntryInfo();
             if (partData == null)
                 continue;
 
-            List<PartStudy> experimentData = experimentData(partData.getId());
+            List<PartStudy> experimentData = experimentData(partData.getId());      // todo : paging
             if (experimentData == null)
                 continue;
 
             studies.addAll(experimentData);
         }
+
+        new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, studies.size());
         return studies;
     }
 
