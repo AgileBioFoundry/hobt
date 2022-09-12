@@ -32,6 +32,8 @@ import { AuthenticationComponent } from './components/admin/authentication/authe
 import { ExperimentsComponent } from './components/host-detail/experiments/experiments.component';
 import { AttributesComponent } from './components/admin/attributes/attributes.component';
 import { CreateNewAttributeModalComponent } from './components/admin/modal/create-new-attribute-modal/create-new-attribute-modal.component';
+import { ApiComponent } from './components/admin/api/api.component';
+import { ProtocolsComponent } from './components/host-detail/protocols/protocols.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +62,9 @@ import { CreateNewAttributeModalComponent } from './components/admin/modal/creat
         AuthenticationComponent,
         ExperimentsComponent,
         AttributesComponent,
-        CreateNewAttributeModalComponent
+        CreateNewAttributeModalComponent,
+        ApiComponent,
+        ProtocolsComponent
     ],
     imports: [
         BrowserModule,

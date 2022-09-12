@@ -10,6 +10,7 @@ import org.abf.hobt.host.publication.HostPublications;
 import org.abf.hobt.host.publication.Publication;
 import org.abf.hobt.host.publication.Publications;
 import org.abf.hobt.host.status.HostStatus;
+import org.abf.hobt.service.protocols.Protocols;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -109,6 +110,20 @@ public class HostResource extends RestResource {
     @Path("/{id}")
     public Response deleteHost(@PathParam("id") long orgId) {
         return super.respond(false);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/protocols")
+    public Response getHostProtocols(
+        @PathParam("id") long organismId,
+        @DefaultValue("0") @QueryParam("offset") int offset,
+        @DefaultValue("15") @QueryParam("limit") int limit,
+        @DefaultValue("id") @QueryParam("sort") String sort,
+        @DefaultValue("false") @QueryParam("asc") boolean asc) {
+        Protocols protocols = new Protocols();
+        return super.respond(protocols.getByOrganism(organismId, offset, limit, sort, asc));
     }
 
     @GET

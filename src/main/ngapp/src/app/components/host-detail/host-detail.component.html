@@ -65,9 +65,7 @@
         <li [ngbNavItem]="'protocols'">
             <a ngbNavLink class="me-5 ms-5">Protocols</a>
             <ng-template ngbNavContent>
-                <div class="container-fluid font-90 pt-3">
-                    <i class="text-muted">No information available</i>
-                </div>
+                <app-protocols [host]="host"></app-protocols>
             </ng-template>
         </li>
 
