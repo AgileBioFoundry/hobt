@@ -24,10 +24,17 @@ public class HostExperiments {
         // get parts for this host
         HostParts hostParts = new HostParts();
         SearchResults searchResults = hostParts.get(hostId, false, 0, Integer.MAX_VALUE, false);
-        if (searchResults == null)
+        SearchResults searchResults2 = hostParts.get(hostId, true, 0, Integer.MAX_VALUE, false);
+        if (searchResults == null && searchResults2 == null)
             return studies;
 
-        new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, searchResults.getResultCount());
+        if (searchResults == null) searchResults = new SearchResults();
+        if (searchResults2 == null) searchResults2 = new SearchResults();
+
+        long totalCount = searchResults2.getResultCount() + searchResults.getResultCount();
+        new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, totalCount);
+
+        searchResults.getResults().addAll(searchResults2.getResults());
 
         // get experiments for each ice entry
         for (SearchResult result : searchResults.getResults()) {
