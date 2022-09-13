@@ -1,5 +1,8 @@
 package org.abf.hobt.host;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.abf.hobt.IceApiClient;
 import org.abf.hobt.cache.ElementCacheType;
 import org.abf.hobt.cache.ElementCaches;
@@ -8,7 +11,10 @@ import org.abf.hobt.service.ice.entry.PartData;
 import org.abf.hobt.service.ice.search.SearchResult;
 import org.abf.hobt.service.ice.search.SearchResults;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class HostExperiments {
@@ -36,6 +42,8 @@ public class HostExperiments {
 
         searchResults.getResults().addAll(searchResults2.getResults());
 
+        HashMap<String, String> dedupeSet = new LinkedHashMap<>();
+
         // get experiments for each ice entry
         for (SearchResult result : searchResults.getResults()) {
             PartData partData = result.getEntryInfo();
@@ -43,10 +51,17 @@ public class HostExperiments {
                 continue;
 
             List<PartStudy> experimentData = experimentData(partData.getId());      // todo : paging
-            if (experimentData == null)
+            if (experimentData == null || experimentData.isEmpty())
                 continue;
 
-            studies.addAll(experimentData);
+            // de-dupe
+            for (PartStudy study : experimentData) {
+                String setLabel = dedupeSet.get(study.getUrl().trim());
+                if (!study.getLabel().equalsIgnoreCase(setLabel)) {
+                    dedupeSet.put(study.getUrl().trim(), study.getLabel().trim());
+                    studies.add(study);
+                }
+            }
         }
 
         new ElementCaches(hostId).updateStatistics(ElementCacheType.EXPERIMENT, studies.size());
@@ -54,6 +69,11 @@ public class HostExperiments {
     }
 
     public List<PartStudy> experimentData(long id) {
-        return this.client.get("/rest/parts/" + id + "/experiments", List.class, null);
+        List<?> list = this.client.get("/rest/parts/" + id + "/experiments", List.class, null);
+
+        final Type partStudyType = new TypeToken<ArrayList<PartStudy>>() {
+        }.getType();
+        final Gson gson = new GsonBuilder().create();
+        return gson.fromJson(gson.toJsonTree(list), partStudyType);
     }
 }
