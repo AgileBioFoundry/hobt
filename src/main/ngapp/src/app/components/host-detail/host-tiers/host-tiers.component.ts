@@ -101,6 +101,11 @@ export class HostTiersComponent implements OnInit {
         tier.collapsed = tier.completed;
     }
 
+    revertTierComplete(tier: Tier): void {
+        if (!this.canEditTiers)
+            return;
+    }
+
     setTierCriteriaStatus(tier: Tier, criteria: TierCriteria, status: number): void {
         this.http.post('hosts/' + this.host.id + '/criterias/' + criteria.id + '/status', {
             id: criteria.id,

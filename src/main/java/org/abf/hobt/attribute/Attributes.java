@@ -63,4 +63,12 @@ public class Attributes {
 
         return result;
     }
+
+    public OrganismAttribute update(long id, String userId, OrganismAttribute attribute) {
+        this.authorization.expectAdmin(userId);
+        OrganismAttributeModel model = this.dao.get(id);
+        model.setLabel(attribute.getLabel());
+        model.setRequired(attribute.isRequired());
+        return this.dao.update(model).toDataTransferObject();
+    }
 }

@@ -1,9 +1,10 @@
 package org.abf.hobt.dao.hibernate;
 
 import org.abf.hobt.dao.model.OrganismAttributeModel;
+import org.abf.hobt.dao.model.OrganismModel;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -15,10 +16,9 @@ public class OrganismAttributeDAO extends HibernateRepository<OrganismAttributeM
     }
 
     public List<OrganismAttributeModel> pageAttributes(int start, int limit, boolean asc, String property) {
-        CriteriaBuilder cb = getBuilder();
         CriteriaQuery<OrganismAttributeModel> criteriaQuery = getBuilder().createQuery(OrganismAttributeModel.class);
         Root<OrganismAttributeModel> root = criteriaQuery.from(OrganismAttributeModel.class);
-        criteriaQuery.orderBy(asc ? cb.asc(root.get(property)) : cb.desc(root.get(property)));
+        criteriaQuery.orderBy(asc ? getBuilder().asc(root.get(property)) : getBuilder().desc(root.get(property)));
         return currentSession().createQuery(criteriaQuery).setFirstResult(start).setMaxResults(limit).getResultList();
     }
 
@@ -27,5 +27,15 @@ public class OrganismAttributeDAO extends HibernateRepository<OrganismAttributeM
         Root<OrganismAttributeModel> root = criteriaQuery.from(OrganismAttributeModel.class);
         criteriaQuery.select(getBuilder().countDistinct(root));
         return currentSession().createQuery(criteriaQuery).uniqueResult();
+    }
+
+    public List<OrganismAttributeModel> getAttributesForHost(long hostId) {
+        CriteriaQuery<OrganismAttributeModel> criteriaQuery = getBuilder().createQuery(OrganismAttributeModel.class);
+        Root<OrganismAttributeModel> root = criteriaQuery.from(OrganismAttributeModel.class);
+        Join<OrganismAttributeModel, OrganismModel> join = root.join("organisms");
+        criteriaQuery.where(getBuilder().or(
+            getBuilder().isTrue(root.get("allOrganisms")))
+        );
+        return currentSession().createQuery(criteriaQuery).list();
     }
 }

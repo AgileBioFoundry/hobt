@@ -16,6 +16,7 @@
                     <th>Label</th>
                     <th>Hosts</th>
                     <th>Required</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,11 @@
                         </div>
                     </td>
                     <td>{{attribute.required}}</td>
+                    <td>
+                        <i class="fa fa-fw fa-edit opacity-hover font-12" [ngbTooltip]="'Edit'"
+                           (click)="showCreateAttributeModal(attribute)"></i>
+                        <i class="fa fa-fw fa-trash opacity-hover font-12" [ngbTooltip]="'Delete'"></i>
+                    </td>
                 </tr>
                 </tbody>
             </table>

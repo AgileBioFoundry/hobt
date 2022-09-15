@@ -5,9 +5,7 @@ import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.OrganismAttribute;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "OrganismAttribute")
@@ -34,8 +32,10 @@ public class OrganismAttributeModel implements IDataModel {
     @Enumerated(EnumType.STRING)
     private AttributeType type;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<OrganismModel> organisms = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "attribute_organisms", joinColumns = @JoinColumn(name = "attribute_id"),
+        inverseJoinColumns = @JoinColumn(name = "organism_id"))
+    private final Set<OrganismModel> organisms = new LinkedHashSet<>();
 
     @Column(name = "required")
     private Boolean required = Boolean.FALSE;
@@ -72,7 +72,7 @@ public class OrganismAttributeModel implements IDataModel {
         this.type = type;
     }
 
-    public List<OrganismModel> getOrganisms() {
+    public Set<OrganismModel> getOrganisms() {
         return organisms;
     }
 

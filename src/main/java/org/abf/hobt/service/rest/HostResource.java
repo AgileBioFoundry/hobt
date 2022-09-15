@@ -3,6 +3,7 @@ package org.abf.hobt.service.rest;
 import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.dto.TierStatus;
+import org.abf.hobt.host.HostAttributes;
 import org.abf.hobt.host.HostExperiments;
 import org.abf.hobt.host.HostParts;
 import org.abf.hobt.host.Organisms;
@@ -171,5 +172,26 @@ public class HostResource extends RestResource {
         log("", "retrieving organism " + hostId + " tiers status");
         HostStatus hostStatus = new HostStatus(hostId, null);
         return super.respond(hostStatus.get());
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/attributes/values")
+    public Response updateHostAttributeValues(@PathParam("id") long hostId, Organism organism) {
+        String userId = getUserId();
+        log(userId, "update host attribute values for host " + hostId);
+        HostAttributes hostAttributes = new HostAttributes(hostId);
+        hostAttributes.update(organism);
+        return super.respond(true);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/attributes/values")
+    public Response getHostAttributeValues(@PathParam("id") long hostId) {
+        HostAttributes hostAttributes = new HostAttributes(hostId);
+        return super.respond(hostAttributes.getValues());
     }
 }

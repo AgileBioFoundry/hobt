@@ -9,11 +9,11 @@ import {Attribute} from "../../../model/attribute.model";
 import {Result} from "../../../model/result";
 
 @Component({
-    selector: 'app-attributes',
-    templateUrl: './attributes.component.html',
-    styleUrls: ['./attributes.component.css']
+    selector: 'app-admin-attributes',
+    templateUrl: './admin-attributes.component.html',
+    styleUrls: ['./admin-attributes.component.css']
 })
-export class AttributesComponent implements OnInit {
+export class AdminAttributesComponent implements OnInit {
 
     paging: Paging;
     attributes: Attribute[];
@@ -52,10 +52,13 @@ export class AttributesComponent implements OnInit {
         return pageNum + " - " + (pageCount) + " of " + (resultCount);
     };
 
-
-    showCreateAttributeModal(): void {
+    showCreateAttributeModal(attribute?: Attribute): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false, size: 'lg'};
         const modalRef = this.modalService.open(CreateNewAttributeModalComponent, options);
+        if (!attribute)
+            attribute = new Attribute();
+        modalRef.componentInstance.newAttribute = attribute;
+
         modalRef.result.then((result: Attribute) => {
             if (result) {
                 this.pageAttributes();
@@ -64,5 +67,4 @@ export class AttributesComponent implements OnInit {
             console.log('error', error);
         });
     }
-
 }
