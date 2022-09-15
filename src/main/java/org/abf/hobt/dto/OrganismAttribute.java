@@ -14,6 +14,7 @@ public class OrganismAttribute implements IDataTransferObject {
     private boolean required;
     private boolean allOrganisms;
     private final List<Organism> hosts = new ArrayList<>();
+    private String value;
 
     public long getId() {
         return id;
@@ -57,5 +58,13 @@ public class OrganismAttribute implements IDataTransferObject {
 
     public void setAllOrganisms(boolean allOrganisms) {
         this.allOrganisms = allOrganisms;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

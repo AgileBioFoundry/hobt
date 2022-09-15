@@ -3,6 +3,8 @@ package org.abf.hobt.dto;
 import org.abf.hobt.service.ice.IDataTransferObject;
 import org.abf.hobt.tier.Tier;
 
+import java.util.List;
+
 public class Organism implements IDataTransferObject {
 
     private long id;
@@ -12,6 +14,7 @@ public class Organism implements IDataTransferObject {
     private long updated;
     private String userId;
     private Tier tier;
+    private List<OrganismAttribute> attributes;
 
     public long getId() {
         return id;
@@ -67,5 +70,13 @@ public class Organism implements IDataTransferObject {
 
     public void setTier(Tier tier) {
         this.tier = tier;
+    }
+
+    public List<OrganismAttribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<OrganismAttribute> attributes) {
+        this.attributes = attributes;
     }
 }

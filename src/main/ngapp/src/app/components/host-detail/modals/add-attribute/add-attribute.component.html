@@ -1,20 +1,33 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-title">Add Attribute</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()">&times;</button>
+    <h5 class="modal-title" id="modal-title">Organism Attributes</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 
 <div class="modal-body" id="modal-body">
-<!--    <div class="form-group">-->
-<!--        <label for="link" class="fw-bold font-80 text-uppercase">Label</label>-->
-<!--        <input type="email" class="form-control" id="link" ngbAutofocus>-->
-<!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--        <label for="link" class="fw-bold font-80 text-uppercase">Label</label>-->
+    <!--        <input type="email" class="form-control" id="link" ngbAutofocus>-->
+    <!--    </div>-->
 
-<!--    <div class="form-group">-->
-<!--        <label for="display" class="fw-bold font-80 text-uppercase">Type</label>-->
-<!--        <input class="form-control" id="display">-->
-<!--    </div>-->
-    <div class="p-3 fst-italic text-muted">
+    <!--    <div class="form-group">-->
+    <!--        <label for="display" class="fw-bold font-80 text-uppercase">Type</label>-->
+    <!--        <input class="form-control" id="display">-->
+    <!--    </div>-->
+    <div class="p-3 fst-italic text-muted" *ngIf="attributes && !attributes.length">
         No pre-defined attributes available
+    </div>
+
+    <div class="row mb-3" *ngFor="let attribute of attributes">
+        <div class="col-5">
+            <div class="float-end">
+                {{attribute.label}} <span class="text-danger" *ngIf="attribute.required">*</span>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="w-75" *ngIf="attribute.type === 'TEXT_INPUT'">
+                <input class="form-control form-control-sm" [(ngModel)]="attribute.value">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -23,10 +36,11 @@
 
         <!--        <span class="red" *ngIf="errorSaving">-->
         <!--            <i class="fa fa-exclamation-triangle"></i> Error saving part</span>-->
+
     </div>
 
     <div class="pull-right">
-        <button class="btn btn-link btn-sm" (click)="activeModal.close()">Cancel</button>
-        <button class="btn btn-primary btn-sm" (click)="createAttribute()">Create</button>
+        <button class="btn btn-light btn-sm" (click)="activeModal.close()">Cancel</button>&nbsp;
+        <button class="btn btn-primary btn-sm" (click)="saveAttribute()">Save Attributes</button>
     </div>
 </div>

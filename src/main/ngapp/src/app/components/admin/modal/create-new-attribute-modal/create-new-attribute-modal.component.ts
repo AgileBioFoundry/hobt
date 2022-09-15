@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "../../../../service/http.service";
 import {Result} from "../../../../model/result";
@@ -21,10 +21,9 @@ export class CreateNewAttributeModalComponent implements OnInit {
         {label: 'Options', value: 'MULTI_CHOICE'},
         {label: 'Boolean', value: 'BOOLEAN'}
     ];
-    newAttribute: Attribute;
+    @Input() newAttribute: Attribute;
 
     constructor(public activeModal: NgbActiveModal, private http: HttpService) {
-        this.newAttribute = new Attribute();
     }
 
     ngOnInit(): void {
@@ -37,7 +36,7 @@ export class CreateNewAttributeModalComponent implements OnInit {
     typeSelectionChange(): void {
     }
 
-    createAttribute(): void {
+    createOrUpdateAttribute(): void {
         // check hosts information that need to be sent to the backend
         this.newAttribute.hosts = [];
         if (this.newAttribute.allOrganisms) {
@@ -50,11 +49,17 @@ export class CreateNewAttributeModalComponent implements OnInit {
         }
 
         // submit
-        this.http.post('attributes', this.newAttribute).subscribe(result => {
-            if (!result)
-                return; // todo show error message
-            this.activeModal.close(result);
-        });
+        if (this.newAttribute.id) {
+            this.http.put('attributes/' + this.newAttribute.id, this.newAttribute).subscribe((result: Attribute) => {
+                this.activeModal.close(result);
+            })
+        } else {
+            this.http.post('attributes', this.newAttribute).subscribe(result => {
+                if (!result)
+                    return; // todo show error message
+                this.activeModal.close(result);
+            });
+        }
     }
 
     selectAllHosts(e): void {

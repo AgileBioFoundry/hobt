@@ -10,7 +10,7 @@ import {TiersComponent} from "./components/admin/tiers/tiers.component";
 import {UsersComponent} from "./components/admin/users/users.component";
 import {RolesComponent} from "./components/admin/roles/roles.component";
 import {AuthenticationComponent} from "./components/admin/authentication/authentication.component";
-import {AttributesComponent} from "./components/admin/attributes/attributes.component";
+import {AdminAttributesComponent} from "./components/admin/attributes/admin-attributes.component";
 import {ApiComponent} from "./components/admin/api/api.component";
 
 const routes: Routes = [
@@ -32,7 +32,7 @@ const routes: Routes = [
                 component: RolesComponent
             }, {
                 path: 'attributes',
-                component: AttributesComponent
+                component: AdminAttributesComponent
             }, {
                 path: 'auth',
                 component: AuthenticationComponent

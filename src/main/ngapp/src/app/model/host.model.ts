@@ -1,5 +1,6 @@
 import {Tier} from "./tier.model";
 import {HostStatistics} from "./host-statistics";
+import {Attribute} from "./attribute.model";
 
 export class Host {
 
@@ -20,4 +21,5 @@ export class Host {
 
     // ui controls
     selected: boolean;
+    attributes: Attribute[];
 }

@@ -6,5 +6,6 @@ export class Attribute {
     type: string;
     required: boolean;
     allOrganisms: boolean;
+    value: string;
     hosts: Host[];
 }

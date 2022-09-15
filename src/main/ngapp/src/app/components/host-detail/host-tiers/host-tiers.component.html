@@ -21,7 +21,7 @@
 
                 <div *ngIf="tier.completed">
                     <div *ngIf="canEditTiers">Tier Completed
-                        <i class="fa fa-fw font-14 fa-toggle-on green"></i>
+                        <i class="fa fa-fw font-14 fa-toggle-on green" (click)="revertTierComplete(tier)"></i>
                     </div>
 
                     <div *ngIf="!canEditTiers">

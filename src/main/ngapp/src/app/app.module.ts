@@ -28,12 +28,15 @@ import {AddRoleComponent} from './components/admin/users/add-role/add-role.compo
 import {HostPartsComponent} from './components/host-detail/host-parts/host-parts.component';
 import {ConfirmActionComponent} from './components/common/confirm-action/confirm-action.component';
 import {PublicationsComponent} from './components/host-detail/publications/publications.component';
-import { AuthenticationComponent } from './components/admin/authentication/authentication.component';
-import { ExperimentsComponent } from './components/host-detail/experiments/experiments.component';
-import { AttributesComponent } from './components/admin/attributes/attributes.component';
-import { CreateNewAttributeModalComponent } from './components/admin/modal/create-new-attribute-modal/create-new-attribute-modal.component';
-import { ApiComponent } from './components/admin/api/api.component';
-import { ProtocolsComponent } from './components/host-detail/protocols/protocols.component';
+import {AuthenticationComponent} from './components/admin/authentication/authentication.component';
+import {ExperimentsComponent} from './components/host-detail/experiments/experiments.component';
+import {AdminAttributesComponent} from './components/admin/attributes/admin-attributes.component';
+import {
+    CreateNewAttributeModalComponent
+} from './components/admin/modal/create-new-attribute-modal/create-new-attribute-modal.component';
+import {ApiComponent} from './components/admin/api/api.component';
+import {ProtocolsComponent} from './components/host-detail/protocols/protocols.component';
+import {AttributesComponent} from './components/host-detail/attributes/attributes.component';
 
 @NgModule({
     declarations: [
@@ -61,10 +64,11 @@ import { ProtocolsComponent } from './components/host-detail/protocols/protocols
         PublicationsComponent,
         AuthenticationComponent,
         ExperimentsComponent,
-        AttributesComponent,
+        AdminAttributesComponent,
         CreateNewAttributeModalComponent,
         ApiComponent,
-        ProtocolsComponent
+        ProtocolsComponent,
+        AttributesComponent
     ],
     imports: [
         BrowserModule,
