@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Host} from "../../model/host.model";
 import {Location} from "@angular/common";
+import {HostStatistics} from "../../model/host-statistics";
+import {HttpService} from "../../service/http.service";
+import {PermissionService} from "../../service/permission.service";
 
 @Component({
     selector: 'app-host-detail',
@@ -12,8 +15,10 @@ export class HostDetailComponent implements OnInit {
 
     host: Host;
     active: 'attributes';
+    canWrite: boolean;
 
-    constructor(private route: ActivatedRoute, private location: Location) {
+    constructor(private route: ActivatedRoute, private http: HttpService,
+                private location: Location, private permission: PermissionService) {
     }
 
     ngOnInit(): void {
@@ -21,6 +26,11 @@ export class HostDetailComponent implements OnInit {
             this.host = data.host;
             if (!this.host) {
                 this.host = new Host();
+            } else {
+                this.http.get('hosts/' + this.host.id + '/statistics').subscribe((result: HostStatistics) => {
+                    this.host.statistics = result;
+                    this.canWrite = this.permission.canWrite('hosts', this.host.id.toString());
+                });
             }
         });
 

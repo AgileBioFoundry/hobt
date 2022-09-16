@@ -39,7 +39,10 @@ export class PermissionService {
         return false;
     }
 
-    canWrite(resource: string): boolean {
+    canWrite(resource: string, subResource?: string): boolean {
+        if (!this.userService.getUser())
+            return false;
+
         if (this.userService.isAdmin())
             return true;
 

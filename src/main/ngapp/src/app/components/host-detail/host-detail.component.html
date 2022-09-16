@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="pt-5 ps-5 pb-5 border-bottom" style="background-color: #F6F6F7">
+<div class="pt-5 ps-5 pb-5" style="background-color: #F6F6F7">
     <div class="d-flex justify-content-between">
         <div>
             <h3 class="fst-italic">{{host.name}}</h3>
@@ -19,18 +19,25 @@
 </div>
 
 <div class="w-100">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0" (navChange)="activeChanged($event)">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0 shadow-sm flex-nowrap"
+        (navChange)="activeChanged($event)">
 
         <li [ngbNavItem]="'attributes'">
-            <a ngbNavLink class="me-5 ms-5">Attributes</a>
+            <a ngbNavLink class="me-4 ms-4">Attributes
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.attributesCount}}</div>
+            </a>
             <ng-template ngbNavContent>
-                <app-attributes [host]="host"></app-attributes>
+                <app-attributes [host]="host" [canEdit]="canWrite"></app-attributes>
             </ng-template>
         </li>
 
 
         <li [ngbNavItem]="'publications'">
-            <a ngbNavLink class="me-5 ms-5">Publications</a>
+            <a ngbNavLink class="me-4 ms-4">Publications
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.publicationCount}}</div>
+            </a>
             <ng-template ngbNavContent>
                 <app-publications [host]="host"></app-publications>
             </ng-template>
@@ -38,8 +45,9 @@
 
 
         <li [ngbNavItem]="'parts'">
-            <a ngbNavLink class="me-5 ms-5">Parts
-                <!--                <div class="badge bg-light bg-pill p-1 font-90 text-muted">8</div>-->
+            <a ngbNavLink class="me-4 ms-4">Parts
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.partCount}}</div>
             </a>
             <ng-template ngbNavContent>
                 <app-host-parts [host]="host" [strains]="false"></app-host-parts>
@@ -48,8 +56,9 @@
 
 
         <li [ngbNavItem]="'strains'">
-            <a ngbNavLink class="me-5 ms-5">Strains
-                <!--                <div class="badge bg-light bg-pill p-1 font-90 text-muted">8</div>-->
+            <a ngbNavLink class="me-4 ms-4">Strains
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.strainCount}}</div>
             </a>
             <ng-template ngbNavContent>
                 <app-host-parts [host]="host" [strains]="true"></app-host-parts>
@@ -58,7 +67,10 @@
 
 
         <li [ngbNavItem]="'protocols'">
-            <a ngbNavLink class="me-5 ms-5">Protocols</a>
+            <a ngbNavLink class="me-4 ms-4">Protocols
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.protocolCount}}</div>
+            </a>
             <ng-template ngbNavContent>
                 <app-protocols [host]="host"></app-protocols>
             </ng-template>
@@ -66,9 +78,9 @@
 
 
         <li [ngbNavItem]="'experiments'">
-            <a ngbNavLink class="me-5 ms-5">Experiments
-                <!--                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"-->
-                <!--                     *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>-->
+            <a ngbNavLink class="me-4 ms-4">Experiments
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+                     *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>
             </a>
             <ng-template ngbNavContent>
                 <app-experiments [host]="host"></app-experiments>
@@ -77,7 +89,7 @@
 
 
         <li [ngbNavItem]="'tiers'">
-            <a ngbNavLink class="me-5 ms-5">Tier Progress</a>
+            <a ngbNavLink class="me-4 ms-4">Tier Progress</a>
             <ng-template ngbNavContent>
                 <app-host-tiers [host]="host"></app-host-tiers>
             </ng-template>
@@ -88,18 +100,6 @@
 </div>
 
 <app-footer></app-footer>
-
-<!--<div class="d-flex justify-content-around text-white pt-1 text-uppercase font-80 border-bottom"-->
-<!--     style="background-color: #0074B3">-->
-<!--    <div class="sub-menu-selected">Attributes</div>-->
-<!--    <div class="sub-menu"><i class="fa fa-newspaper-o font-12"></i> &nbsp;-->
-<!--        Publications-->
-<!--    </div>-->
-<!--    <div class="sub-menu">Parts</div>-->
-<!--    <div class="sub-menu">Protocols</div>-->
-<!--    <div class="sub-menu">Experiments</div>-->
-<!--    <div class="sub-menu">Tier Progress</div>-->
-<!--</div>-->
 
 
 

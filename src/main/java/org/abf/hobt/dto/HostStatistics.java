@@ -14,6 +14,7 @@ public class HostStatistics implements IDataTransferObject {
     private long strainCount;
     private long protocolCount;
     private long experimentCount;
+    private long attributesCount;
 
     public long getPartCount() {
         return partCount;
@@ -53,5 +54,13 @@ public class HostStatistics implements IDataTransferObject {
 
     public void setPublicationCount(long publicationCount) {
         this.publicationCount = publicationCount;
+    }
+
+    public long getAttributesCount() {
+        return attributesCount;
+    }
+
+    public void setAttributesCount(long attributesCount) {
+        this.attributesCount = attributesCount;
     }
 }

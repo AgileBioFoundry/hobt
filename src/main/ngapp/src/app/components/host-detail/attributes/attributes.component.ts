@@ -14,6 +14,8 @@ import {Attribute} from "../../../model/attribute.model";
 export class AttributesComponent implements OnInit {
 
     @Input() host: Host;
+    @Input() canEdit: boolean;
+
     attributes: Attribute[];
     paging: Paging;
 
@@ -39,5 +41,4 @@ export class AttributesComponent implements OnInit {
             console.log('error', error);
         });
     }
-
 }
