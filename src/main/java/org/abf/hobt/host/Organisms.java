@@ -132,6 +132,10 @@ public class Organisms {
         statistics.setPartCount(getCacheCount(organismModel, ElementCacheType.PART));
         statistics.setStrainCount(getCacheCount(organismModel, ElementCacheType.STRAIN));
         statistics.setProtocolCount(getCacheCount(organismModel, ElementCacheType.PROTOCOL));
+
+        // get attributes count
+        long attributesCount = DAOFactory.getOrganismAttributeValueDAO().getCountByHost(organismModel);
+        statistics.setAttributesCount(attributesCount);
         return statistics;
     }
 

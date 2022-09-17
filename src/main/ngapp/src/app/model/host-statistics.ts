@@ -4,4 +4,5 @@ export class HostStatistics {
     partCount: number;
     strainCount: number;
     protocolCount: number;
+    attributesCount: number;
 }

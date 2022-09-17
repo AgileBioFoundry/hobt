@@ -5,10 +5,10 @@
         </div>
 
         <div class="col" *ngIf="processing">
-            <i class="text-muted fst-italic"><img src="assets/loader.gif"> retrieving experiments</i>
+            <i class="text-muted fst-italic"><img src="assets/loader.gif"> &nbsp;retrieving experiments</i>
         </div>
 
-        <div class="col" *ngIf="!processing && studies">
+        <div class="col mb-2" *ngIf="!processing && studies">
             <ol class="list-group list-group-numbered list-group-flush">
                 <li class="list-group-item" *ngFor="let study of studies">
                     <a [href]="study.url">{{study.label}}</a> &nbsp;

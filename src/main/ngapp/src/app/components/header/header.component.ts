@@ -38,7 +38,9 @@ export class HeaderComponent implements OnInit {
         const modalRef = this.modalService.open(LoginComponent, options);
         modalRef.result.then((loggedInUser: User) => {
             this.loggedInUser = loggedInUser;
-            this.router.navigate([this.router.url])
+            window.location.reload();
+            // console.log('reloading', this.router.url);
+            // this.router.navigate([this.router.url])
         }, () => {
             // console.log('delete modal cancel');
         });
@@ -55,6 +57,7 @@ export class HeaderComponent implements OnInit {
     logoutUser(): void {
         this.userService.clearUser();
         this.loggedInUser = undefined;
+        window.location.reload();
     }
 
     goHome(): void {

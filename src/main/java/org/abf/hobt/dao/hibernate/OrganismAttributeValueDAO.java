@@ -29,4 +29,12 @@ public class OrganismAttributeValueDAO extends HibernateRepository<OrganismAttri
         criteriaQuery.where(getBuilder().equal(root.get("organism"), organism));
         return currentSession().createQuery(criteriaQuery).getResultList();
     }
+
+    public long getCountByHost(OrganismModel organismModel) {
+        CriteriaQuery<Long> criteriaQuery = getBuilder().createQuery(Long.class);
+        Root<OrganismAttributeValueModel> root = criteriaQuery.from(OrganismAttributeValueModel.class);
+        criteriaQuery.where(getBuilder().equal(root.get("organism"), organismModel));
+        criteriaQuery.select(getBuilder().countDistinct(root.get("id")));
+        return currentSession().createQuery(criteriaQuery).getSingleResult();
+    }
 }
