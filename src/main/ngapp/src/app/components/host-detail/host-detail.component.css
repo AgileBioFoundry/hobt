@@ -21,12 +21,7 @@
 
 .nav-tabs .nav-link {
     border: 1px solid transparent;
-    font-size: 0.95rem;
-}
-
-.nav-link {
-    display: block;
-    padding: 1rem 1rem;
+    font-size: 0.90rem;
 }
 
 .nav {

@@ -136,6 +136,15 @@ public class Organisms {
         // get attributes count
         long attributesCount = DAOFactory.getOrganismAttributeValueDAO().getCountByHost(organismModel);
         statistics.setAttributesCount(attributesCount);
+
+        // set tier progress
+        if (organismModel.getTier() != null) {
+            long tierCount = DAOFactory.getTierDAO().getTierCount();
+            statistics.setTierProgressPercentage((organismModel.getTier().getIndex() + 1) * 100L / tierCount);
+        } else {
+            statistics.setTierProgressPercentage(0);
+        }
+
         return statistics;
     }
 

@@ -23,8 +23,8 @@
         (navChange)="activeChanged($event)">
 
         <li [ngbNavItem]="'attributes'">
-            <a ngbNavLink class="me-4 ms-4">Attributes
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+            <a ngbNavLink class="mx-4">Attributes
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.attributesCount}}</div>
             </a>
             <ng-template ngbNavContent>
@@ -34,8 +34,8 @@
 
 
         <li [ngbNavItem]="'publications'">
-            <a ngbNavLink class="me-4 ms-4">Publications
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+            <a ngbNavLink class="mx-4">Publications
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.publicationCount}}</div>
             </a>
             <ng-template ngbNavContent>
@@ -45,8 +45,8 @@
 
 
         <li [ngbNavItem]="'parts'">
-            <a ngbNavLink class="me-4 ms-4">Parts
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+            <a ngbNavLink class="mx-4">Parts
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.partCount}}</div>
             </a>
             <ng-template ngbNavContent>
@@ -56,8 +56,8 @@
 
 
         <li [ngbNavItem]="'strains'">
-            <a ngbNavLink class="me-4 ms-4">Strains
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+            <a ngbNavLink class="mx-4">Strains
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.strainCount}}</div>
             </a>
             <ng-template ngbNavContent>
@@ -67,8 +67,8 @@
 
 
         <li [ngbNavItem]="'protocols'">
-            <a ngbNavLink class="me-4 ms-4">Protocols
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+            <a ngbNavLink class="mx-4">Protocols
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.protocolCount}}</div>
             </a>
             <ng-template ngbNavContent>
@@ -78,8 +78,8 @@
 
 
         <li [ngbNavItem]="'experiments'">
-            <a ngbNavLink class="me-4 ms-4">Experiments
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted"
+            <a ngbNavLink class="mx-4">Experiments
+                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>
             </a>
             <ng-template ngbNavContent>
@@ -89,7 +89,10 @@
 
 
         <li [ngbNavItem]="'tiers'">
-            <a ngbNavLink class="me-4 ms-4">Tier Progress</a>
+            <a ngbNavLink class="mx-4">Tier Progress
+                <ngb-progressbar [type]="getProgressType(host.tier)" *ngIf="host.statistics"
+                                 [value]="host.statistics.tierProgressPercentage" height="7px"></ngb-progressbar>
+            </a>
             <ng-template ngbNavContent>
                 <app-host-tiers [host]="host"></app-host-tiers>
             </ng-template>
