@@ -5,6 +5,7 @@ import {Location} from "@angular/common";
 import {HostStatistics} from "../../model/host-statistics";
 import {HttpService} from "../../service/http.service";
 import {PermissionService} from "../../service/permission.service";
+import {Tier} from "../../model/tier.model";
 
 @Component({
     selector: 'app-host-detail',
@@ -41,6 +42,23 @@ export class HostDetailComponent implements OnInit {
 
     activeChanged(event): void {
         this.location.go('/host/' + this.host.id + '/' + event.nextId);
+    }
+
+    getProgressType(tier: Tier): string {
+        if (!tier)
+            return 'secondary';
+
+        switch (tier.index) {
+            case 0:
+            default:
+                return 'secondary';
+            case 1:
+                return 'primary';
+            case 2:
+                return 'info';
+            case 3:
+                return 'success';
+        }
     }
 
     tiers = [];

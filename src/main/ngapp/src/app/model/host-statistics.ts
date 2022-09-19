@@ -5,4 +5,5 @@ export class HostStatistics {
     strainCount: number;
     protocolCount: number;
     attributesCount: number;
+    tierProgressPercentage: number;
 }

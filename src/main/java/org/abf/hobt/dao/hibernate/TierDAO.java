@@ -49,4 +49,13 @@ public class TierDAO extends HibernateRepository<TierModel> {
             throw new DataAccessException(e);
         }
     }
+
+    public long getTierCount() {
+        try {
+            return super.listCount(TierModel.class);
+        } catch (HibernateException e) {
+            Logger.error(e);
+            throw new DataAccessException(e);
+        }
+    }
 }
