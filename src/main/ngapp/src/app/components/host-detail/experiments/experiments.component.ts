@@ -20,8 +20,11 @@ export class ExperimentsComponent implements OnInit {
     ngOnInit(): void {
         this.processing = true;
         this.http.get('hosts/' + this.host.id + '/experiments').subscribe((result: Study[]) => {
-            this.studies = result;
-            this.processing = false;
-        })
+                this.studies = result;
+                this.processing = false;
+            }, error => {
+                this.processing = false;
+            }
+        )
     }
 }

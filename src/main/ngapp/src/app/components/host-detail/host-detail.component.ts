@@ -6,6 +6,7 @@ import {HostStatistics} from "../../model/host-statistics";
 import {HttpService} from "../../service/http.service";
 import {PermissionService} from "../../service/permission.service";
 import {Tier} from "../../model/tier.model";
+import {UserService} from "../../service/user.service";
 
 @Component({
     selector: 'app-host-detail',
@@ -17,8 +18,9 @@ export class HostDetailComponent implements OnInit {
     host: Host;
     active: 'attributes';
     canWrite: boolean;
+    userLoggedIn: boolean;
 
-    constructor(private route: ActivatedRoute, private http: HttpService,
+    constructor(private route: ActivatedRoute, private http: HttpService, private user: UserService,
                 private location: Location, private permission: PermissionService) {
     }
 
@@ -34,6 +36,9 @@ export class HostDetailComponent implements OnInit {
                 });
             }
         });
+
+        // check if user is logged in
+        this.userLoggedIn = (this.user.getUser() != undefined);
 
         const param = this.route.snapshot.params['attribute'];
         if (param)

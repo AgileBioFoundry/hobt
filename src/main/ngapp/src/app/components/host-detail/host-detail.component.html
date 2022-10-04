@@ -44,7 +44,7 @@
         </li>
 
 
-        <li [ngbNavItem]="'parts'">
+        <li [ngbNavItem]="'parts'" [disabled]="!userLoggedIn">
             <a ngbNavLink class="mx-4">Parts
                 <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.partCount}}</div>
@@ -55,7 +55,7 @@
         </li>
 
 
-        <li [ngbNavItem]="'strains'">
+        <li [ngbNavItem]="'strains'"  [disabled]="!userLoggedIn">
             <a ngbNavLink class="mx-4">Strains
                 <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.strainCount}}</div>
@@ -77,7 +77,7 @@
         </li>
 
 
-        <li [ngbNavItem]="'experiments'">
+        <li [ngbNavItem]="'experiments'" [disabled]="!userLoggedIn">
             <a ngbNavLink class="mx-4">Experiments
                 <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>

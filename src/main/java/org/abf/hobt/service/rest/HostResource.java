@@ -74,6 +74,7 @@ public class HostResource extends RestResource {
                                  @DefaultValue("id") @QueryParam("sort") String sort,
                                  @DefaultValue("false") @QueryParam("asc") boolean asc,
                                  @PathParam("id") long organismId) {
+        String userId = getUserId();
         HostParts parts = new HostParts();
         return super.respond(parts.get(organismId, strainsOnly, offset, limit, asc));
     }
@@ -83,6 +84,7 @@ public class HostResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getHostExperiments(@PathParam("id") long organismId) {
+        String userId = getUserId();
         HostExperiments experiments = new HostExperiments();
         return super.respond(experiments.get(organismId));
     }

@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="row pb-2">
+    <div class="row pb-2" *ngIf="paging.available">
         <div class="col">
             <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
                             [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
