@@ -39,7 +39,7 @@
                      *ngIf="host.statistics">{{host.statistics.publicationCount}}</div>
             </a>
             <ng-template ngbNavContent>
-                <app-publications [host]="host"></app-publications>
+                <app-publications [host]="host" [canEdit]="canWrite"></app-publications>
             </ng-template>
         </li>
 
