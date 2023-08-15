@@ -6,7 +6,7 @@
 
     <groupId>org.abf</groupId>
     <artifactId>hobt</artifactId>
-    <version>3.5.0</version>
+    <version>3.5.1</version>
     <packaging>war</packaging>
 
     <name>hobt</name>
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.5.0</version>
+            <version>42.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

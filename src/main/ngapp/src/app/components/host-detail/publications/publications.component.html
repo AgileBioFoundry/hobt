@@ -1,33 +1,40 @@
 <div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <div *ngIf="canEdit">
+                <button class="btn btn-sm btn-secondary float-end mt-3" (click)="showPublicationAddModal()">
+                    Add Publication
+                </button>
+            </div>
 
-    <button class="btn btn-sm btn-secondary float-end mt-3" (click)="showPublicationAddModal()">
-        Add Publication
-    </button>
-    <br>
+            <div class="text-muted fst-italic" *ngIf="paging.processing && !publications">
+                <img src="assets/loader.gif"> <span class="fst-italic text-muted">Loading publications...</span>
+            </div>
 
-    <div class="text-muted fst-italic" *ngIf="paging.processing && !publications">
-        <img src="assets/loader.gif"> <span class="fst-italic text-muted">Loading publications...</span>
-    </div>
-
-    <div class="text-muted fst-italic mt-2" *ngIf="!paging.processing && !publications.length">
-        No publications available
-    </div>
-
-    <div *ngIf="publications && publications.length" class="mt-5 mb-5">
-
-        <ul class="list-group list-group-flush border-bottom border-top">
-            <li class="list-group-item" *ngFor="let publication of publications">
-                <a [href]="publication.link" target="_blank">{{publication.title}}</a>
-                <div class="text-muted small">{{publication.authors}}</div>
-                <div>{{publication.journal}}, {{publication.year}}</div>
-            </li>
-        </ul>
-
-        <div class="mt-4">
-            <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
-                            [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
-                            (pageChange)="pagePublications($event)"></ngb-pagination>
+            <div class="text-muted fst-italic mt-2" *ngIf="!paging.processing && !publications.length">
+                No publications available
+            </div>
         </div>
+    </div>
 
+    <div class="row mb-2">
+        <div class="col">
+            <div *ngIf="publications && publications.length" class="mt-1 mb-5">
+
+                <ul class="list-group list-group-flush border-bottom border-top">
+                    <li class="list-group-item" *ngFor="let publication of publications">
+                        <a [href]="publication.link" target="_blank">{{publication.title}}</a>
+                        <div class="text-muted small">{{publication.authors}}</div>
+                        <div>{{publication.journal}}, {{publication.year}}</div>
+                    </li>
+                </ul>
+
+                <div class="mt-4">
+                    <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
+                                    [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
+                                    (pageChange)="pagePublications($event)"></ngb-pagination>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

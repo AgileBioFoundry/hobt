@@ -15,6 +15,8 @@ import {Paging} from "../../../model/paging.model";
 export class PublicationsComponent implements OnInit {
 
     @Input() host: Host;
+    @Input() canEdit: boolean;
+
     publications: Publication[];
     paging: Paging;
 
