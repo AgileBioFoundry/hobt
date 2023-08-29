@@ -72,7 +72,6 @@ import {AttributesComponent} from './components/host-detail/attributes/attribute
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
         NgbModule,
         HttpClientModule,
         BrowserModule,
