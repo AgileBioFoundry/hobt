@@ -1,11 +1,84 @@
 <div id="login" class="container-fluid">
     <div class="modal-body">
-        <h4>Registration has not been enabled yet. <br>Please check back soon!</h4>
+
+        <!--                <div class="text-center">-->
+        <!--                    <img src="assets/img/img.png" alt="logo" style="height: 60px">-->
+        <!--                </div>-->
+        <div class="fw-bold">Register New Account</div>
+
+        <hr class="border-top">
+
+        <div class="pt-3" *ngIf="accountCreated">
+            <div class="alert alert-success">
+                Account successfully created. Please check your email for
+                login details<br><br>
+                <a class="icon-link icon-link-hover" href="/login">
+                    Go to Login <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="pt-3" *ngIf="serverError">
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle"></i> Error creating account.
+            </div>
+        </div>
+
+        <div class="pt-3" *ngIf="!accountCreated">
+
+            <div class="alert alert-danger p-2" *ngIf="validationError"><i
+                class="bi bi-exclamation-triangle"></i> &nbsp; All fields required. Please try again.
+            </div>
+
+            <div class="mb-2">Name</div>
+
+            <div class="d-flex align-items-center">
+                <input type="email" class="form-control form-control-sm" id="firstName"
+                       [(ngModel)]="newUser.firstName"
+                       name="userId" [ngClass]="{'is-invalid': !newUser.firstNameValid}" required>
+                &nbsp;
+                <input type="email" class="form-control form-control-sm" id="lastName"
+                       [(ngModel)]="newUser.lastName"
+                       name="userId" [ngClass]="{'is-invalid': !newUser.lastNameValid}" required>
+            </div>
+
+            <div class="d-flex justify-content-around mb-4 small text-muted">
+                <div>First Name</div>
+                <div>Last Name</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="userId" class="form-label">Email address</label>
+                <input type="email" class="form-control form-control-sm" id="userId" name="userId"
+                       [ngClass]="{'is-invalid': !newUser.userIdValid}" [(ngModel)]="newUser.email"
+                       required>
+            </div>
+
+            <div class="mb-4">
+                <div><label class="form-label" for="institution">Institution</label></div>
+                <input type="text" class="form-control form-control-sm" id="institution" name="institution" required
+                       [ngClass]="{'is-invalid': !newUser.institutionValid}"
+                       [(ngModel)]="newUser.institution">
+            </div>
+
+            <div class="mb-2">
+                <div><label class="form-label" for="description">About you</label></div>
+                <textarea class="form-control form-control-sm" id="description" name="description" required
+                          [ngClass]="{'is-invalid': !newUser.descriptionValid}"
+                          [(ngModel)]="newUser.description">
+                        </textarea>
+            </div>
+        </div>
     </div>
 
-    <div class="modal-footer justify-content-between">
-        <div class="pull-right">
-            <button class="btn btn-primary" (click)="activeModal.close()">OK</button>
-        </div>
+    <div class="modal-footer">
+        <button [disabled]="processing" class="btn btn-primary btn-sm" id="submit" (click)="registerNewUser()">
+            <div *ngIf="processing" class="spinner-border spinner-border-sm text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            Register
+        </button>
+
+        <button class="btn btn-secondary btn-sm" (click)="activeModal.close()">Cancel</button>
     </div>
 </div>
