@@ -33,12 +33,15 @@ export class HostPartsComponent implements OnInit {
         if (this.strains)
             url += "?strainsOnly=true"
 
-        this.http.get(url, this.paging).subscribe((result: any) => {
-            this.results = result.results;
-            this.paging.available = result.resultCount;
-            this.paging.processing = false;
-        }, error => {
-            this.paging.processing = false;
+        this.http.get(url, this.paging).subscribe({
+            next: (result: any) => {
+                this.results = result.results;
+                this.paging.available = result.resultCount;
+                this.paging.processing = false;
+            }
+            , error: (error: any) => {
+                this.paging.processing = false;
+            }
         })
     }
 
