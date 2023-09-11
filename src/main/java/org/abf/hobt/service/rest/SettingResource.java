@@ -35,7 +35,7 @@ public class SettingResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getSettings() {
-        String userId = getUserId();
+        String userId = getUserId(true);
         AccountAuthorization authorization = new AccountAuthorization();
         authorization.expectAdmin(userId);
 
@@ -50,7 +50,7 @@ public class SettingResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(@Context UriInfo uriInfo, Setting setting) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         AccountAuthorization authorization = new AccountAuthorization();
         authorization.expectAdmin(userId); // todo : might have to filter out some settings
 
@@ -65,7 +65,7 @@ public class SettingResource extends RestResource {
     @Path("/{key}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSetting(@PathParam("key") String key) {
-        getUserId();
+        getUserId(true);
         ConfigurationValue valueKey = ConfigurationValue.valueOf(key.toUpperCase());
         Settings settings = new Settings();
         return super.respond(settings.get(valueKey));

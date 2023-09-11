@@ -12,6 +12,7 @@ import {RolesComponent} from "./components/admin/roles/roles.component";
 import {AuthenticationComponent} from "./components/admin/authentication/authentication.component";
 import {AdminAttributesComponent} from "./components/admin/attributes/admin-attributes.component";
 import {ApiComponent} from "./components/admin/api/api.component";
+import {RegisterComponent} from "./components/register/register.component";
 
 const routes: Routes = [
     {path: '', component: MainPageComponent},
@@ -43,7 +44,8 @@ const routes: Routes = [
         ]
     },
     {path: 'host/:hid', redirectTo: 'host/:hid/attributes', pathMatch: 'full'},
-    {path: 'host/:hid/:attribute', component: HostDetailComponent, resolve: {host: HostDetailResolver}}
+    {path: 'host/:hid/:attribute', component: HostDetailComponent, resolve: {host: HostDetailResolver}},
+    {path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({

@@ -58,7 +58,7 @@ public class UserResource extends RestResource {
                             @DefaultValue("false") @QueryParam("asc") boolean asc,
                             @DefaultValue("id") @QueryParam("sort") String sort,
                             @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         new AccountAuthorization().expectAdmin(userId);
         Logger.info(userId + ": retrieving all accounts");
         Accounts accounts = new Accounts();
@@ -80,7 +80,7 @@ public class UserResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response get(@PathParam("id") String id) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         Logger.info(userId + ": retrieving information for user '" + id + "'");
         Accounts accounts = new Accounts();
         Account result = accounts.get(userId, id);
@@ -92,7 +92,7 @@ public class UserResource extends RestResource {
     @Path("{id}")
     public Response update(@PathParam("id") long id,
                            Account transfer) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         Logger.info(userId + ": updating account " + id);
         Accounts accounts = new Accounts();
         boolean success = accounts.update(userId, id, transfer);
@@ -103,7 +103,7 @@ public class UserResource extends RestResource {
     @Path("{id}/roles")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addRole(@PathParam("id") long id, AccountRole role) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         Logger.info(userId + ": adding role " + role + " to account " + id);
         Accounts accounts = new Accounts();
         boolean success = false; //accounts.addRole(id, role);
@@ -114,7 +114,7 @@ public class UserResource extends RestResource {
     @Path("{id}/roles")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addRole(@PathParam("id") long id, Role role) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         Logger.info(userId + ": adding role with id " + role.getId() + " to account " + id);
         AccountRoles roles = new AccountRoles(userId);
         roles.addRole(id, role.getId());
@@ -126,7 +126,7 @@ public class UserResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response removeRole(@PathParam("id") long id,
                                @PathParam("role") AccountRole role) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         Logger.info(userId + ": removing role " + role + " from account " + id);
         Accounts accounts = new Accounts();
 //        boolean success = accounts.removeRole(id, role);
@@ -138,7 +138,7 @@ public class UserResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserPermissions(@PathParam("id") long id) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         Logger.info(userId + ": retrieving permissions for " + id);
         AccountRoles roles = new AccountRoles(userId);
         return super.respond(roles.getPermissions(id));

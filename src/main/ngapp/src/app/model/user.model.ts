@@ -21,5 +21,23 @@ export class User {
     allowedToChangePassword: boolean;
     usingTemporaryPassword: boolean;
     type?: string;
+    institution?: string;
+
+    // validation ui controls
+    userIdValid: boolean;
+    institutionValid: boolean;
+    firstNameValid: boolean;
+    lastNameValid: boolean;
+    descriptionValid: boolean;
     isAdmin: boolean;
+
+    constructor() {
+        this.usingTemporaryPassword = false;
+
+        this.userIdValid = true;
+        this.institutionValid = true;
+        this.firstNameValid = true;
+        this.lastNameValid = true;
+        this.descriptionValid = true;
+    }
 }

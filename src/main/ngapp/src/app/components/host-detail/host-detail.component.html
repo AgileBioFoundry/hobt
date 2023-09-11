@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="pt-5 ps-5 pb-5" style="background-color: #F6F6F7">
+<div class="pt-5 ps-5 pb-5">
     <div class="d-flex justify-content-between">
         <div>
             <h3 class="fst-italic">{{host.name}}</h3>
@@ -18,8 +18,8 @@
     </div>
 </div>
 
-<div class="w-100">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0 shadow-sm flex-nowrap"
+<div class="w-100 bg-white">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0 flex-nowrap"
         (navChange)="activeChanged($event)">
 
         <li [ngbNavItem]="'attributes'">
@@ -44,7 +44,7 @@
         </li>
 
 
-        <li [ngbNavItem]="'parts'" [disabled]="!userLoggedIn">
+        <li [ngbNavItem]="'parts'">
             <a ngbNavLink class="mx-4">Parts
                 <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.partCount}}</div>
@@ -55,7 +55,7 @@
         </li>
 
 
-        <li [ngbNavItem]="'strains'"  [disabled]="!userLoggedIn">
+        <li [ngbNavItem]="'strains'">
             <a ngbNavLink class="mx-4">Strains
                 <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.strainCount}}</div>
@@ -77,7 +77,7 @@
         </li>
 
 
-        <li [ngbNavItem]="'experiments'" [disabled]="!userLoggedIn">
+        <li [ngbNavItem]="'experiments'">
             <a ngbNavLink class="mx-4">Experiments
                 <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
                      *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>

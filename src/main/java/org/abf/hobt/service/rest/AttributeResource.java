@@ -15,7 +15,7 @@ public class AttributeResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAttribute(OrganismAttribute organismAttribute) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         log(userId, "creating new attribute");
         Attributes attributes = new Attributes();
         return super.respond(attributes.create(userId, organismAttribute));
@@ -29,7 +29,7 @@ public class AttributeResource extends RestResource {
                                   @DefaultValue("id") @QueryParam("sort") String sort,
                                   @DefaultValue("false") @QueryParam("asc") boolean asc,
                                   @QueryParam("organism") long organismId) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         if (organismId > 0) {
             log(userId, "retrieving attributes for host " + organismId);
             HostAttributes hostAttributes = new HostAttributes(organismId);
@@ -46,7 +46,7 @@ public class AttributeResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     public Response updateAttribute(@PathParam("id") long attributeId, OrganismAttribute organismAttribute) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         log(userId, "updating attribute " + attributeId);
         Attributes attributes = new Attributes();
         return super.respond(attributes.update(attributeId, userId, organismAttribute));

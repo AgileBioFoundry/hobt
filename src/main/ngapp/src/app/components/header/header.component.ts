@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
     }
 
     registerUser(): void {
-        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const options: NgbModalOptions = {backdrop: 'static', size: 'md', keyboard: false};
         const modalRef = this.modalService.open(RegisterComponent, options);
         modalRef.result.then(() => {
 

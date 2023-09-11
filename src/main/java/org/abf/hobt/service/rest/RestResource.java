@@ -21,9 +21,9 @@ public class RestResource {
     @HeaderParam(value = AUTHENTICATION_HEADER_NAME)
     protected String sessionId;
 
-    protected String getUserId() {
+    protected String getUserId(boolean require) {
         String userId = SessionHandler.getUserIdBySession(sessionId);
-        if (userId == null)
+        if (userId == null && require)
             throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED)
                 .entity(new ErrorResult("Your session has expired or was invalidated. Please login again."))
                 .type(MediaType.APPLICATION_JSON_TYPE)
