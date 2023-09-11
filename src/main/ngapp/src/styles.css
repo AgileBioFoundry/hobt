@@ -4,7 +4,8 @@
 @import url('bootstrap-icons/font/bootstrap-icons.css');
 
 html body {
-    font-family: Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-color: #f1f5f9;
 }
 
 .font-70 {
