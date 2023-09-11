@@ -5,7 +5,6 @@ import org.abf.hobt.cache.ElementCaches;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.service.ice.IceParts;
-import org.abf.hobt.service.ice.entry.EntryField;
 import org.abf.hobt.service.ice.entry.EntryType;
 import org.abf.hobt.service.ice.search.SearchQuery;
 import org.abf.hobt.service.ice.search.SearchResults;
@@ -15,6 +14,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HostParts {
+
+    private final String userId;
+
+    /**
+     * @param userId optional (if available i.e. user is logged in) identifier of user
+     */
+    public HostParts(String userId) {
+        this.userId = userId;
+    }
 
     public SearchResults get(long orgId, boolean strainsOnly, int offset, int limit, boolean asc) {
 

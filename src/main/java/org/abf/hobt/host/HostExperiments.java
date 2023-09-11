@@ -28,7 +28,7 @@ public class HostExperiments {
     public List<PartStudy> get(long hostId) {
         List<PartStudy> studies = new ArrayList<>();
         // get parts for this host
-        HostParts hostParts = new HostParts();
+        HostParts hostParts = new HostParts(null);
         SearchResults searchResults = hostParts.get(hostId, false, 0, Integer.MAX_VALUE, false);
         SearchResults searchResults2 = hostParts.get(hostId, true, 0, Integer.MAX_VALUE, false);
         if (searchResults == null && searchResults2 == null)

@@ -74,8 +74,8 @@ public class HostResource extends RestResource {
                                  @DefaultValue("id") @QueryParam("sort") String sort,
                                  @DefaultValue("false") @QueryParam("asc") boolean asc,
                                  @PathParam("id") long organismId) {
-        String userId = getUserId();
-        HostParts parts = new HostParts();
+        String userId = getUserId(false);
+        HostParts parts = new HostParts(userId);
         return super.respond(parts.get(organismId, strainsOnly, offset, limit, asc));
     }
 
@@ -84,7 +84,7 @@ public class HostResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getHostExperiments(@PathParam("id") long organismId) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         HostExperiments experiments = new HostExperiments();
         return super.respond(experiments.get(organismId));
     }
@@ -149,7 +149,7 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/publications")
     public Response createHostPublication(@PathParam("id") long organismId, Publication publication) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         log(userId, "creating new publication");
         HostPublications hostPublications = new HostPublications(organismId, userId);
         return super.respond(hostPublications.create(publication));
@@ -160,7 +160,7 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/tiers/status")
     public Response updateTierCompletionStatus(@PathParam("id") long hostId, TierStatus tierStatus) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         log(userId, "updating organism " + hostId + " status");
         HostStatus hostStatus = new HostStatus(hostId, userId);
         return super.respond(hostStatus.update(tierStatus));
@@ -181,7 +181,7 @@ public class HostResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/attributes/values")
     public Response updateHostAttributeValues(@PathParam("id") long hostId, Organism organism) {
-        String userId = getUserId();
+        String userId = getUserId(true);
         log(userId, "update host attribute values for host " + hostId);
         HostAttributes hostAttributes = new HostAttributes(hostId);
         hostAttributes.update(organism);
