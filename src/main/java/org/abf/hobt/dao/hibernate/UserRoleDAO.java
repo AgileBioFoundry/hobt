@@ -1,12 +1,12 @@
 package org.abf.hobt.dao.hibernate;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
 import org.abf.hobt.dao.model.UserRoleModel;
 import org.abf.hobt.dto.Account;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserRoleDAO extends HibernateRepository<UserRoleModel> {

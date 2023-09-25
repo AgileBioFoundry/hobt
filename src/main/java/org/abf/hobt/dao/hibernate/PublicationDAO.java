@@ -1,14 +1,14 @@
 package org.abf.hobt.dao.hibernate;
 
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dao.DataAccessException;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.dao.model.PublicationModel;
 import org.hibernate.HibernateException;
 
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class PublicationDAO extends HibernateRepository<PublicationModel> {

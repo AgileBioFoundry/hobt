@@ -1,5 +1,8 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.dto.TierStatus;
@@ -12,10 +15,6 @@ import org.abf.hobt.host.publication.Publication;
 import org.abf.hobt.host.publication.Publications;
 import org.abf.hobt.host.status.HostStatus;
 import org.abf.hobt.service.protocols.Protocols;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/hosts")
 public class HostResource extends RestResource {

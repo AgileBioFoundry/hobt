@@ -1,5 +1,8 @@
 package org.abf.hobt.dao.hibernate;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dao.DataAccessException;
 import org.abf.hobt.dao.IDataModel;
@@ -7,9 +10,6 @@ import org.abf.hobt.dao.IRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**

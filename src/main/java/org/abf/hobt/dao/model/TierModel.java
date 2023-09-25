@@ -1,9 +1,9 @@
 package org.abf.hobt.dao.model;
 
+import jakarta.persistence.*;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.tier.Tier;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 

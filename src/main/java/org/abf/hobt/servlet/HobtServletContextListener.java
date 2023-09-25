@@ -1,11 +1,11 @@
 package org.abf.hobt.servlet;
 
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 import org.abf.hobt.ApplicationInitializer;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dao.hibernate.HibernateConfiguration;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import java.nio.file.Path;
 
 public class HobtServletContextListener implements ServletContextListener {

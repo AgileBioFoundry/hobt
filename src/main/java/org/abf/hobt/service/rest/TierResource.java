@@ -1,13 +1,12 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.dto.Criteria;
 import org.abf.hobt.tier.Rule;
 import org.abf.hobt.tier.Tier;
 import org.abf.hobt.tier.Tiers;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/tiers")
 public class TierResource extends RestResource {

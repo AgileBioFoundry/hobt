@@ -1,9 +1,9 @@
 package org.abf.hobt.dao.model;
 
+import jakarta.persistence.*;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.Role;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

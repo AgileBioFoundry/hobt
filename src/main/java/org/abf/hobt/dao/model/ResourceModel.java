@@ -1,9 +1,8 @@
 package org.abf.hobt.dao.model;
 
+import jakarta.persistence.*;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.service.ice.IDataTransferObject;
-
-import javax.persistence.*;
 
 /**
  * Table for resources/securables/parts of HObT that can be secured and accessed only with authorization

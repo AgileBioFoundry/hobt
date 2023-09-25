@@ -29,7 +29,7 @@ public class DevelopmentServer {
                 Servlets.servlet("Jersey REST Servlet", ServletContainer.class)
                     .addInitParam("jersey.config.server.provider.packages", "org.abf.hobt.service.rest")
                     .addInitParam("jersey.config.server.provider.scanning.recursive", "false")
-                    .addInitParam("javax.ws.rs.Application", "org.abf.hobt.HobtApplication")
+                    .addInitParam("jakarta.ws.rs.Application", "org.abf.hobt.HobtApplication")
                     .setAsyncSupported(true)
                     .setEnabled(true)
                     .addMapping("/rest/*")

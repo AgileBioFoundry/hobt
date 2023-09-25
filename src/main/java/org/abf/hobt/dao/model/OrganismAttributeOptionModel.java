@@ -1,9 +1,8 @@
 package org.abf.hobt.dao.model;
 
+import jakarta.persistence.*;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.CustomAttributeOption;
-
-import javax.persistence.*;
 
 /**
  * Multi choice option value for custom attribute

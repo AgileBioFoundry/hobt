@@ -1,10 +1,10 @@
 package org.abf.hobt.dao.model;
 
+import jakarta.persistence.*;
 import org.abf.hobt.attribute.AttributeType;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.OrganismAttribute;
 
-import javax.persistence.*;
 import java.util.*;
 
 @Entity
