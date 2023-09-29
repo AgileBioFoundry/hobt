@@ -78,4 +78,12 @@ public class SearchResult extends HasEntryData {
     public void setNident(int nident) {
         this.nident = nident;
     }
+
+    public RegistryPartner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(RegistryPartner partner) {
+        this.partner = partner;
+    }
 }

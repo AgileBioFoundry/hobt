@@ -6,7 +6,9 @@ import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.model.OrganismModel;
 import org.abf.hobt.service.ice.IceParts;
 import org.abf.hobt.service.ice.entry.EntryType;
+import org.abf.hobt.service.ice.search.RegistryPartner;
 import org.abf.hobt.service.ice.search.SearchQuery;
+import org.abf.hobt.service.ice.search.SearchResult;
 import org.abf.hobt.service.ice.search.SearchResults;
 
 import java.util.ArrayList;
@@ -43,8 +45,16 @@ public class HostParts {
             types = new ArrayList<>(Arrays.asList(EntryType.PLASMID, EntryType.PART, EntryType.SEED));
         }
         searchQuery.setEntryTypes(types);
+
+        // from ice partner (config.properties)
         IceParts iceParts = new IceParts();
         SearchResults results = iceParts.search(searchQuery);
+        for (SearchResult result : results.getResults()) {
+            RegistryPartner partner = new RegistryPartner();
+            partner.setUrl("https://public-registry.agilebiofoundry.org/entry/" + result.getEntryInfo().getId());
+            result.setPartner(partner);
+        }
+
         // todo : using bioparts
 //        SearchResults results = BioPartsAPIClient.getInstance().post("/rest/search", searchQuery, SearchResults.class);
 
