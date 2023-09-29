@@ -1,5 +1,8 @@
 package org.abf.hobt;
 
+import jakarta.ws.rs.client.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dto.Account;
 import org.abf.hobt.service.rest.ArrayDataJSONHandler;
@@ -7,9 +10,6 @@ import org.abf.hobt.service.rest.DataTransferObjectJSONHandler;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;

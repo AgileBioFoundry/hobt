@@ -1,10 +1,9 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.service.ice.search.SearchQuery;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * REST resource for searching. Supports keyword search with query params for filtering and advanced search

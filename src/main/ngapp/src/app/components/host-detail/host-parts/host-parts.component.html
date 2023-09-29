@@ -30,9 +30,8 @@
                         <div style="width: 320px" class="small text-muted">{{result.entryInfo.shortDescription}}</div>
                     </td>
                     <td style="width: 200px" class="text-truncate">{{result.entryInfo.owner}}</td>
-                    <td style="width: 180px"><a
-                        [href]="'https://registry.agilebiofoundry.org/entry/' + result.entryInfo.partId"
-                        target="_blank">{{result.entryInfo.partId}}</a></td>
+                    <td style="width: 180px">
+                        <a [href]="result.partner.url" target="_blank">{{result.entryInfo.partId}}</a></td>
                     <td style="width: 180px">{{result.entryInfo.creationTime | date: 'MMM d, y'}}</td>
                 </tr>
                 </tbody>

@@ -1,5 +1,6 @@
 package org.abf.hobt.dao.hibernate;
 
+import jakarta.persistence.criteria.*;
 import org.abf.hobt.account.Accounts;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.common.util.StringUtils;
@@ -8,7 +9,6 @@ import org.abf.hobt.dao.model.AccountModel;
 import org.abf.hobt.dao.model.GroupModel;
 import org.hibernate.HibernateException;
 
-import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

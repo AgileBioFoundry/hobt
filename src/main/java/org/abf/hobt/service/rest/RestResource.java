@@ -1,13 +1,12 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.account.SessionHandler;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.servlet.ErrorResult;
-
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * Parent class for all rest resource objects

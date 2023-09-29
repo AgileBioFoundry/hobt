@@ -1,13 +1,12 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.account.Authenticator;
 import org.abf.hobt.account.SessionHandler;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dto.Account;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * API for access tokens (also session id for the user interface)

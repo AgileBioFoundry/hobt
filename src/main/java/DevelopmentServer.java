@@ -8,6 +8,7 @@ import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.DeploymentManager;
 import io.undertow.util.HttpString;
+import jakarta.servlet.ServletContextListener;
 import org.abf.hobt.servlet.HobtServletContextListener;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -20,7 +21,7 @@ public class DevelopmentServer {
 
     public static void main(String[] args) throws Exception {
         DeploymentInfo servletBuilder = Servlets.deployment()
-            .setClassLoader(ClassLoader.getSystemClassLoader())
+            .setClassLoader(ServletContextListener.class.getClassLoader())
             .addListener(Servlets.listener(HobtServletContextListener.class))
             .setContextPath("/")
             .setDeploymentName("Host OnBoarding Tool")
@@ -29,7 +30,7 @@ public class DevelopmentServer {
                 Servlets.servlet("Jersey REST Servlet", ServletContainer.class)
                     .addInitParam("jersey.config.server.provider.packages", "org.abf.hobt.service.rest")
                     .addInitParam("jersey.config.server.provider.scanning.recursive", "false")
-                    .addInitParam("javax.ws.rs.Application", "org.abf.hobt.HobtApplication")
+                    .addInitParam("jakarta.ws.rs.core.Application", "org.abf.hobt.HobtApplication")
                     .setAsyncSupported(true)
                     .setEnabled(true)
                     .addMapping("/rest/*")

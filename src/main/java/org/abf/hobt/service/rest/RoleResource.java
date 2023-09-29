@@ -1,13 +1,12 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.dto.Permission;
 import org.abf.hobt.dto.Role;
 import org.abf.hobt.role.RolePermissions;
 import org.abf.hobt.role.Roles;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/roles")
 public class RoleResource extends RestResource {

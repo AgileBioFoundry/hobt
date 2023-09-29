@@ -1,12 +1,11 @@
 package org.abf.hobt.service.rest;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.abf.hobt.attribute.Attributes;
 import org.abf.hobt.dto.OrganismAttribute;
 import org.abf.hobt.host.HostAttributes;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/attributes")
 public class AttributeResource extends RestResource {

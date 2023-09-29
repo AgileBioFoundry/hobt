@@ -1,10 +1,9 @@
 package org.abf.hobt.dao.model;
 
+import jakarta.persistence.*;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.tier.Rule;
 import org.abf.hobt.tier.rule.RuleType;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "TierRule")

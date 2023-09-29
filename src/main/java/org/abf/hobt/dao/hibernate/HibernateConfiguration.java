@@ -169,7 +169,7 @@ public class HibernateConfiguration {
     public static void close() {
         if (sessionFactory != null && !sessionFactory.isClosed()) {
             Logger.info("Closing session factory");
-            sessionFactory.getCurrentSession().disconnect();
+            sessionFactory.getCurrentSession().close();
             sessionFactory.close();
         }
     }
