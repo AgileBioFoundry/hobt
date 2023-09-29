@@ -45,6 +45,8 @@ public class HostParts {
         searchQuery.setEntryTypes(types);
         IceParts iceParts = new IceParts();
         SearchResults results = iceParts.search(searchQuery);
+        // todo : using bioparts
+//        SearchResults results = BioPartsAPIClient.getInstance().post("/rest/search", searchQuery, SearchResults.class);
 
         // update stats
         ElementCacheType type = strainsOnly ? ElementCacheType.STRAIN : ElementCacheType.PART;
