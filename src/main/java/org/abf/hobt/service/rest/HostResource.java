@@ -83,7 +83,7 @@ public class HostResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getHostExperiments(@PathParam("id") long organismId) {
-        String userId = getUserId(true);
+        String userId = getUserId(false);
         HostExperiments experiments = new HostExperiments();
         return super.respond(experiments.get(organismId));
     }
