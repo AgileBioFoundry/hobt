@@ -203,6 +203,8 @@ public class AccountModel implements IDataModel {
         transfer.setDescription(description);
         if (this.disabled != null)
             transfer.setDisabled(this.disabled);
+        if (this.usingTempPassword != null)
+            transfer.setUsingTempPassword(this.usingTempPassword);
         return transfer;
     }
 }

@@ -24,6 +24,7 @@ public class Account implements IDataTransferObject {
     private boolean isAdmin;
     private boolean isDisabled;
     private int newMessageCount;
+    private boolean usingTempPassword;
     private final List<Role> roles;
     private final List<Permission> permissions = new ArrayList<>();
 
@@ -179,5 +180,13 @@ public class Account implements IDataTransferObject {
 
     public List<Permission> getPermissions() {
         return this.permissions;
+    }
+
+    public boolean isUsingTempPassword() {
+        return usingTempPassword;
+    }
+
+    public void setUsingTempPassword(boolean usingTempPassword) {
+        this.usingTempPassword = usingTempPassword;
     }
 }
