@@ -11,7 +11,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.UUID;
 
 /**
  * Utility class for handling account passwords
@@ -24,6 +23,9 @@ public class PasswordUtil {
     private static final int SALT_BYTE_SIZE = 32;
     private static final int PBKDF2_ITERATIONS = 20000;
     private static final int TOKEN_BYTE_SIZE = 128;
+    private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
+    private static final String DIGITS = "0123456789";
+    private static final String SPECIAL_XTERS = "!@#$%^&*()_+";
 
     public static String encryptPassword(String password, String salt) throws UtilityException {
         if (password == null || password.trim().isEmpty() || salt == null || salt.trim().isEmpty())
@@ -47,18 +49,30 @@ public class PasswordUtil {
         return Arrays.toString(Hex.encodeHex(salt));
     }
 
-    public static String generateTemporaryPassword() {
-        char[] arr = UUID.randomUUID().toString().substring(24).toCharArray();
-        boolean converted = false;
-        for (int i = 0; i < arr.length; i += 1) {
-            if (arr[i] >= 'a' && arr[i] <= 'z') {
-                arr[i] = (char) (arr[i] - 32);
-                if (converted)
-                    break;
-                converted = true;
-            }
+    public static String generateTemporaryPassword(int length) {
+        String charactersForPassword = LOWER.toUpperCase() + LOWER + DIGITS + SPECIAL_XTERS;
+
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(charactersForPassword.length());
+            password.append(charactersForPassword.charAt(index));
         }
-        return String.copyValueOf(arr);
+
+        return password.toString();
+
+//        char[] arr = UUID.randomUUID().toString().substring(24).toCharArray();
+//        boolean converted = false;
+//        for (int i = 0; i < arr.length; i += 1) {
+//            if (arr[i] >= 'a' && arr[i] <= 'z') {
+//                arr[i] = (char) (arr[i] - 32);
+//                if (converted)
+//                    break;
+//                converted = true;
+//            }
+//        }
+//        return String.copyValueOf(arr);
     }
 
     public static String generateRandomToken() {

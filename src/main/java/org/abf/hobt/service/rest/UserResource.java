@@ -19,16 +19,16 @@ public class UserResource extends RestResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(Account accountTransfer) {
+    public Response create(@DefaultValue("true") @QueryParam("sendEmail") boolean sendEmail, Account account) {
         Logger.info("Creating new account");
         try {
             Accounts accounts = new Accounts();
-            accountTransfer = accounts.create(accountTransfer, true);
+            account = accounts.create(account, sendEmail);
         } catch (IllegalArgumentException e) {
-            Logger.error(e);
-            return super.respond(Response.Status.CONFLICT);
+            Logger.error("Duplicated user id: " + account.getUserId(), e);
+            return super.respond(Response.Status.INTERNAL_SERVER_ERROR);
         }
-        return super.respond(accountTransfer);
+        return super.respond(account);
     }
 
     /**
