@@ -63,4 +63,8 @@ export class HeaderComponent implements OnInit {
     goHome(): void {
         this.router.navigate(['/']);
     }
+
+    goToAdminSettings(): void {
+        this.router.navigate(['/admin']);
+    }
 }

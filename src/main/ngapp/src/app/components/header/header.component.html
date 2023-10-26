@@ -16,6 +16,11 @@
 
                     &nbsp;|&nbsp;
 
+                    <span *ngIf="loggedInUser.isAdmin">
+                        <span class="cursor-pointer" (click)="goToAdminSettings()"><i class="bi bi-sliders"></i></span>
+                        &nbsp;|&nbsp;
+                    </span>
+
                     <i class="fa fa-fw fa-sign-out"></i> <span class="cursor-pointer"
                                                                (click)="logoutUser()">Logout</span>
 
