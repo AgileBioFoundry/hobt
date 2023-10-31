@@ -200,6 +200,8 @@ public class AccountModel implements IDataModel {
         transfer.setLastName(lastName);
         transfer.setEmail(email);
         transfer.setUserId(userId);
+        transfer.setCreationTime(this.creationTime.getTime());
+        transfer.setLastUpdateTime(this.lastUpdateTime.getTime());
         transfer.setDescription(description);
         if (this.disabled != null)
             transfer.setDisabled(this.disabled);
