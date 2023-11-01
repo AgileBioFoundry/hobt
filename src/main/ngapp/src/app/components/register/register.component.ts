@@ -28,7 +28,7 @@ export class RegisterComponent {
         if (!this.userInformationValid())
             return;
 
-        this.http.post('users?sendEmail=true', this.newUser).subscribe({
+        this.http.post('users', this.newUser).subscribe({
             next: (result: any) => {
                 console.log(result);
                 this.accountCreated = true;

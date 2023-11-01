@@ -29,10 +29,16 @@ public class Accounts {
     public static final String DEFAULT_ADMIN_USERID = "Administrator";
     private static final long MIN_PASSWORD_RESET_PERIOD = 1000 * 60 * 60 * 3;  // 3 hour in milliseconds
     private final AccountAuthorization authorization;
+    private String userId;
 
     public Accounts() {
         this.dao = DAOFactory.getAccountDAO();
         this.authorization = new AccountAuthorization();
+    }
+
+    public Accounts(String userId) {
+        this();
+        this.userId = userId;
     }
 
     public void createDefaultAdminAccount() throws ServiceException {
@@ -78,8 +84,14 @@ public class Accounts {
     }
 
     public Account create(Account account, boolean sendEmail) {
+        if (account == null)
+            throw new ServiceException("Error creating account");
 
-        if (account == null || StringUtils.isBlank(account.getUserId()))
+        // if user id is not set but email set, use email as user id
+        if (StringUtils.isBlank(account.getUserId()) && !StringUtils.isBlank(account.getEmail()))
+            account.setUserId(account.getEmail());
+
+        if (StringUtils.isBlank(account.getUserId()))
             throw new ServiceException("User id is required to create an account");
 
         if (StringUtils.isBlank(account.getFirstName()) || StringUtils.isBlank(account.getLastName()))
@@ -107,13 +119,15 @@ public class Accounts {
         accountModel.setUsingTempPassword(true);
         accountModel.setDescription(account.getDescription());
 
-        // generate password related (todo : only on successful vetting)
-        String password = PasswordUtil.generateTemporaryPassword(12);
-        accountModel.setSalt(PasswordUtil.generateSalt());
-        try {
-            account.setPassword(PasswordUtil.encryptPassword(password, accountModel.getSalt()));
-        } catch (UtilityException ue) {
-            throw new ServiceException("Exception encrypting password", ue);
+        // generate password if vetting is not enabled. the password will be generated on approval
+        if (!vettingEnabled) {
+            String password = PasswordUtil.generateTemporaryPassword(12);
+            accountModel.setSalt(PasswordUtil.generateSalt());
+            try {
+                account.setPassword(PasswordUtil.encryptPassword(password, accountModel.getSalt()));
+            } catch (UtilityException ue) {
+                throw new ServiceException("Exception encrypting password", ue);
+            }
         }
 
         Account newAccount = dao.create(accountModel).toDataTransferObject();
@@ -128,6 +142,7 @@ public class Accounts {
     private void sendAdminNotificationEmail() {
         Settings settings = new Settings();
 
+        // todo : look into a template file / library for sending email text
         String subject = "New Host Onboarding Tool account created";
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -159,7 +174,32 @@ public class Accounts {
         }
     }
 
+    public boolean setDisabled(long id, boolean disable) {
+//        authorization.expectAdmin(this.userId); // todo
+        AccountModel account = DAOFactory.getAccountDAO().get(id);
+        if (account == null)
+            return false;
+
+        // if enabling and account is using a temporary password
+        // then it is approved after vetting
+        if (!disable && account.getUsingTempPassword() != null && account.getUsingTempPassword()) {
+            String tempPassword = PasswordUtil.generateTemporaryPassword(12);
+
+            try {
+                account.setPassword(PasswordUtil.encryptPassword(tempPassword, account.getSalt()));
+            } catch (UtilityException ue) {
+                throw new ServiceException("Exception encrypting password", ue);
+            }
+
+            sendAccountEmail(account.toDataTransferObject(), tempPassword);
+        }
+
+        account.setDisabled(disable);
+        return dao.update(account) != null;
+    }
+
     private void sendAccountEmail(Account newAccount, String password) {
+        // todo : see note about about template
         String subject = "Account created successfully";
 
         Email email = new Email();
@@ -293,19 +333,17 @@ public class Accounts {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy 'at' HH:mm aaa, z");
 
-        StringBuilder builder = new StringBuilder();
-        builder.append("Dear ").append(name).append(",\n\n")
-            .append("The password for your ").append("HObT")
-            .append(" account (").append(userId).append(") was reset on ")
-            .append(dateFormat.format(new Date())).append(". Your new temporary password is\n\n")
-            .append(tempPassword).append("\n\n")
-            .append("Please use it to login and change your password");
-
-        builder.append(" at ").append("https://hobt.agilebiofoundry.org");
-        builder.append(".\n\nThank you.");
+        String builder = "Dear " + name + ",\n\n" +
+            "The password for your " + "HObT" +
+            " account (" + userId + ") was reset on " +
+            dateFormat.format(new Date()) + ". Your new temporary password is\n\n" +
+            tempPassword + "\n\n" +
+            "Please use it to login and change your password" +
+            " at " + "https://hobt.agilebiofoundry.org" +
+            ".\n\nThank you.";
 
         Email email = new Email();
-        email.send(account.getEmail(), null, subject, builder.toString());
+        email.send(account.getEmail(), null, subject, builder);
         return account.toDataTransferObject();
     }
 

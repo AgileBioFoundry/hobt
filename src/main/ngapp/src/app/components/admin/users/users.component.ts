@@ -24,6 +24,31 @@ export class UsersComponent implements OnInit {
         this.pageUsers(1);
     }
 
+    setUserActive(user: User): void {
+        user.processing = true;
+        // if user is disable (enable)
+        if (user.isDisabled) {
+            // enable
+            this.http.put("users/" + user.id + "/active", {}).subscribe({
+                next: (result: any) => {
+                    user.processing = false;
+                    user.isDisabled = !user.isDisabled;
+                }, error: err => {
+                    user.processing = false;
+                }
+            })
+        } else {
+            this.http.delete("/users/" + user.id + "/active").subscribe({
+                next: (result: any) => {
+                    user.processing = false;
+                    user.isDisabled = !user.isDisabled;
+                }, error: err => {
+                    user.processing = false;
+                }
+            })
+        }
+    }
+
     showAddRoleModal(user: User): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(AddRoleComponent, options);

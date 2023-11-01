@@ -143,4 +143,23 @@ public class UserResource extends RestResource {
         return super.respond(roles.getPermissions(id));
     }
 
+    @PUT
+    @Path("{id}/active")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addToActiveUsers(@PathParam("id") long id) {
+        String userId = getUserId(true);
+        Accounts accounts = new Accounts(userId);
+        return super.respond(accounts.setDisabled(id, false));
+    }
+
+    @DELETE
+    @Path("{id}/active")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeFromActiveUsers(@PathParam("id") long id) {
+        String userId = getUserId(true);
+        Accounts accounts = new Accounts(userId);
+        return super.respond(accounts.setDisabled(id, true));
+    }
+
 }
