@@ -55,11 +55,43 @@
             </div>
 
             <div class="mb-4">
-                <div><label class="form-label" for="institution">Institution</label></div>
+                <div><label class="form-label" for="institution">Professional Affiliation <span
+                    class="small text-muted">(e.g.Institution)</span></label></div>
                 <input type="text" class="form-control form-control-sm" id="institution" name="institution" required
                        [ngClass]="{'is-invalid': !newUser.institutionValid}"
                        [(ngModel)]="newUser.institution">
             </div>
+
+            <div class="mb-4">
+                <fieldset class="form-group">
+                    <legend class="font-95">Account Type</legend>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Commercial
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                               checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Non-commercial
+                        </label>
+                    </div>
+                    <!--                    <label class="col-md-12 form-label">-->
+                    <!--                        <app-radio-button childId="personal" name="userType" formControlName="userType" value="personal" aria-describedby="account-type-description">-->
+                    <!--                        </app-radio-button>-->
+                    <!--                        Non-commercial-->
+                    <!--                    </label>-->
+                    <!--                    <label class="col-md-12 form-label">-->
+                    <!--                        <app-radio-button childId="commercial" name="userType" formControlName="userType" value="commercial"-->
+                    <!--                                          aria-describedby="account-type-description">-->
+                    <!--                        </app-radio-button>-->
+                    <!--                        Commercial-->
+                    <!--                    </label>-->
+                </fieldset>
+            </div>
+
 
             <div class="mb-2">
                 <div><label class="form-label" for="description">About you</label></div>

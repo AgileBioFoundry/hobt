@@ -25,6 +25,7 @@ public class Account implements IDataTransferObject {
     private boolean isDisabled;
     private int newMessageCount;
     private boolean usingTempPassword;
+    private boolean commercial;
     private final List<Role> roles;
     private final List<Permission> permissions = new ArrayList<>();
 
@@ -188,5 +189,13 @@ public class Account implements IDataTransferObject {
 
     public void setUsingTempPassword(boolean usingTempPassword) {
         this.usingTempPassword = usingTempPassword;
+    }
+
+    public boolean isCommercial() {
+        return commercial;
+    }
+
+    public void setCommercial(boolean commercial) {
+        this.commercial = commercial;
     }
 }

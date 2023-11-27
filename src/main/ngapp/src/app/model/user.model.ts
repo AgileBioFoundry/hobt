@@ -21,6 +21,7 @@ export class User {
     usingTemporaryPassword: boolean;
     type?: string;
     institution?: string;
+    commercial: boolean;
 
     // validation ui controls
     userIdValid: boolean;
