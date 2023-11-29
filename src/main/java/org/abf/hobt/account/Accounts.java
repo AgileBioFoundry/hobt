@@ -175,8 +175,8 @@ public class Accounts {
     }
 
     public boolean setDisabled(long id, boolean disable) {
-//        authorization.expectAdmin(this.userId); // todo
-        AccountModel account = DAOFactory.getAccountDAO().get(id);
+        authorization.expectAdmin(this.userId);
+        AccountModel account = dao.get(id);
         if (account == null)
             return false;
 
@@ -196,6 +196,22 @@ public class Accounts {
 
         account.setDisabled(disable);
         return dao.update(account) != null;
+    }
+
+    /**
+     * Delete account referenced by
+     *
+     * @param id unique identifier for account
+     * @return true if deletion successful, false otherwise
+     */
+    public boolean delete(long id) {
+        authorization.expectAdmin(this.userId);
+        AccountModel account = dao.get(id);
+        if (account == null)
+            return false;
+
+        dao.delete(account);
+        return true;
     }
 
     private void sendAccountEmail(Account newAccount, String password) {

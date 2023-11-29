@@ -162,4 +162,13 @@ public class UserResource extends RestResource {
         return super.respond(accounts.setDisabled(id, true));
     }
 
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteAccount(@PathParam("id") long id) {
+        String userId = getUserId(true);
+        Accounts accounts = new Accounts(userId);
+        return super.respond(accounts.delete(id));
+    }
 }

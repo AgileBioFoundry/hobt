@@ -78,4 +78,21 @@ export class UsersComponent implements OnInit {
             this.paging.available = result.available;
         });
     };
+
+    promptDeleteUser(user: User): void {
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const modalRef = this.modalService.open(ConfirmActionComponent, options);
+        modalRef.componentInstance.resourceName = 'user';
+        modalRef.componentInstance.resourceIdentifier = user.userId;
+        modalRef.result.then((result: boolean) => {
+            if (!result)
+                return;
+
+            // delete confirmed. go ahead
+            this.http.delete('users/' + user.id).subscribe({
+                next: (result: boolean) => {
+                }
+            })
+        })
+    }
 }
