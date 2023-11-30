@@ -24,6 +24,31 @@ export class UsersComponent implements OnInit {
         this.pageUsers(1);
     }
 
+    setUserActive(user: User): void {
+        user.processing = true;
+        // if user is disable (enable)
+        if (user.isDisabled) {
+            // enable
+            this.http.put("users/" + user.id + "/active", {}).subscribe({
+                next: (result: any) => {
+                    user.processing = false;
+                    user.isDisabled = !user.isDisabled;
+                }, error: err => {
+                    user.processing = false;
+                }
+            })
+        } else {
+            this.http.delete("/users/" + user.id + "/active").subscribe({
+                next: (result: any) => {
+                    user.processing = false;
+                    user.isDisabled = !user.isDisabled;
+                }, error: err => {
+                    user.processing = false;
+                }
+            })
+        }
+    }
+
     showAddRoleModal(user: User): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(AddRoleComponent, options);
@@ -53,4 +78,21 @@ export class UsersComponent implements OnInit {
             this.paging.available = result.available;
         });
     };
+
+    promptDeleteUser(user: User): void {
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
+        const modalRef = this.modalService.open(ConfirmActionComponent, options);
+        modalRef.componentInstance.resourceName = 'user';
+        modalRef.componentInstance.resourceIdentifier = user.userId;
+        modalRef.result.then((result: boolean) => {
+            if (!result)
+                return;
+
+            // delete confirmed. go ahead
+            this.http.delete('users/' + user.id).subscribe({
+                next: (result: boolean) => {
+                }
+            })
+        })
+    }
 }

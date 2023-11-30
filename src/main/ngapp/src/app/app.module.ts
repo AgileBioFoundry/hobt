@@ -26,7 +26,6 @@ import {CreateRoleModalComponent} from './components/admin/modal/create-role-mod
 import {AdminComponent} from "./components/admin/admin.component";
 import {AddRoleComponent} from './components/admin/users/add-role/add-role.component';
 import {HostPartsComponent} from './components/host-detail/host-parts/host-parts.component';
-import {ConfirmActionComponent} from './components/common/confirm-action/confirm-action.component';
 import {PublicationsComponent} from './components/host-detail/publications/publications.component';
 import {AuthenticationComponent} from './components/admin/authentication/authentication.component';
 import {ExperimentsComponent} from './components/host-detail/experiments/experiments.component';
@@ -60,7 +59,6 @@ import {AttributesComponent} from './components/host-detail/attributes/attribute
         AdminComponent,
         AddRoleComponent,
         HostPartsComponent,
-        ConfirmActionComponent,
         PublicationsComponent,
         AuthenticationComponent,
         ExperimentsComponent,

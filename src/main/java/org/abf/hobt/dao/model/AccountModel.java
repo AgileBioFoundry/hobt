@@ -1,6 +1,7 @@
 package org.abf.hobt.dao.model;
 
 import jakarta.persistence.*;
+import org.abf.hobt.account.AccountType;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dto.Account;
 
@@ -60,6 +61,9 @@ public class AccountModel implements IDataModel {
     @JoinTable(name = "account_group", joinColumns = @JoinColumn(name = "account_id"),
         inverseJoinColumns = @JoinColumn(name = "group_id"))
     private final Set<GroupModel> groups = new LinkedHashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    private AccountType type = AccountType.PERSONAL;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"),
@@ -192,6 +196,14 @@ public class AccountModel implements IDataModel {
         return userId;
     }
 
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
     @Override
     public Account toDataTransferObject() {
         Account transfer = new Account();
@@ -200,9 +212,14 @@ public class AccountModel implements IDataModel {
         transfer.setLastName(lastName);
         transfer.setEmail(email);
         transfer.setUserId(userId);
+        transfer.setCreationTime(this.creationTime.getTime());
+        transfer.setLastUpdateTime(this.lastUpdateTime.getTime());
         transfer.setDescription(description);
+        transfer.setCommercial(type == AccountType.COMMERCIAL);
         if (this.disabled != null)
             transfer.setDisabled(this.disabled);
+        if (this.usingTempPassword != null)
+            transfer.setUsingTempPassword(this.usingTempPassword);
         return transfer;
     }
 }

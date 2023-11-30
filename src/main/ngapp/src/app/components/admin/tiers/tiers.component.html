@@ -1,4 +1,4 @@
-<div>
+<div class="p-2">
 
     <div class="pt-3 pb-3 border-bottom">
         <button class="btn btn-secondary" (click)="showCreateTierClick()">
@@ -77,7 +77,7 @@
     <table class="table table-bordered mt-3" *ngIf="tiers && tiers.length">
         <tr *ngFor="let tier of tiers">
             <td class="font-12 align-text-top">
-                <i class="fa fa-fw fa-reorder"></i> {{tier.label}}
+                <i class="bi bi-justify"></i> {{tier.label}}
             </td>
 
             <td class="w-50 p-0">

@@ -1,20 +1,24 @@
 <div class="row mt-4">
     <div class="col">
-        <table class="table table-condensed table-bordered table-hover">
+        <table class="table table-condensed table-bordered">
             <thead class="font-80 text-uppercase bg-light">
             <tr>
                 <th>Name</th>
                 <th>UserID</th>
                 <th class="w-25">Roles</th>
+                <th style="width: 80px">Enabled</th>
+                <th>Registered</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let user of users">
-                <td>{{user.firstName}} {{user.lastName}}</td>
                 <td>
-                    {{user.userId}}<br>
-                    <div class="text-muted small">({{user.email}})</div>
+                    {{user.firstName}} {{user.lastName}}
+                </td>
+                <td>
+                    {{user.userId}}
+                    <div class="text-muted small font-80">email: {{user.email}}</div>
                 </td>
                 <td>
                     <span class="badge bg-secondary p-2 ms-2" *ngFor="let role of user.roles">{{role.label}} <i
@@ -25,7 +29,16 @@
                         Add Role
                     </button>
                 </td>
-                <td></td>
+                <td class="text-center">
+                    <i class="bi cursor-pointer" (click)="setUserActive(user)"
+                       [ngClass]="{'bi-square': user.isDisabled, 'bi-check-square': !user.isDisabled}"></i>
+                </td>
+                <td>
+                    {{user.creationTime | date}}
+                    <div class="small text-muted fst-italic font-80">Last Login: {{user.lastLoginTime | date}}</div>
+                </td>
+                <td><i class="bi bi-trash font-14 cursor-pointer" [ngbTooltip]="'Delete user account'"
+                       (click)="promptDeleteUser(user)"></i></td>
             </tr>
             </tbody>
         </table>

@@ -19,16 +19,16 @@ public class UserResource extends RestResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(Account accountTransfer) {
+    public Response create(@DefaultValue("true") @QueryParam("sendEmail") boolean sendEmail, Account account) {
         Logger.info("Creating new account");
         try {
             Accounts accounts = new Accounts();
-            accountTransfer = accounts.create(accountTransfer, true);
+            account = accounts.create(account, sendEmail);
         } catch (IllegalArgumentException e) {
-            Logger.error(e);
-            return super.respond(Response.Status.CONFLICT);
+            Logger.error("Duplicated user id: " + account.getUserId(), e);
+            return super.respond(Response.Status.INTERNAL_SERVER_ERROR);
         }
-        return super.respond(accountTransfer);
+        return super.respond(account);
     }
 
     /**
@@ -143,4 +143,32 @@ public class UserResource extends RestResource {
         return super.respond(roles.getPermissions(id));
     }
 
+    @PUT
+    @Path("{id}/active")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addToActiveUsers(@PathParam("id") long id) {
+        String userId = getUserId(true);
+        Accounts accounts = new Accounts(userId);
+        return super.respond(accounts.setDisabled(id, false));
+    }
+
+    @DELETE
+    @Path("{id}/active")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeFromActiveUsers(@PathParam("id") long id) {
+        String userId = getUserId(true);
+        Accounts accounts = new Accounts(userId);
+        return super.respond(accounts.setDisabled(id, true));
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteAccount(@PathParam("id") long id) {
+        String userId = getUserId(true);
+        Accounts accounts = new Accounts(userId);
+        return super.respond(accounts.delete(id));
+    }
 }

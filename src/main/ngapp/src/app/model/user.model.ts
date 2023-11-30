@@ -15,13 +15,13 @@ export class User {
     public creationTime: string;
     public lastUpdateTime: string;
     public lastLoginTime: string;
-    public disabled: boolean;
+    public isDisabled: boolean;
     public description: string;
-    updatingActiveStatus?: boolean;
     allowedToChangePassword: boolean;
     usingTemporaryPassword: boolean;
     type?: string;
     institution?: string;
+    commercial: boolean;
 
     // validation ui controls
     userIdValid: boolean;
@@ -30,6 +30,8 @@ export class User {
     lastNameValid: boolean;
     descriptionValid: boolean;
     isAdmin: boolean;
+
+    processing: boolean;
 
     constructor() {
         this.usingTemporaryPassword = false;
