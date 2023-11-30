@@ -33,7 +33,7 @@ export class RegisterComponent {
                 console.log(result);
                 this.accountCreated = true;
             }, error: err => {
-                console.error(err);
+                console.error(err); // returns 500 even in cases where user id is being duplicated
                 this.serverError = true;
             }
         });
