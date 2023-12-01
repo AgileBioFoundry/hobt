@@ -1,0 +1,72 @@
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-2 offset-2">SMTP Host</div>
+        <div class="col-4">
+            <input class="form-control form-control-sm"
+                   [(ngModel)]="smtpSetting.value" [disabled]="!smtpSetting.enableEdit">
+        </div>
+        <div class="col-2">
+            <i class="bi bi-pencil-fill opacity-hover" *ngIf="!smtpSetting.enableEdit"
+               [ngbTooltip]="'Edit'" (click)="enableDisableEdit(smtpSetting)"></i>
+            <ng-container *ngIf="smtpSetting.enableEdit">
+                <button class="btn btn-sm btn-outline-primary p-1" (click)="updateSetting(smtpSetting)">Save</button>&nbsp;
+                <button class="btn btn-sm btn-secondary p-1" (click)="enableDisableEdit(smtpSetting)">Cancel</button>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-2 offset-2">Administrator Email</div>
+        <div class="col-4">
+            <input class="form-control form-control-sm"
+                   [(ngModel)]="adminEmailSetting.value" [disabled]="!adminEmailSetting.enableEdit">
+        </div>
+        <div class="col-2">
+            <i class="bi bi-pencil-fill opacity-hover" *ngIf="!adminEmailSetting.enableEdit"
+               [ngbTooltip]="'Edit'" (click)="enableDisableEdit(adminEmailSetting)"></i>
+            <ng-container *ngIf="adminEmailSetting.enableEdit">
+                <button class="btn btn-sm btn-outline-primary p-1" (click)="updateSetting(adminEmailSetting)">Save
+                </button>&nbsp;
+                <button class="btn btn-sm btn-secondary p-1" (click)="enableDisableEdit(adminEmailSetting)">Cancel
+                </button>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-2 offset-2">Sender Email</div>
+        <div class="col-4">
+            <input class="form-control form-control-sm"
+                   [(ngModel)]="sendEmailSetting.value" [disabled]="!sendEmailSetting.enableEdit">
+        </div>
+        <div class="col-2">
+            <i class="bi bi-pencil-fill opacity-hover" *ngIf="!sendEmailSetting.enableEdit"
+               [ngbTooltip]="'Edit'" (click)="enableDisableEdit(sendEmailSetting)"></i>
+            <ng-container *ngIf="sendEmailSetting.enableEdit">
+                <button class="btn btn-sm btn-outline-primary p-1" (click)="updateSetting(sendEmailSetting)">Save
+                </button>&nbsp;
+                <button class="btn btn-sm btn-secondary p-1" (click)="enableDisableEdit(sendEmailSetting)">Cancel
+                </button>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-2 offset-2">Authentication Method</div>
+        <div class="col">
+            <select class="form-select form-select-sm" id="tier" name="rolePermissionResourceSelect"
+                    [(ngModel)]="authSetting.value" (change)="selectionChange()"
+                    [disabled]="!authSetting.enableEdit">
+                <option [ngValue]="undefined">Select</option>
+                <option [ngValue]="perm" *ngFor="let perm of options">{{perm}}</option>
+            </select>
+
+        </div>
+        <div class="col">
+            <i class="fa fa-fw fa-pencil text-muted cursor-pointer" *ngIf="!authSetting.enableEdit"
+               [ngbTooltip]="'Edit'" (click)="authSetting.enableEdit=true"></i>
+        </div>
+    </div>
+
+
+</div>

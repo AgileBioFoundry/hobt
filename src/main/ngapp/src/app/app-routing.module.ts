@@ -9,7 +9,7 @@ import {AdminComponent} from "./components/admin/admin.component";
 import {TiersComponent} from "./components/admin/tiers/tiers.component";
 import {UsersComponent} from "./components/admin/users/users.component";
 import {RolesComponent} from "./components/admin/roles/roles.component";
-import {AuthenticationComponent} from "./components/admin/authentication/authentication.component";
+import {AdminSettingsComponent} from "./components/admin/authentication/admin-settings.component";
 import {AdminAttributesComponent} from "./components/admin/attributes/admin-attributes.component";
 import {ApiComponent} from "./components/admin/api/api.component";
 import {RegisterComponent} from "./components/register/register.component";
@@ -35,8 +35,8 @@ const routes: Routes = [
                 path: 'attributes',
                 component: AdminAttributesComponent
             }, {
-                path: 'auth',
-                component: AuthenticationComponent
+                path: 'settings',
+                component: AdminSettingsComponent
             }, {
                 path: 'api',
                 component: ApiComponent
