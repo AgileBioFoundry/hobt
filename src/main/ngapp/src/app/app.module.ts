@@ -27,7 +27,6 @@ import {AdminComponent} from "./components/admin/admin.component";
 import {AddRoleComponent} from './components/admin/users/add-role/add-role.component';
 import {HostPartsComponent} from './components/host-detail/host-parts/host-parts.component';
 import {PublicationsComponent} from './components/host-detail/publications/publications.component';
-import {AuthenticationComponent} from './components/admin/authentication/authentication.component';
 import {ExperimentsComponent} from './components/host-detail/experiments/experiments.component';
 import {AdminAttributesComponent} from './components/admin/attributes/admin-attributes.component';
 import {
@@ -60,7 +59,6 @@ import {AttributesComponent} from './components/host-detail/attributes/attribute
         AddRoleComponent,
         HostPartsComponent,
         PublicationsComponent,
-        AuthenticationComponent,
         ExperimentsComponent,
         AdminAttributesComponent,
         CreateNewAttributeModalComponent,
