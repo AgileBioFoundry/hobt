@@ -30,9 +30,8 @@
                     </button>
                 </td>
                 <td class="text-center">
-                    <i class="bi cursor-pointer" (click)="setUserActive(user)" *ngIf="!user.processing"
-                       [ngClass]="{'bi-square': user.isDisabled,
-                       'bi-check-square': !user.isDisabled}"></i>
+                    <i class="bi cursor-pointer" (click)="setUserActive(user)"
+                       [ngClass]="{'bi-square': user.isDisabled, 'bi-check-square': !user.isDisabled}"></i>
                 </td>
                 <td>
                     {{user.creationTime | date}}
