@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
                 }
             })
         } else {
-            this.http.delete("/users/" + user.id + "/active").subscribe({
+            this.http.delete("users/" + user.id + "/active").subscribe({
                 next: (result: any) => {
                     user.processing = false;
                     user.isDisabled = !user.isDisabled;
