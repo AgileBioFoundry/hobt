@@ -24,4 +24,5 @@ public class AccountAuthorization extends Authorization<AccountModel> {
 //
 //        return account.getRoles().contains(role);
 //    }
+
 }

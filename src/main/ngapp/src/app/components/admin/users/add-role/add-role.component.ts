@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Role} from "../../../../model/role.model";
 import {HttpService} from "../../../../service/http.service";
@@ -9,7 +9,7 @@ import {User} from "../../../../model/user.model";
     templateUrl: './add-role.component.html',
     styleUrls: ['./add-role.component.css']
 })
-export class AddRoleComponent implements OnInit {
+export class AddRoleComponent {
 
     @Input() user: User;
     roles: Role[];
@@ -20,9 +20,6 @@ export class AddRoleComponent implements OnInit {
         this.http.get('roles').subscribe((result: Role[]) => {
             this.roles = result;
         });
-    }
-
-    ngOnInit(): void {
     }
 
     createNewRole(): void {

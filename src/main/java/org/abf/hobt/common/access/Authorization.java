@@ -1,10 +1,13 @@
 package org.abf.hobt.common.access;
 
+import org.abf.hobt.account.Accounts;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.IDataModel;
 import org.abf.hobt.dao.IRepository;
 import org.abf.hobt.dao.model.AccountModel;
+import org.abf.hobt.dao.model.RoleModel;
 import org.abf.hobt.dto.Account;
+import org.abf.hobt.role.Roles;
 
 /**
  * Used in instances where access permissions are to be enforced.
@@ -39,9 +42,20 @@ public abstract class Authorization<T extends IDataModel> {
     }
 
     public boolean isAdmin(String userId) {
-        return true;
-//        AccountModel account = getAccount(userId);
-//        return account.getRoles().contains(AccountRole.ADMINISTRATOR);
+        AccountModel account = getAccount(userId);
+        if (account == null)
+            return false;
+
+        if (Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(account.getUserId()))
+            return true;
+
+        for (RoleModel role : account.getRoles()) {
+            if (Roles.ADMIN_ROLE_NAME.equals(role.getLabel())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean canRead(String userId, T object) {
