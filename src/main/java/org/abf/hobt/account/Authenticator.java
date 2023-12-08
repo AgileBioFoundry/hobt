@@ -43,15 +43,7 @@ public class Authenticator {
 
         Account transfer = account.toDataTransferObject();
         transfer.setSessionId(sid);
-        transfer.setAdmin(Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(userName));
-
-        // check if user can change password (is not a member of JBEI group)
-//        List<Long> ids = DAOFactory.getGroupDAO().getIdsByMember(userName);
-//        Settings settings = new Settings();
-//        long divaTeamId = settings.getLong(ConfigurationValue.JBEI_GROUP_ID);
-//        if (ids == null || !ids.contains(divaTeamId))
-//            transfer.setAllowedToChangePassword(true);
-
+        transfer.setAdmin(new AccountAuthorization().isAdmin(transfer.getUserId()));
         return transfer;
     }
 

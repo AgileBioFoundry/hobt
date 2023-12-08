@@ -184,6 +184,9 @@ public class Accounts {
         // then it is approved after vetting
         if (!disable && account.getUsingTempPassword() != null && account.getUsingTempPassword()) {
             String tempPassword = PasswordUtil.generateTemporaryPassword(12);
+            if (StringUtils.isBlank(account.getSalt())) {
+                account.setSalt(PasswordUtil.generateSalt());
+            }
 
             try {
                 account.setPassword(PasswordUtil.encryptPassword(tempPassword, account.getSalt()));

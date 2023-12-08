@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
                 }
             })
         } else {
-            this.http.delete("/users/" + user.id + "/active").subscribe({
+            this.http.delete("users/" + user.id + "/active").subscribe({
                 next: (result: any) => {
                     user.processing = false;
                     user.isDisabled = !user.isDisabled;
@@ -53,22 +53,17 @@ export class UsersComponent implements OnInit {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(AddRoleComponent, options);
         modalRef.componentInstance.user = user;
+        modalRef.result.then((result) => {
+            this.pageUsers(1);
+        }, error => {
+            console.log('error', error);
+        });
     }
 
     showConfirmationModal(user: User): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(ConfirmActionComponent, options);
     }
-
-    // fetchUsers(): void {
-    //     this.http.get('users', this.paging).subscribe((result: any) => {
-    //         console.log(result);
-    //         this.users = result.requested;
-    //         this.paging.available = result.available;
-    //     }, error => {
-    //         console.log(error);
-    //     });
-    // }
 
     pageUsers(page: number): void {
         this.paging.start = ((page - 1) * this.paging.limit);

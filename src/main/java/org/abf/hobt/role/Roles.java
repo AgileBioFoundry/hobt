@@ -19,9 +19,23 @@ import java.util.Optional;
 public class Roles {
 
     private final RoleDAO dao;
+    public static final String ADMIN_ROLE_NAME = "Administrator";
+    private final String ADMIN_ROLE_DESCRIPTION = "Built in administrator role";
 
     public Roles() {
         this.dao = DAOFactory.getRoleDAO();
+    }
+
+    public Role createAdminRole() {
+        Optional<RoleModel> optional = dao.getByLabel(ADMIN_ROLE_NAME);
+        if (optional.isPresent())
+            return optional.get().toDataTransferObject();
+
+        Logger.info("Creating admin role");
+        Role role = new Role();
+        role.setLabel(ADMIN_ROLE_NAME);
+        role.setDescription(ADMIN_ROLE_DESCRIPTION);
+        return this.create(role);
     }
 
     public Role create(Role role) {
@@ -30,7 +44,7 @@ public class Roles {
 
         Optional<RoleModel> optional = dao.getByLabel(role.getLabel());
         if (optional.isPresent())
-            throw new IllegalArgumentException("Role label is not unique");
+            throw new IllegalArgumentException("Role label " + role.getLabel() + " is not unique");
 
         RoleModel model = new RoleModel();
         model.setLabel(role.getLabel());

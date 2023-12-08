@@ -8,6 +8,7 @@ import org.abf.hobt.config.Settings;
 import org.abf.hobt.dao.DbType;
 import org.abf.hobt.dao.hibernate.HibernateConfiguration;
 import org.abf.hobt.dto.Setting;
+import org.abf.hobt.role.Roles;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -152,6 +153,9 @@ public class ApplicationInitializer {
 
         // initialize settings
         new Settings().initialize();
+
+        // create admin role
+        new Roles().createAdminRole(); // todo : assign to admin account
 
         // check data directory
         checkDataDirectory(dataDirectory);
