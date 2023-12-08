@@ -65,10 +65,16 @@ export class UsersComponent implements OnInit {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(ConfirmActionComponent, options);
         modalRef.result.then((result: boolean) => {
+            console.log(result);
             if (!result)
                 return;
 
             // delete role
+            this.http.delete('users/' + user.id + '/roles/' + role.id).subscribe({
+                next: () => {
+                    this.pageUsers(1);
+                }
+            })
         });
     }
 
