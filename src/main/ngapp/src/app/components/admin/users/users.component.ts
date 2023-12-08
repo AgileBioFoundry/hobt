@@ -5,6 +5,7 @@ import {User} from "../../../model/user.model";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {AddRoleComponent} from "./add-role/add-role.component";
 import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action.component";
+import {Role} from "../../../model/role.model";
 
 @Component({
     selector: 'app-users',
@@ -60,9 +61,15 @@ export class UsersComponent implements OnInit {
         });
     }
 
-    showConfirmationModal(user: User): void {
+    showConfirmationModal(user: User, role: Role): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false};
         const modalRef = this.modalService.open(ConfirmActionComponent, options);
+        modalRef.result.then((result: boolean) => {
+            if (!result)
+                return;
+
+            // delete role
+        });
     }
 
     pageUsers(page: number): void {

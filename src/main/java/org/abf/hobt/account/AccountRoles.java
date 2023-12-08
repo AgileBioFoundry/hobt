@@ -26,6 +26,19 @@ public class AccountRoles {
         this.accountAuthorization = new AccountAuthorization();
     }
 
+    public void removeRole(long userId, long roleId) {
+        AccountModel accountModel = this.accountDAO.get(userId);
+        if (accountModel == null)
+            throw new IllegalArgumentException("Cannot retrieve account with id : " + userId);
+
+        RoleModel roleModel = this.roleDAO.get(roleId);
+        if (roleModel == null)
+            throw new IllegalArgumentException("Cannot retrieve role with id : " + roleId);
+
+        if (accountModel.getRoles().remove(roleModel))
+            this.accountDAO.update(accountModel);
+    }
+
     public void addRole(long userId, long roleId) {
         // todo : check permission to ensure it works
 

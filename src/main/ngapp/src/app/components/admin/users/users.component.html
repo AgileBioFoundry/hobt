@@ -22,7 +22,7 @@
                 </td>
                 <td>
                     <span class="badge bg-secondary p-2 ms-2" *ngFor="let role of user.roles">{{role.label}} <i
-                        class="fa fa-fw fa-times opacity-hover" (click)="showConfirmationModal(user)"></i> </span>
+                        class="fa fa-fw fa-times opacity-hover" (click)="showConfirmationModal(user, role)"></i></span>
 
                     <button class="btn btn-sm btn-link" (click)="showAddRoleModal(user)"><i
                         class="fa fa-fw fa-plus"></i>

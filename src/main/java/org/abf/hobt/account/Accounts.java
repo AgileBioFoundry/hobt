@@ -14,6 +14,7 @@ import org.abf.hobt.dao.hibernate.AccountDAO;
 import org.abf.hobt.dao.model.AccountModel;
 import org.abf.hobt.dao.model.RoleModel;
 import org.abf.hobt.dto.Account;
+import org.abf.hobt.dto.Setting;
 import org.abf.hobt.notification.Email;
 
 import java.text.SimpleDateFormat;
@@ -158,20 +159,10 @@ public class Accounts {
 
         stringBuilder.append("\n\nThank you");
 
-        List<AccountModel> admins = DAOFactory.getAccountDAO().getByRole(AccountRole.ADMINISTRATOR);
-
+        // get setting
+        Setting setting = new Settings().get(ConfigurationValue.ADMIN_EMAIL);
         Email email = new Email();
-        int i = 0;
-        for (AccountModel account : admins) {
-            if (Accounts.DEFAULT_ADMIN_USERID.equalsIgnoreCase(account.getUserId()))
-                continue;
-
-            email.send(account.getEmail(), null, subject, stringBuilder.toString());
-
-            // arbitrary
-            if (++i >= 5)
-                break;
-        }
+        email.send(setting.getKey().trim(), null, subject, stringBuilder.toString());
     }
 
     public boolean setDisabled(long id, boolean disable) {

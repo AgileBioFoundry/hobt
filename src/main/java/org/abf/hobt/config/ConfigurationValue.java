@@ -19,8 +19,6 @@ public enum ConfigurationValue {
     SEND_EMAIL_NOTIFICATION,
     REGISTRATION_ALLOWED,
     ENABLE_ACCOUNT_VETTING,  // requires that new registered users have to be vetted before they can use the account
-    RESTRICT_PROJECT_CREATION, // permit only users with principal investigator privileges to create projects
     AUTHENTICATION_METHOD,
-
     PROTOCOL_IO_API_TOKEN
 }

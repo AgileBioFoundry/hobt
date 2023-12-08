@@ -1,7 +1,6 @@
 package org.abf.hobt.dao.hibernate;
 
 import jakarta.persistence.criteria.*;
-import org.abf.hobt.account.AccountRole;
 import org.abf.hobt.account.Accounts;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.common.util.StringUtils;
@@ -91,13 +90,6 @@ public class AccountDAO extends HibernateRepository<AccountModel> {
             Logger.error(e);
             throw new DataAccessException(e);
         }
-    }
-
-    public List<AccountModel> getByRole(AccountRole role) {
-        CriteriaQuery<AccountModel> criteriaQuery = getBuilder().createQuery(AccountModel.class);
-        Root<AccountModel> root = criteriaQuery.from(AccountModel.class);
-        criteriaQuery.where(root.join("roles").in(role));
-        return currentSession().createQuery(criteriaQuery).getResultList();
     }
 
     public List<AccountModel> getGroupMembers(GroupModel groupModel) {

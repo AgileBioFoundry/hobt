@@ -3,7 +3,10 @@ package org.abf.hobt.service.rest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.abf.hobt.account.*;
+import org.abf.hobt.account.AccountAuthorization;
+import org.abf.hobt.account.AccountRoles;
+import org.abf.hobt.account.Accounts;
+import org.abf.hobt.account.Users;
 import org.abf.hobt.common.logging.Logger;
 import org.abf.hobt.dto.Account;
 import org.abf.hobt.dto.Role;
@@ -98,16 +101,16 @@ public class UserResource extends RestResource {
         return super.respond(success);
     }
 
-    @POST
-    @Path("{id}/roles")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addRole(@PathParam("id") long id, AccountRole role) {
-        String userId = getUserId(true);
-        Logger.info(userId + ": adding role " + role + " to account " + id);
-        Accounts accounts = new Accounts();
-        boolean success = false; //accounts.addRole(id, role);
-        return respond(success);
-    }
+//    @POST
+//    @Path("{id}/roles")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response addRole(@PathParam("id") long id, AccountRole role) {
+//        String userId = getUserId(true);
+//        Logger.info(userId + ": adding role " + role + " to account " + id);
+//        Accounts accounts = new Accounts();
+//        boolean success = false; //accounts.addRole(id, role);
+//        return respond(success);
+//    }
 
     @PUT
     @Path("{id}/roles")
@@ -121,15 +124,15 @@ public class UserResource extends RestResource {
     }
 
     @DELETE
-    @Path("{id}/roles/{role}")
+    @Path("{id}/roles/{roleId}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response removeRole(@PathParam("id") long id,
-                               @PathParam("role") AccountRole role) {
+                               @PathParam("roleId") long roleId) {
         String userId = getUserId(true);
-        Logger.info(userId + ": removing role " + role + " from account " + id);
-        Accounts accounts = new Accounts();
-//        boolean success = accounts.removeRole(id, role);
-        return respond(false);
+        Logger.info(userId + ": removing role " + roleId + " from account " + id);
+        AccountRoles roles = new AccountRoles(userId);
+        roles.removeRole(id, roleId);
+        return respond(true);
     }
 
     @GET
