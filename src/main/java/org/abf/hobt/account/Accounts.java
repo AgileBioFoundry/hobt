@@ -161,8 +161,13 @@ public class Accounts {
 
         // get setting
         Setting setting = new Settings().get(ConfigurationValue.ADMIN_EMAIL);
+        if (setting == null || StringUtils.isBlank(setting.getValue())) {
+            Logger.error("Could not retrieve admin email from setting");
+            return;
+        }
+
         Email email = new Email();
-        email.send(setting.getKey().trim(), null, subject, stringBuilder.toString());
+        email.send(setting.getValue().trim(), null, subject, stringBuilder.toString());
     }
 
     public boolean setDisabled(long id, boolean disable) {

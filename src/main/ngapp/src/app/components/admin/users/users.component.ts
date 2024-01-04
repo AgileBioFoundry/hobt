@@ -14,11 +14,10 @@ import {Role} from "../../../model/role.model";
 })
 export class UsersComponent implements OnInit {
 
-    paging: Paging;
+    paging: Paging = new Paging();
     users: User[];
 
     constructor(private http: HttpService, private modalService: NgbModal) {
-        this.paging = new Paging();
     }
 
     ngOnInit(): void {
@@ -99,6 +98,7 @@ export class UsersComponent implements OnInit {
             // delete confirmed. go ahead
             this.http.delete('users/' + user.id).subscribe({
                 next: (result: boolean) => {
+                    this.pageUsers(1);
                 }
             })
         })
