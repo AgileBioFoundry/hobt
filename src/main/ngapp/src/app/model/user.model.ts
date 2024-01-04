@@ -14,7 +14,7 @@ export class User {
     permissions: Permission[];
     public creationTime: string;
     public lastUpdateTime: string;
-    public lastLoginTime: string;
+    public lastLogin: string;
     public isDisabled: boolean;
     public description: string;
     allowedToChangePassword: boolean;

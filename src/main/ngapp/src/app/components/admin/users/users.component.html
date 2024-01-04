@@ -35,7 +35,7 @@
                 </td>
                 <td>
                     {{user.creationTime | date}}
-                    <div class="small text-muted fst-italic font-80">Last Login: {{user.lastLoginTime | date}}</div>
+                    <div class="small text-muted fst-italic font-80">Last Login: {{ user.lastLogin | date }}</div>
                 </td>
                 <td><i class="bi bi-trash font-14 cursor-pointer" [ngbTooltip]="'Delete user account'"
                        (click)="promptDeleteUser(user)"></i></td>
