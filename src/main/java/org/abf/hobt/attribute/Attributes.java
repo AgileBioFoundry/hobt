@@ -4,10 +4,13 @@ import org.abf.hobt.account.AccountAuthorization;
 import org.abf.hobt.common.ResultData;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.OrganismAttributeDAO;
+import org.abf.hobt.dao.hibernate.OrganismAttributeOptionDAO;
 import org.abf.hobt.dao.hibernate.OrganismDAO;
 import org.abf.hobt.dao.model.AccountModel;
 import org.abf.hobt.dao.model.OrganismAttributeModel;
+import org.abf.hobt.dao.model.OrganismAttributeOptionModel;
 import org.abf.hobt.dao.model.OrganismModel;
+import org.abf.hobt.dto.CustomAttributeOption;
 import org.abf.hobt.dto.Organism;
 import org.abf.hobt.dto.OrganismAttribute;
 
@@ -46,7 +49,21 @@ public class Attributes {
                 model.getOrganisms().add(organismModel);
             }
         }
+
         model = this.dao.create(model);
+
+        // create attribute options if applicable
+        if (organismAttribute.getType() == AttributeType.MULTI_CHOICE) {
+            OrganismAttributeOptionDAO optionDAO = DAOFactory.getOrganismAttributeOptionDAO();
+
+            for (CustomAttributeOption option : organismAttribute.getOptions()) {
+                OrganismAttributeOptionModel optionModel = new OrganismAttributeOptionModel();
+                optionModel.setLabel(option.getValue());
+                optionModel.setAttribute(model);
+                optionDAO.create(optionModel);
+            }
+        }
+
         return model.toDataTransferObject();
     }
 

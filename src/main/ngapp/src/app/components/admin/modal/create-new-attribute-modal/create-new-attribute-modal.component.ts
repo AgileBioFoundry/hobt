@@ -4,6 +4,7 @@ import {HttpService} from "../../../../service/http.service";
 import {Result} from "../../../../model/result";
 import {Host} from "../../../../model/host.model";
 import {Attribute} from "../../../../model/attribute.model";
+import {AttributeOption} from "../../../../model/attribute-option.model";
 
 @Component({
     selector: 'app-create-new-attribute-modal',
@@ -34,6 +35,21 @@ export class CreateNewAttributeModalComponent implements OnInit {
     }
 
     typeSelectionChange(): void {
+        console.log(this.newAttribute);
+        if (this.newAttribute.type === 'MULTI_CHOICE') {
+            // check for attribute options list
+            if (!this.newAttribute.options) {
+                this.newAttribute.options = [new AttributeOption()];
+            }
+        }
+    }
+
+    addAttributeOption(index: number): void {
+        this.newAttribute.options.splice(index + 1, 0, new AttributeOption());
+    }
+
+    removeAttributeOption(index: number): void {
+        this.newAttribute.options.splice(index, 1);
     }
 
     createOrUpdateAttribute(): void {
@@ -46,6 +62,11 @@ export class CreateNewAttributeModalComponent implements OnInit {
                 if (host.selected)
                     this.newAttribute.hosts.push(host);
             }
+        }
+
+        // check options
+        if (this.newAttribute.type !== 'MULTI_CHOICE') {
+            this.newAttribute.options = [];
         }
 
         // submit

@@ -1,4 +1,5 @@
 import {Host} from "./host.model";
+import {AttributeOption} from "./attribute-option.model";
 
 export class Attribute {
     id: number;
@@ -8,4 +9,5 @@ export class Attribute {
     allOrganisms: boolean;
     value: string;
     hosts: Host[];
+    options: AttributeOption[];
 }

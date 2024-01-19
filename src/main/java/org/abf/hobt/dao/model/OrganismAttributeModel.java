@@ -49,7 +49,7 @@ public class OrganismAttributeModel implements IDataModel {
     /**
      * Options for attribute type "Multi_Choice"
      */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "attribute")
     private final List<OrganismAttributeOptionModel> options = new ArrayList<>();
 
     public long getId() {

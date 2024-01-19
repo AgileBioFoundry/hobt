@@ -24,6 +24,7 @@ public class DAOFactory {
     private static OrganismAttributeDAO organismAttributeDAO;
     private static OrganismElementCacheDAO organismElementCacheDAO;
     private static OrganismAttributeValueDAO organismAttributeValueDAO;
+    private static OrganismAttributeOptionDAO organismAttributeOptionDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -113,5 +114,11 @@ public class DAOFactory {
         if (organismAttributeValueDAO == null)
             organismAttributeValueDAO = new OrganismAttributeValueDAO();
         return organismAttributeValueDAO;
+    }
+
+    public static OrganismAttributeOptionDAO getOrganismAttributeOptionDAO() {
+        if (organismAttributeOptionDAO == null)
+            organismAttributeOptionDAO = new OrganismAttributeOptionDAO();
+        return organismAttributeOptionDAO;
     }
 }

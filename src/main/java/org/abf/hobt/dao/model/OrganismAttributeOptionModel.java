@@ -20,12 +20,35 @@ public class OrganismAttributeOptionModel implements IDataModel {
     @Column(name = "label")
     private String label;
 
+    @ManyToOne()
+    @JoinColumn(name = "attribute_id")
+    private OrganismAttributeModel attribute;
+
     public long getId() {
         return id;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public OrganismAttributeModel getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(OrganismAttributeModel attribute) {
+        this.attribute = attribute;
+    }
+
     @Override
     public CustomAttributeOption toDataTransferObject() {
-        return null;
+        CustomAttributeOption option = new CustomAttributeOption();
+        option.setValue(label);
+        option.setId(id);
+        return option;
     }
 }
