@@ -126,9 +126,15 @@ public class OrganismAttributeModel implements IDataModel {
         attribute.setId(this.id);
         attribute.setLabel(this.label);
         attribute.setType(this.type);
+        attribute.setRequired(this.required);
         attribute.setAllOrganisms(this.allOrganisms);
-        for (OrganismModel model : this.organisms)
+        for (OrganismModel model : this.organisms) {
             attribute.getHosts().add(model.toDataTransferObject());
+        }
+
+        for (OrganismAttributeOptionModel optionModel : this.options) {
+            attribute.getOptions().add(optionModel.toDataTransferObject());
+        }
         return attribute;
     }
 }
