@@ -7,29 +7,35 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="attributes && attributes.length">
         <div class="col">
             <table class="table">
                 <thead class="small">
                 <tr>
-                    <th>Type</th>
-                    <th>Label</th>
-                    <th>Hosts</th>
-                    <th>Required</th>
-                    <th>Action</th>
+                    <th class="small text-uppercase text-muted">Type</th>
+                    <th class="small text-uppercase text-muted">Label</th>
+                    <th class="small text-uppercase text-muted">Hosts</th>
+                    <th class="small text-uppercase text-muted">Required</th>
+                    <th class="small text-uppercase text-muted">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let attribute of attributes">
-                    <td>{{attribute.type}}</td>
-                    <td>{{attribute.label}}</td>
+                    <td>{{ attributeTypeLabel(attribute.type) }}
+                        <div *ngIf="attribute.options && attribute.options.length">
+                            <span *ngFor="let option of attribute.options; first as first" style="font-size: 11px"
+                                  class="text-muted">
+                                <span *ngIf="!first">,&nbsp;</span>{{ option.value }}</span>
+                        </div>
+                    </td>
+                    <td>{{ attribute.label }}</td>
                     <td>
                         <div *ngIf="attribute.allOrganisms">All</div>
                         <div *ngIf="!attribute.allOrganisms">
                             Subset
                         </div>
                     </td>
-                    <td>{{attribute.required}}</td>
+                    <td>{{ attribute.required }}</td>
                     <td>
                         <i class="fa fa-fw fa-edit opacity-hover font-12" [ngbTooltip]="'Edit'"
                            (click)="showCreateAttributeModal(attribute)"></i>
@@ -48,7 +54,7 @@
                             (pageChange)="pageAttributes($event)"></ngb-pagination>
         </div>
 
-        <div class="col"><strong>{{pageCounts()}}</strong></div>
+        <div class="col"><strong>{{ pageCounts() }}</strong></div>
     </div>
 </div>
 

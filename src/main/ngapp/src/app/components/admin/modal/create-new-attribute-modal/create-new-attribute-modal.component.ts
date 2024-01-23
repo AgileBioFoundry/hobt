@@ -19,7 +19,7 @@ export class CreateNewAttributeModalComponent implements OnInit {
 
     availableTypes: { label: string, value: string }[] = [
         {label: 'Text', value: 'TEXT_INPUT'},
-        {label: 'Options', value: 'MULTI_CHOICE'},
+        {label: 'Multi Choice Options', value: 'MULTI_CHOICE'},
         {label: 'Boolean', value: 'BOOLEAN'}
     ];
     @Input() newAttribute: Attribute;

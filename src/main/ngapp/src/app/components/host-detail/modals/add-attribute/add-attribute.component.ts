@@ -22,10 +22,22 @@ export class AddAttributeComponent implements OnInit {
         });
     }
 
+    disableSave(): boolean {
+        if (!this.attributes || !this.attributes.length)
+            return true;
+
+        for (let i = 0; i < this.attributes.length; i += 1) {
+            const attribute = this.attributes[i];
+            if (attribute.required && attribute.value === undefined)
+                return true;
+        }
+        return false;
+    }
+
     saveAttribute(): void {
         this.http.put('hosts/' + this.hostId + '/attributes/values', {id: this.hostId, attributes: this.attributes})
             .subscribe(result => {
-
+                this.activeModal.close(result);
             })
     }
 }

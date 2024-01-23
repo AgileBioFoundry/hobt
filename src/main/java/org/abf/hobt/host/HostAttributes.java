@@ -1,5 +1,6 @@
 package org.abf.hobt.host;
 
+import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.OrganismAttributeDAO;
 import org.abf.hobt.dao.hibernate.OrganismAttributeValueDAO;
@@ -54,6 +55,9 @@ public class HostAttributes {
 
 
         for (OrganismAttribute attribute : organism.getAttributes()) {
+            if (StringUtils.isBlank(attribute.getValue()))
+                continue;
+
             OrganismAttributeModel model = dao.get(attribute.getId());
             if (model == null)
                 continue;

@@ -17,6 +17,11 @@ export class AdminAttributesComponent implements OnInit {
 
     paging: Paging;
     attributes: Attribute[];
+    availableTypes: { label: string, value: string }[] = [
+        {label: 'Text', value: 'TEXT_INPUT'},
+        {label: 'Multi Choice Options', value: 'MULTI_CHOICE'},
+        {label: 'Boolean', value: 'BOOLEAN'}
+    ];
 
     constructor(private http: HttpService, private modalService: NgbModal) {
         this.paging = new Paging();
@@ -25,6 +30,15 @@ export class AdminAttributesComponent implements OnInit {
     ngOnInit(): void {
         // todo : retrieve new attributes
         this.pageAttributes();
+    }
+
+    attributeTypeLabel(type: string): string {
+        for (let i = 0; i < this.availableTypes.length; i += 1) {
+            const typeC = this.availableTypes[i];
+            if (typeC.value === type)
+                return typeC.label;
+        }
+        return type;
     }
 
     pageAttributes(page: number = 1): void {

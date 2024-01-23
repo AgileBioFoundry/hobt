@@ -1,15 +1,11 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-title">Create New Attribute</h5>
+    <h5 class="modal-title" id="modal-title" *ngIf="!newAttribute.id">Create New Attribute</h5>
+    <h5 class="modal-title" id="modal-title" *ngIf="newAttribute.id">Update Attribute</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 
 <div class="modal-body" id="modal-body">
     <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
-        </div>
-
         <div class="row">
             <div class="col">Select Type</div>
             <div class="col">
@@ -62,7 +58,6 @@
                                [(ngModel)]="host.selected" [disabled]="this.newAttribute.allOrganisms"> &nbsp;
                         <label class="form-check-label" [for]="'check-host-' + i">{{ host.name }}</label>
                     </div>
-
                 </div>
 
             </div>
@@ -72,13 +67,11 @@
             <div class="col">Is this attribute required?</div>
             <div class="col">
                 <input type="radio" class="form-check-input" id="radio-yes" name="radio-stacked"
-                       [value]="newAttribute.required"
-                       required>&nbsp;
+                       [value]="true" [(ngModel)]="newAttribute.required" required>&nbsp;
                 <label class="form-check-label" for="radio-yes"> Yes</label>
                 &nbsp;
                 <input type="radio" class="form-check-input" id="radio-no" name="radio-stacked"
-                       [value]="newAttribute.required"
-                       required>&nbsp;
+                       [value]="false" [(ngModel)]="newAttribute.required" required>&nbsp;
                 <label class="form-check-label" for="radio-no">No</label>
             </div>
         </div>
@@ -94,7 +87,7 @@
     <div class="text-end">
         <button class="btn btn-light" (click)="activeModal.close()">Cancel</button>&nbsp;
         <button class="btn btn-primary" (click)="createOrUpdateAttribute()">
-            Create Attribute
+            Save
         </button>
     </div>
 </div>
