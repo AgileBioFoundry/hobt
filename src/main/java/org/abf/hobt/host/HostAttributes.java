@@ -1,5 +1,6 @@
 package org.abf.hobt.host;
 
+import org.abf.hobt.account.AccountAuthorization;
 import org.abf.hobt.common.util.StringUtils;
 import org.abf.hobt.dao.DAOFactory;
 import org.abf.hobt.dao.hibernate.OrganismAttributeDAO;
@@ -49,6 +50,23 @@ public class HostAttributes {
         return results;
     }
 
+    public boolean delete(String userId, long attributeId) {
+        // only admins can delete
+        AccountAuthorization accountAuthorization = new AccountAuthorization();
+        accountAuthorization.expectAdmin(userId);
+
+        OrganismAttributeModel model = dao.get(attributeId);
+        if (model == null)
+            return false;
+
+        OrganismAttributeValueDAO attributeValueDAO = DAOFactory.getOrganismAttributeValueDAO();
+        Optional<OrganismAttributeValueModel> optional = attributeValueDAO.getByAttributeAndHost(this.organismModel, model);
+        optional.ifPresent(attributeValueDAO::delete);
+
+        dao.delete(model);
+        return true;
+    }
+
     public void update(Organism organism) {
         if (organism.getAttributes() == null)
             return;
@@ -84,6 +102,7 @@ public class HostAttributes {
         List<OrganismAttributeValueModel> list = this.valueDAO.getByHost(this.organismModel);
         List<OrganismAttribute> result = new ArrayList<>();
         for (OrganismAttributeValueModel model : list) {
+            // note that the id in this case is the id of the attribute, note the value
             result.add(model.toDataTransferObject());
         }
         return result;

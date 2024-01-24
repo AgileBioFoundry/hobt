@@ -5,6 +5,9 @@ import {AddAttributeComponent} from "../modals/add-attribute/add-attribute.compo
 import {Paging} from "../../../model/paging.model";
 import {HttpService} from "../../../service/http.service";
 import {Attribute} from "../../../model/attribute.model";
+import {User} from "../../../model/user.model";
+import {UserService} from "../../../service/user.service";
+import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action.component";
 
 @Component({
     selector: 'app-attributes',
@@ -18,21 +21,48 @@ export class AttributesComponent implements OnInit {
 
     attributes: Attribute[];
     paging: Paging;
+    user: User;
 
-    constructor(private modalService: NgbModal, private http: HttpService) {
+    constructor(private modalService: NgbModal, private http: HttpService, private userService: UserService) {
         this.paging = new Paging();
+        this.user = this.userService.getUser();
     }
 
     ngOnInit(): void {
+        this.getAttributeList();
+    }
+
+    private getAttributeList(): void {
         this.http.get('hosts/' + this.host.id + '/attributes/values').subscribe((result: Attribute[]) => {
             this.attributes = result;
         });
     }
 
+    deleteAttribute(attribute: Attribute): void {
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false, size: 'md'};
+        const modalRef = this.modalService.open(ConfirmActionComponent, options);
+        modalRef.componentInstance.resourceName = 'Attribute';
+        modalRef.componentInstance.resourceIdentifier = attribute.label;
+        modalRef.result.then((result: boolean) => {
+            if (!result)
+                return;
+
+            // delete attribute
+            this.http.delete('hosts/' + this.host.id + '/attributes/' + attribute.id).subscribe({
+                next: (result: boolean) => {
+                    if (!result)
+                        return;
+
+                    this.getAttributeList();
+                }
+            })
+        })
+
+    }
+
     showAttributeAddModal(): void {
         const options: NgbModalOptions = {backdrop: 'static', keyboard: false, size: 'lg'};
         const modalRef = this.modalService.open(AddAttributeComponent, options);
-        console.log(this.host);
         modalRef.componentInstance.hostId = this.host.id;
 
         modalRef.result.then((result) => {

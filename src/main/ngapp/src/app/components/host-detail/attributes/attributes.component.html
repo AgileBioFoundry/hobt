@@ -14,12 +14,16 @@
         </div>
     </div>
 
-    <div class="row mb-2" *ngFor="let attribute of attributes">
+    <div class="row pb-2" *ngFor="let attribute of attributes">
         <div class="col-5">
             <div class="text-muted float-end">{{attribute.label}}</div>
         </div>
-        <div class="col">
-            <div>{{attribute.value}}</div>
+        <div class="col d-flex">
+            <div *ngIf="attribute.value">{{ attribute.value }}</div>
+            <div *ngIf="!attribute.value" class="text-muted fst-italic">No value</div>
+
+            <i class="bi bi-trash ms-2 cursor-pointer" *ngIf="user && user.isAdmin"
+               (click)="deleteAttribute(attribute)"></i>
         </div>
     </div>
 </div>

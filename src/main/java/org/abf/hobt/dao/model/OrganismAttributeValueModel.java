@@ -55,7 +55,7 @@ public class OrganismAttributeValueModel implements IDataModel {
     @Override
     public OrganismAttribute toDataTransferObject() {
         OrganismAttribute attribute = new OrganismAttribute();
-        attribute.setId(this.id);
+        attribute.setId(this.organismAttribute.getId());
         attribute.setValue(this.value);
         attribute.setLabel(this.organismAttribute.getLabel());
         attribute.setRequired(this.organismAttribute.getRequired());

@@ -195,4 +195,14 @@ public class HostResource extends RestResource {
         HostAttributes hostAttributes = new HostAttributes(hostId);
         return super.respond(hostAttributes.getValues());
     }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/attributes/{att_id}")
+    public Response deleteHostAttribute(@PathParam("id") long hostId, @PathParam("att_id") long attributeId) {
+        String userId = getUserId(true);
+        HostAttributes hostAttributes = new HostAttributes(hostId);
+        return super.respond(hostAttributes.delete(userId, attributeId));
+    }
 }
