@@ -2,14 +2,23 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../../../service/http.service";
 import {Paging} from "../../../model/paging.model";
 import {User} from "../../../model/user.model";
-import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalOptions, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {AddRoleComponent} from "./add-role/add-role.component";
 import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action.component";
 import {Role} from "../../../model/role.model";
+import {DatePipe, NgClass, NgForOf} from "@angular/common";
 
 @Component({
     selector: 'app-users',
+    standalone: true,
     templateUrl: './users.component.html',
+    imports: [
+        NgForOf,
+        NgClass,
+        DatePipe,
+        NgbTooltip,
+        NgbPagination
+    ],
     styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {

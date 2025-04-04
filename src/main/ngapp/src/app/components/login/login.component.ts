@@ -1,15 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../model/user.model";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {HttpService} from "../../service/http.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Permission} from "../../model/permission.model";
 import {PermissionService} from "../../service/permission.service";
+import {NgClass, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-login',
+    standalone: true,
     templateUrl: './login.component.html',
+    imports: [
+        RouterLink,
+        NgIf,
+        NgClass,
+        FormsModule
+    ],
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {

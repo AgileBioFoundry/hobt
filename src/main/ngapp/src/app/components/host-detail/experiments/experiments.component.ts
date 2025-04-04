@@ -2,10 +2,17 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Host} from "../../../model/host.model";
 import {HttpService} from "../../../service/http.service";
 import {Study} from "../../../model/study.model";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-experiments',
+    standalone: true,
     templateUrl: './experiments.component.html',
+    imports: [
+        DatePipe,
+        NgIf,
+        NgForOf
+    ],
     styleUrls: ['./experiments.component.css']
 })
 export class ExperimentsComponent implements OnInit {

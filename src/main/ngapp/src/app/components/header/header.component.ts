@@ -6,10 +6,15 @@ import {User} from "../../model/user.model";
 import {UserService} from "../../service/user.service";
 import {RegisterComponent} from "../register/register.component";
 import {HttpService} from "../../service/http.service";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-header',
+    standalone: true,
     templateUrl: './header.component.html',
+    imports: [
+        NgIf
+    ],
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {

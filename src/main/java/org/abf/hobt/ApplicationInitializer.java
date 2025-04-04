@@ -40,7 +40,7 @@ public class ApplicationInitializer {
             if (dataDirectory == null || !Files.exists(dataDirectory))
                 return null;
 
-            // check if there is a ice-server.properties in the config directory inside the data directory
+            // check if there is a hobt-server.properties in the config directory inside the data directory
             // and use it to connect to the database if so
             if (Files.exists(Paths.get(dataDirectory.toString(), "config", SERVER_PROPERTY_NAME))) {
                 loadServerProperties(dataDirectory);
@@ -126,7 +126,7 @@ public class ApplicationInitializer {
 
         Logger.info("Loading server properties from " + serverPropertiesPath);
 
-        // get type of data base
+        // get type of database
         String dbTypeString = properties.getProperty("connectionType");
         DbType type;
         if (StringUtils.isBlank(dbTypeString)) {

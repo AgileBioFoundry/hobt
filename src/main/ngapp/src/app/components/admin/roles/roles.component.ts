@@ -13,6 +13,7 @@ import {Result} from "../../../model/result";
 
 @Component({
     selector: 'app-roles',
+    standalone: true,
     templateUrl: './roles.component.html',
     styleUrls: ['./roles.component.css']
 })

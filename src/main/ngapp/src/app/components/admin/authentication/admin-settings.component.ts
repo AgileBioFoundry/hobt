@@ -13,8 +13,7 @@ import {Setting} from "../../../model/setting";
         FormsModule,
         NgbTooltip,
         NgForOf,
-        NgIf,
-        JsonPipe
+        NgIf
     ],
     styleUrls: ['./admin-settings.component.css']
 })

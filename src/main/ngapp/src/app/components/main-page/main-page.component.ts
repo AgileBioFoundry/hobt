@@ -1,14 +1,34 @@
 import {Component, OnInit} from '@angular/core';
 import {Host} from "../../model/host.model";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {HttpService} from "../../service/http.service";
 import {Tier} from "../../model/tier.model";
 import {PermissionService} from "../../service/permission.service";
 import {HostStatistics} from "../../model/host-statistics";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {HeaderComponent} from "../header/header.component";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
     selector: 'app-main-page',
     templateUrl: './main-page.component.html',
+    standalone: true,
+    imports: [
+        DatePipe,
+        NgForOf,
+        NgIf,
+        NgClass,
+        FormsModule,
+        RouterLink,
+        NgbDropdown,
+        NgbDropdownToggle,
+        NgbDropdownItem,
+        FooterComponent,
+        NgbDropdownMenu,
+        HeaderComponent
+    ],
     styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {

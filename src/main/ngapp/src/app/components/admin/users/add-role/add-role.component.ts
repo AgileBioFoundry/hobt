@@ -3,10 +3,19 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Role} from "../../../../model/role.model";
 import {HttpService} from "../../../../service/http.service";
 import {User} from "../../../../model/user.model";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-add-role',
+    standalone: true,
     templateUrl: './add-role.component.html',
+    imports: [
+        NgClass,
+        FormsModule,
+        NgForOf,
+        NgIf
+    ],
     styleUrls: ['./add-role.component.css']
 })
 export class AddRoleComponent {

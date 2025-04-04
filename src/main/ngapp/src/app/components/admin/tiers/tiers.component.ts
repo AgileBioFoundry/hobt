@@ -8,6 +8,7 @@ import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action
 
 @Component({
     selector: 'app-tiers',
+    standalone: true,
     templateUrl: './tiers.component.html',
     styleUrls: ['./tiers.component.css']
 })

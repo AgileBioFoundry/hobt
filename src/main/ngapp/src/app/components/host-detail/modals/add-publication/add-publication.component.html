@@ -1,16 +1,21 @@
 <div class="modal-header">
     <h5 class="modal-title" id="modal-title">Add Publication</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()">&times;</button>
+    <button type="button" class="btn-close" aria-label="Close this dialog" (click)="activeModal.close()"></button>
 </div>
 
 <div class="modal-body" id="modal-body">
-    <form class="p-1">
+    <form class="p-1" aria-labelledby="modal-title">
         <div class="row">
             <div class="col">
                 <label for="authors" class="font-80">Author List</label>
                 <input type="text" class="form-control" name="authors"
                        [ngClass]="{'is-invalid': publication.invalidLink}"
-                       id="authors" ngbAutofocus [(ngModel)]="publication.authors">
+                       id="authors" ngbAutofocus [(ngModel)]="publication.authors"
+                       aria-required="true" aria-describedby="authors-error"
+                       [attr.aria-invalid]="publication.invalidLink">
+                <div id="authors-error" class="invalid-feedback" *ngIf="publication.invalidLink">
+                    Please provide valid author information
+                </div>
             </div>
         </div>
 
@@ -18,7 +23,12 @@
             <div class="col">
                 <label for="year" class="font-80">Publication Year</label>
                 <input type="text" name="year" class="form-control" id="year"
-                       [(ngModel)]="publication.year" [ngClass]="{'is-invalid': publication.invalidYear}">
+                       [(ngModel)]="publication.year" [ngClass]="{'is-invalid': publication.invalidYear}"
+                       aria-required="true" aria-describedby="year-error"
+                       [attr.aria-invalid]="publication.invalidYear">
+                <div id="year-error" class="invalid-feedback" *ngIf="publication.invalidYear">
+                    Please provide a valid publication year
+                </div>
             </div>
         </div>
 
@@ -26,7 +36,12 @@
             <div class="col">
                 <label for="journal" class="font-80">Journal</label>
                 <input type="text" name="journal" class="form-control" id="journal"
-                       [(ngModel)]="publication.journal" [ngClass]="{'is-invalid': publication.invalidJournal}">
+                       [(ngModel)]="publication.journal" [ngClass]="{'is-invalid': publication.invalidJournal}"
+                       aria-required="true" aria-describedby="journal-error"
+                       [attr.aria-invalid]="publication.invalidJournal">
+                <div id="journal-error" class="invalid-feedback" *ngIf="publication.invalidJournal">
+                    Please provide a valid journal name
+                </div>
             </div>
         </div>
 
@@ -35,7 +50,12 @@
                 <label for="title" class="font-80">Title</label>
                 <textarea rows="2" name="title" id="title" class="form-control"
                           [(ngModel)]="publication.title"
-                          [ngClass]="{'is-invalid': publication.invalidTitle}"></textarea>
+                          [ngClass]="{'is-invalid': publication.invalidTitle}"
+                          aria-required="true" aria-describedby="title-error"
+                          [attr.aria-invalid]="publication.invalidTitle"></textarea>
+                <div id="title-error" class="invalid-feedback" *ngIf="publication.invalidTitle">
+                    Please provide a valid publication title
+                </div>
             </div>
         </div>
 
@@ -43,34 +63,41 @@
             <div class="col">
                 <label for="url" class="font-80">Publication URL</label>
                 <input type="text" name="url" class="form-control" id="url"
-                       [(ngModel)]="publication.link" [ngClass]="{'is-invalid': publication.invalidLink}">
+                       [(ngModel)]="publication.link" [ngClass]="{'is-invalid': publication.invalidLink}"
+                       aria-required="true" aria-describedby="url-error"
+                       [attr.aria-invalid]="publication.invalidLink">
+                <div id="url-error" class="invalid-feedback" *ngIf="publication.invalidLink">
+                    Please provide a valid URL
+                </div>
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col">
-                <span class="cursor-pointer" (click)="publication.privileged = !publication.privileged">
-                    <i class="fa fa-fw"
-                       [ngClass]="{'fa-square-o': !publication.privileged, 'fa-check-square-o': publication.privileged}"></i>
-                    This is an Agile BioFoundry publication
-                </span>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="privileged-check"
+                           [(ngModel)]="publication.privileged" name="privileged">
+                    <label class="form-check-label cursor-pointer" for="privileged-check">
+                        This is an Agile BioFoundry publication
+                    </label>
+                </div>
             </div>
         </div>
-
     </form>
 </div>
 
 <div class="modal-footer justify-content-between">
-    <div>
-
-        <!--        <span class="red" *ngIf="errorSaving">-->
-        <!--            <i class="fa fa-exclamation-triangle"></i> Error saving part</span>-->
+    <div aria-live="assertive" role="alert" id="save-error">
+        <!-- Area for error messages -->
     </div>
 
     <div class="pull-right">
-        <button class="btn btn-light" (click)="activeModal.close('cancel')">Cancel</button>
+        <button class="btn btn-light" (click)="activeModal.close('cancel')" aria-label="Cancel and close this dialog">
+            Cancel
+        </button>
         &nbsp;
-        <button class="btn btn-primary" (click)="createPublication()">
+        <button class="btn btn-primary" (click)="createPublication()"
+                [attr.aria-label]="isUpdate ? 'Update publication' : 'Save publication'">
             <span *ngIf="isUpdate">Update</span>
             <span *ngIf="!isUpdate">Save</span>
         </button>

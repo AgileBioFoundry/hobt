@@ -8,10 +8,16 @@ import {Attribute} from "../../../model/attribute.model";
 import {User} from "../../../model/user.model";
 import {UserService} from "../../../service/user.service";
 import {ConfirmActionComponent} from "../../common/confirm-action/confirm-action.component";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-attributes',
+    standalone: true,
     templateUrl: './attributes.component.html',
+    imports: [
+        NgIf,
+        NgForOf
+    ],
     styleUrls: ['./attributes.component.css']
 })
 export class AttributesComponent implements OnInit {

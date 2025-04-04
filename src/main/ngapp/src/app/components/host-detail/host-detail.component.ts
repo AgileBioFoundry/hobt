@@ -1,22 +1,49 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Host} from "../../model/host.model";
-import {Location} from "@angular/common";
+import {Location, NgIf} from "@angular/common";
 import {HostStatistics} from "../../model/host-statistics";
 import {HttpService} from "../../service/http.service";
 import {PermissionService} from "../../service/permission.service";
 import {Tier} from "../../model/tier.model";
 import {UserService} from "../../service/user.service";
+import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet, NgbProgressbar} from "@ng-bootstrap/ng-bootstrap";
+import {PublicationsComponent} from "./publications/publications.component";
+import {AttributesComponent} from "./attributes/attributes.component";
+import {HostPartsComponent} from "./host-parts/host-parts.component";
+import {ProtocolsComponent} from "./protocols/protocols.component";
+import {ExperimentsComponent} from "./experiments/experiments.component";
+import {HostTiersComponent} from "./host-tiers/host-tiers.component";
+import {FooterComponent} from "../footer/footer.component";
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
     selector: 'app-host-detail',
+    standalone: true,
     templateUrl: './host-detail.component.html',
+    imports: [
+        NgbNavLink,
+        NgbNavItem,
+        NgIf,
+        PublicationsComponent,
+        NgbNavContent,
+        AttributesComponent,
+        HostPartsComponent,
+        ProtocolsComponent,
+        ExperimentsComponent,
+        NgbProgressbar,
+        HostTiersComponent,
+        NgbNavOutlet,
+        FooterComponent,
+        NgbNav,
+        HeaderComponent
+    ],
     styleUrls: ['./host-detail.component.css']
 })
 export class HostDetailComponent implements OnInit {
 
     host: Host;
-    active: 'attributes';
+    active = 'attributes';
     canWrite: boolean;
     userLoggedIn: boolean;
 

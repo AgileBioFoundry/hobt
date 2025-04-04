@@ -1,40 +1,49 @@
-<header class="sticky-top shadow-sm bg-white">
+<header class="sticky-top shadow-sm bg-white" role="banner">
     <div class="container-fluid">
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main navigation">
             <div class="col d-inline-block align-middle">
-                <!--                                <img src="assets/hobt1.png" style="height: 70px">-->
-                <strong class="fw-bold cursor-pointer" (click)="goHome()" style="font-size: 35px">HObT</strong>
+                <strong class="fw-bold cursor-pointer" (click)="goHome()" style="font-size: 35px" tabindex="0"
+                        role="button" aria-label="Go to homepage">HObT</strong>
             </div>
 
             <div class="col">
-                <input id="Search" class="form-control py-2" type="search" placeholder="Search">
+                <label for="Search" class="visually-hidden">Search the site</label>
+                <input id="Search" class="form-control py-2" type="search" placeholder="Search"
+                       aria-label="Search the site">
             </div>
 
             <div class="col">
-                <div *ngIf="loggedInUser" class="float-end text-black-50 p-3">
-                    <i class="fa fa-fw fa-user-circle-o"></i> {{loggedInUser.firstName}} {{loggedInUser.lastName}}
-
-                    &nbsp;|&nbsp;
-
-                    <span *ngIf="loggedInUser.isAdmin">
-                        <span class="cursor-pointer" (click)="goToAdminSettings()"><i class="bi bi-sliders"></i></span>
-                        &nbsp;|&nbsp;
+                <div *ngIf="loggedInUser" class="float-end text-black-50 p-3" aria-label="User account navigation">
+                    <span aria-label="Logged in as {{loggedInUser.firstName}} {{loggedInUser.lastName}}">
+                        <i class="fa fa-fw fa-user-circle-o"
+                           aria-hidden="true"></i> {{ loggedInUser.firstName }} {{ loggedInUser.lastName }}
                     </span>
 
-                    <i class="fa fa-fw fa-sign-out"></i> <span class="cursor-pointer"
-                                                               (click)="logoutUser()">Logout</span>
+                    <span aria-hidden="true">&nbsp;|&nbsp;</span>
 
+                    <span *ngIf="loggedInUser.isAdmin">
+                        <span class="cursor-pointer" (click)="goToAdminSettings()" tabindex="0" role="button"
+                              aria-label="Admin settings">
+                            <i class="bi bi-sliders" aria-hidden="true"></i><span
+                            class="visually-hidden">Admin Settings</span>
+                        </span>
+                        <span aria-hidden="true">&nbsp;|&nbsp;</span>
+                    </span>
+
+                    <span class="cursor-pointer" (click)="logoutUser()" tabindex="0" role="button" aria-label="Log out">
+                        <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Logout
+                    </span>
                 </div>
 
-                <div *ngIf="!loggedInUser" class="float-end text-black-50">
-                    <button class="btn btn-link" (click)="loginUser()">
-                        <i class="fa fa-fw fa-sign-in"></i> Login
+                <div *ngIf="!loggedInUser" class="float-end text-black-50" aria-label="Authentication options">
+                    <button class="btn btn-link" (click)="loginUser()" aria-label="Log in to your account">
+                        <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i> Login
                     </button>
-                    <button class="btn btn-primary ms-2" (click)="registerUser()">Register</button>
+                    <button class="btn btn-primary ms-2" (click)="registerUser()"
+                            aria-label="Register for a new account">Register
+                    </button>
                 </div>
             </div>
-
         </nav>
-
     </div>
 </header>

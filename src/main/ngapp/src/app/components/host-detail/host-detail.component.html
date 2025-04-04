@@ -1,111 +1,150 @@
-<app-header></app-header>
+<app-header role="banner"></app-header>
 
-<div class="pt-5 ps-5 pb-5">
-    <div class="d-flex justify-content-between">
-        <div>
-            <h3 class="fst-italic">{{host.name}}</h3>
-            <div class="lead fst-italic mt-n2" style="color: #777575">{{host.phylum}}</div>
+<main>
+    <section class="pt-5 ps-5 pb-5" aria-labelledby="hostHeading">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h1 id="hostHeading" class="h3 fst-italic">{{ host.name }}</h1>
+                <p class="lead fst-italic mt-n2" style="color: #777575">
+                    <span class="visually-hidden">Phylum: </span>{{ host.phylum }}
+                </p>
+            </div>
+
+            <!-- Commented section preserved as is -->
+            <!--        <div class="float-end btn-toolbar me-3">-->
+            <!--            <div class="card border-0 shadow-sm ms-5" style="width: 24rem">-->
+            <!--                <div class="card-body">-->
+            <!--                    <strong>Lawrence Berkeley National Lab</strong><br>-->
+            <!--                    Sandia National Lab-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
         </div>
+    </section>
 
-        <!--        <div class="float-end btn-toolbar me-3">-->
-        <!--            <div class="card border-0 shadow-sm ms-5" style="width: 24rem">-->
-        <!--                <div class="card-body">-->
-        <!--                    <strong>Lawrence Berkeley National Lab</strong><br>-->
-        <!--                    Sandia National Lab-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-    </div>
-</div>
+    <section class="w-100 bg-white">
+        <nav aria-label="Host details sections">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0 flex-nowrap"
+                (navChange)="activeChanged($event)" role="tablist">
 
-<div class="w-100 bg-white">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs m-0 flex-nowrap"
-        (navChange)="activeChanged($event)">
+                <li [ngbNavItem]="'attributes'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="attributes-tab" role="tab"
+                       aria-controls="attributes-panel" [attr.aria-selected]="active === 'attributes'">
+                        Attributes
+                        <span class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
+                              aria-hidden="true" *ngIf="host.statistics">{{ host.statistics.attributesCount }}</span>
+                        <span class="visually-hidden" *ngIf="host.statistics">({{ host.statistics.attributesCount }}
+                            items)</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="attributes-panel" role="tabpanel" aria-labelledby="attributes-tab">
+                            <app-attributes [host]="host" [canEdit]="canWrite"></app-attributes>
+                        </div>
+                    </ng-template>
+                </li>
 
-        <li [ngbNavItem]="'attributes'">
-            <a ngbNavLink class="mx-4">Attributes
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
-                     *ngIf="host.statistics">{{host.statistics.attributesCount}}</div>
-            </a>
-            <ng-template ngbNavContent>
-                <app-attributes [host]="host" [canEdit]="canWrite"></app-attributes>
-            </ng-template>
-        </li>
+                <li [ngbNavItem]="'publications'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="publications-tab" role="tab"
+                       aria-controls="publications-panel" [attr.aria-selected]="active === 'publications'">
+                        Publications
+                        <span class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
+                              aria-hidden="true" *ngIf="host.statistics">{{ host.statistics.publicationCount }}</span>
+                        <span class="visually-hidden" *ngIf="host.statistics">({{ host.statistics.publicationCount }}
+                            items)</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="publications-panel" role="tabpanel" aria-labelledby="publications-tab">
+                            <app-publications [host]="host" [canEdit]="canWrite"></app-publications>
+                        </div>
+                    </ng-template>
+                </li>
 
+                <li [ngbNavItem]="'parts'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="parts-tab" role="tab"
+                       aria-controls="parts-panel" [attr.aria-selected]="active === 'parts'">
+                        Parts
+                        <span class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
+                              aria-hidden="true" *ngIf="host.statistics">{{ host.statistics.partCount }}</span>
+                        <span class="visually-hidden" *ngIf="host.statistics">({{ host.statistics.partCount }}
+                            items)</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="parts-panel" role="tabpanel" aria-labelledby="parts-tab">
+                            <app-host-parts [host]="host" [strains]="false"></app-host-parts>
+                        </div>
+                    </ng-template>
+                </li>
 
-        <li [ngbNavItem]="'publications'">
-            <a ngbNavLink class="mx-4">Publications
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
-                     *ngIf="host.statistics">{{host.statistics.publicationCount}}</div>
-            </a>
-            <ng-template ngbNavContent>
-                <app-publications [host]="host" [canEdit]="canWrite"></app-publications>
-            </ng-template>
-        </li>
+                <li [ngbNavItem]="'strains'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="strains-tab" role="tab"
+                       aria-controls="strains-panel" [attr.aria-selected]="active === 'strains'">
+                        Strains
+                        <span class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
+                              aria-hidden="true" *ngIf="host.statistics">{{ host.statistics.strainCount }}</span>
+                        <span class="visually-hidden" *ngIf="host.statistics">({{ host.statistics.strainCount }}
+                            items)</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="strains-panel" role="tabpanel" aria-labelledby="strains-tab">
+                            <app-host-parts [host]="host" [strains]="true"></app-host-parts>
+                        </div>
+                    </ng-template>
+                </li>
 
+                <li [ngbNavItem]="'protocols'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="protocols-tab" role="tab"
+                       aria-controls="protocols-panel" [attr.aria-selected]="active === 'protocols'">
+                        Protocols
+                        <span class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
+                              aria-hidden="true" *ngIf="host.statistics">{{ host.statistics.protocolCount }}</span>
+                        <span class="visually-hidden" *ngIf="host.statistics">({{ host.statistics.protocolCount }}
+                            items)</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="protocols-panel" role="tabpanel" aria-labelledby="protocols-tab">
+                            <app-protocols [host]="host"></app-protocols>
+                        </div>
+                    </ng-template>
+                </li>
 
-        <li [ngbNavItem]="'parts'">
-            <a ngbNavLink class="mx-4">Parts
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
-                     *ngIf="host.statistics">{{host.statistics.partCount}}</div>
-            </a>
-            <ng-template ngbNavContent>
-                <app-host-parts [host]="host" [strains]="false"></app-host-parts>
-            </ng-template>
-        </li>
+                <li [ngbNavItem]="'experiments'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="experiments-tab" role="tab"
+                       aria-controls="experiments-panel" [attr.aria-selected]="active === 'experiments'">
+                        Experiments
+                        <span class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
+                              aria-hidden="true" *ngIf="host.statistics">{{ host.statistics.experimentCount }}</span>
+                        <span class="visually-hidden" *ngIf="host.statistics">({{ host.statistics.experimentCount }}
+                            items)</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="experiments-panel" role="tabpanel" aria-labelledby="experiments-tab">
+                            <app-experiments [host]="host"></app-experiments>
+                        </div>
+                    </ng-template>
+                </li>
 
+                <li [ngbNavItem]="'tiers'" role="presentation">
+                    <a ngbNavLink class="mx-4" id="tiers-tab" role="tab"
+                       aria-controls="tiers-panel" [attr.aria-selected]="active === 'tiers'">
+                        Tier Progress
+                        <ngb-progressbar [type]="getProgressType(host.tier)" *ngIf="host.statistics"
+                                         [value]="host.statistics.tierProgressPercentage" height="7px"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         [attr.aria-valuenow]="host.statistics.tierProgressPercentage"
+                                         [attr.aria-label]="'Tier progress: ' + host.statistics.tierProgressPercentage + '%'">
+                        </ngb-progressbar>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div id="tiers-panel" role="tabpanel" aria-labelledby="tiers-tab">
+                            <app-host-tiers [host]="host"></app-host-tiers>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
 
-        <li [ngbNavItem]="'strains'">
-            <a ngbNavLink class="mx-4">Strains
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
-                     *ngIf="host.statistics">{{host.statistics.strainCount}}</div>
-            </a>
-            <ng-template ngbNavContent>
-                <app-host-parts [host]="host" [strains]="true"></app-host-parts>
-            </ng-template>
-        </li>
+            <div [ngbNavOutlet]="nav"></div>
+        </nav>
+    </section>
+</main>
 
-
-        <li [ngbNavItem]="'protocols'">
-            <a ngbNavLink class="mx-4">Protocols
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
-                     *ngIf="host.statistics">{{host.statistics.protocolCount}}</div>
-            </a>
-            <ng-template ngbNavContent>
-                <app-protocols [host]="host"></app-protocols>
-            </ng-template>
-        </li>
-
-
-        <li [ngbNavItem]="'experiments'">
-            <a ngbNavLink class="mx-4">Experiments
-                <div class="badge bg-light rounded-pill p-1 font-90 text-muted my-1"
-                     *ngIf="host.statistics">{{host.statistics.experimentCount}}</div>
-            </a>
-            <ng-template ngbNavContent>
-                <app-experiments [host]="host"></app-experiments>
-            </ng-template>
-        </li>
-
-
-        <li [ngbNavItem]="'tiers'">
-            <a ngbNavLink class="mx-4">Tier Progress
-                <ngb-progressbar [type]="getProgressType(host.tier)" *ngIf="host.statistics"
-                                 [value]="host.statistics.tierProgressPercentage" height="7px"></ngb-progressbar>
-            </a>
-            <ng-template ngbNavContent>
-                <app-host-tiers [host]="host"></app-host-tiers>
-            </ng-template>
-        </li>
-    </ul>
-
-    <div [ngbNavOutlet]="nav"></div>
-</div>
-
-<app-footer></app-footer>
-
-
-
-
-
-
+<app-footer role="contentinfo"></app-footer>

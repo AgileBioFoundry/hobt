@@ -3,10 +3,20 @@ import {Host} from "../../../model/host.model";
 import {HttpService} from "../../../service/http.service";
 import {SearchResult} from "../../../model/search-result";
 import {Paging} from "../../../model/paging.model";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-host-parts',
+    standalone: true,
     templateUrl: './host-parts.component.html',
+    imports: [
+        NgClass,
+        NgIf,
+        NgbPagination,
+        DatePipe,
+        NgForOf
+    ],
     styleUrls: ['./host-parts.component.css']
 })
 export class HostPartsComponent implements OnInit {

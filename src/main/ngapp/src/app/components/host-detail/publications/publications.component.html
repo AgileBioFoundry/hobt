@@ -1,17 +1,26 @@
-<div class="container-fluid">
+<section class="container-fluid" aria-labelledby="publicationsHeading">
+    <h2 id="publicationsHeading" class="visually-hidden">Publications</h2>
+
     <div class="row mb-3">
         <div class="col">
             <div *ngIf="canEdit">
-                <button class="btn btn-sm btn-secondary float-end mt-3" (click)="showPublicationAddModal()">
+                <button class="btn btn-sm btn-secondary float-end mt-3"
+                        (click)="showPublicationAddModal()"
+                        aria-label="Add Publication">
                     Add Publication
                 </button>
             </div>
 
-            <div class="text-muted fst-italic" *ngIf="paging.processing && !publications">
-                <img src="assets/loader.gif"> <span class="fst-italic text-muted">Loading publications...</span>
+            <div class="text-muted fst-italic" *ngIf="paging.processing && !publications"
+                 role="status"
+                 aria-live="polite">
+                <img src="assets/loader.gif" alt="Loading" role="presentation">
+                <span class="fst-italic text-muted">Loading publications...</span>
             </div>
 
-            <div class="text-muted fst-italic mt-2" *ngIf="!paging.processing && !publications.length">
+            <div class="text-muted fst-italic mt-2" *ngIf="!paging.processing && !publications.length"
+                 role="status"
+                 aria-live="polite">
                 No publications available
             </div>
         </div>
@@ -21,20 +30,40 @@
         <div class="col">
             <div *ngIf="publications && publications.length" class="mt-1 mb-5">
 
-                <ul class="list-group list-group-flush border-bottom border-top">
+                <ul class="list-group list-group-flush border-bottom border-top"
+                    aria-label="List of publications">
                     <li class="list-group-item" *ngFor="let publication of publications">
-                        <a [href]="publication.link" target="_blank">{{publication.title}}</a>
-                        <div class="text-muted small">{{publication.authors}}</div>
-                        <div>{{publication.journal}}, {{publication.year}}</div>
+                        <article>
+                            <h3 class="h6 mb-1">
+                                <a [href]="publication.link"
+                                   target="_blank"
+                                   [attr.aria-label]="publication.title + ', opens in a new window'">
+                                    {{ publication.title }}
+                                </a>
+                            </h3>
+                            <p class="text-muted small mb-1">
+                                <span class="visually-hidden">Authors: </span>{{ publication.authors }}
+                            </p>
+                            <p class="mb-0">
+                                <span class="visually-hidden">Published in: </span>
+                                {{ publication.journal }}, {{ publication.year }}
+                            </p>
+                        </article>
                     </li>
                 </ul>
 
-                <div class="mt-4">
-                    <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
-                                    [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
-                                    (pageChange)="pagePublications($event)"></ngb-pagination>
-                </div>
+                <nav class="mt-4" aria-label="Publications pagination">
+                    <ngb-pagination [collectionSize]="paging.available"
+                                    [boundaryLinks]="true"
+                                    [maxSize]="5"
+                                    [(page)]="paging.currentPage"
+                                    [pageSize]="paging.limit"
+                                    size="sm"
+                                    (pageChange)="pagePublications($event)"
+                                    aria-controls="publicationsHeading">
+                    </ngb-pagination>
+                </nav>
             </div>
         </div>
     </div>
-</div>
+</section>

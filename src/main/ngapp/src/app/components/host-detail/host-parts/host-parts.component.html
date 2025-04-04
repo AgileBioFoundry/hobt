@@ -1,37 +1,46 @@
-<div class="container-fluid">
+<div class="container-fluid" role="region" aria-labelledby="parts-list-heading">
+    <h2 id="parts-list-heading" class="visually-hidden">Parts List</h2>
     <div class="row">
         <div class="col">
 
-            <div class="p-4" *ngIf="this.paging.processing && !results">
-                <img src="assets/loader.gif"> &nbsp;<i class="text-muted">Fetching parts...</i>
+            <div class="p-4" *ngIf="this.paging.processing && !results" aria-live="polite">
+                <img src="assets/loader.gif" alt="Loading spinner" aria-hidden="true">
+                <span class="text-muted">Fetching parts...</span>
             </div>
 
-            <div *ngIf="!this.paging.processing && results && !results.length" class="p-4 fst-italic text-black-50">
+            <div *ngIf="!this.paging.processing && results && !results.length" class="p-4 fst-italic text-black-50"
+                 aria-live="polite">
                 No matching parts available
             </div>
 
             <table class="table table-hover font-90" *ngIf="results && results.length"
-                   [ngClass]="{'opacity-25': this.paging.processing}">
+                   [ngClass]="{'opacity-25': this.paging.processing}"
+                   aria-label="Parts search results" [attr.aria-busy]="this.paging.processing">
+                <caption class="visually-hidden">List of parts with type, name, owner, ID and creation date</caption>
                 <thead class="fw-bold text-uppercase small">
                 <tr>
-                    <td>Type</td>
-                    <td>Name</td>
-                    <td>Owner</td>
-                    <td>PartID</td>
-                    <td>Created</td>
+                    <th scope="col">Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">PartID</th>
+                    <th scope="col">Created</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr *ngFor="let result of results">
+                <tr *ngFor="let result of results; let i = index" tabindex="0">
                     <td style="width: 100px" class="fw-bold small text-secondary">{{result.entryInfo.type}}</td>
                     <td class="text-truncate">
-                        {{result.entryInfo.name}}
-                        <div style="width: 320px" class="small text-muted">{{result.entryInfo.shortDescription}}</div>
+                        <div>{{ result.entryInfo.name }}</div>
+                        <div style="width: 320px" class="small text-muted"
+                             aria-label="Description: {{result.entryInfo.shortDescription}}">{{ result.entryInfo.shortDescription }}
+                        </div>
                     </td>
                     <td style="width: 200px" class="text-truncate">{{result.entryInfo.owner}}</td>
                     <td style="width: 180px">
-                        <a [href]="result.partner.url" target="_blank">{{result.entryInfo.partId}}</a></td>
+                        <a [href]="result.partner.url" target="_blank"
+                           aria-label="View part {{result.entryInfo.partId}} details in new tab">{{ result.entryInfo.partId }}</a>
+                    </td>
                     <td style="width: 180px">{{result.entryInfo.creationTime | date: 'MMM d, y'}}</td>
                 </tr>
                 </tbody>
@@ -41,11 +50,21 @@
 
     <div class="row pb-2" *ngIf="paging.available">
         <div class="col">
-            <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
-                            [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
-                            (pageChange)="pageParts($event)"></ngb-pagination>
+            <ngb-pagination
+                [collectionSize]="paging.available"
+                [boundaryLinks]="true"
+                [maxSize]="5"
+                [(page)]="paging.currentPage"
+                [pageSize]="paging.limit"
+                size="sm"
+                (pageChange)="pageParts($event)"
+                aria-label="Parts pagination"
+                aria-controls="parts-list-heading">
+            </ngb-pagination>
         </div>
 
-        <div class="col"><strong>{{pageCounts()}}</strong></div>
+        <div class="col" aria-live="polite">
+            <strong id="page-count-info">{{ pageCounts() }}</strong>
+        </div>
     </div>
 </div>

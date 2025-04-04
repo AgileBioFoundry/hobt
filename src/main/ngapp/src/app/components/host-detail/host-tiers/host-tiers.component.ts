@@ -7,10 +7,29 @@ import {UserService} from "../../../service/user.service";
 import {User} from "../../../model/user.model";
 import {OrganismCriteria} from "../../../model/organism-criteria.model";
 import {TierStatus} from "../../../model/tier-status";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {
+    NgbDropdown,
+    NgbDropdownItem,
+    NgbDropdownMenu,
+    NgbDropdownToggle,
+    NgbProgressbar
+} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-host-tiers',
+    standalone: true,
     templateUrl: './host-tiers.component.html',
+    imports: [
+        NgForOf,
+        NgClass,
+        NgIf,
+        NgbProgressbar,
+        NgbDropdown,
+        NgbDropdownToggle,
+        NgbDropdownMenu,
+        NgbDropdownItem
+    ],
     styleUrls: ['./host-tiers.component.css']
 })
 export class HostTiersComponent implements OnInit {
