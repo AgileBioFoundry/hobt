@@ -1,19 +1,20 @@
-<div style="margin-top: 65px">
+<footer role="contentinfo" style="margin-top: 65px">
     <div class="navbar-fixed-bottom" id="footer" style="border-top: 1px solid #BBBAAA; background-color: white">
         <div class="container-fluid" style="margin-top: 3px">
             <div style="height: 60px;" class="row">
-                <div class="col-sm-10 opacity-footer ">
-                    <img src="assets/footer.png" alt="footer">
+                <div class="col-sm-10 opacity-footer">
+                    <img src="assets/footer.png" alt="Company logo and information"
+                         aria-labelledby="footer-img-description">
+                    <span id="footer-img-description" class="visually-hidden">ABF company footer image</span>
                 </div>
-                <div class="col-2 font-85 text-end">
-
-                    &copy;&nbsp;ABF {{getCurrentYear()}} <br>
-                    All rights reserved. <br>
-                    <a href="https://support.ese.lbl.gov/" target="_blank">Submit Ticket</a>&nbsp;
-                    <span class="badge p-1 bg-primary ng-binding">v3.9.0</span><br>
+                <div class="col-2 font-85 text-end" aria-label="Copyright and support information">
+                    <span aria-label="Copyright">&copy;&nbsp;ABF {{ getCurrentYear() }}</span><br>
+                    <span>All rights reserved.</span><br>
+                    <a href="https://support.ese.lbl.gov/" target="_blank" aria-label="Submit support ticket">Submit
+                        Ticket</a>&nbsp;
+                    <span class="badge p-1 bg-primary ng-binding" aria-label="Application version">v3.9.0</span><br>
                 </div>
             </div>
         </div>
-        N
     </div>
-</div>
+</footer>

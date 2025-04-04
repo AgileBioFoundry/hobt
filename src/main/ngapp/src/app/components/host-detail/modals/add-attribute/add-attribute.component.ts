@@ -2,10 +2,18 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "../../../../service/http.service";
 import {Attribute} from "../../../../model/attribute.model";
+import {FormsModule} from "@angular/forms";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-add-attribute',
+    standalone: true,
     templateUrl: './add-attribute.component.html',
+    imports: [
+        FormsModule,
+        NgIf,
+        NgForOf
+    ],
     styleUrls: ['./add-attribute.component.css']
 })
 export class AddAttributeComponent implements OnInit {

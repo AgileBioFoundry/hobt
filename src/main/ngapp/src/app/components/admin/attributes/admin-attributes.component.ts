@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalOptions, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "../../../service/http.service";
 import {
     CreateNewAttributeModalComponent
@@ -7,10 +7,18 @@ import {
 import {Paging} from "../../../model/paging.model";
 import {Attribute} from "../../../model/attribute.model";
 import {Result} from "../../../model/result";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-admin-attributes',
     templateUrl: './admin-attributes.component.html',
+    standalone: true,
+    imports: [
+        NgForOf,
+        NgIf,
+        NgbPagination,
+        NgbTooltip
+    ],
     styleUrls: ['./admin-attributes.component.css']
 })
 export class AdminAttributesComponent implements OnInit {

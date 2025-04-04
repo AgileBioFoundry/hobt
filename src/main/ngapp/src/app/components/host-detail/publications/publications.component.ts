@@ -1,15 +1,21 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Host} from "../../../model/host.model";
 import {HttpService} from "../../../service/http.service";
-import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalOptions, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {AddPublicationComponent} from "../modals/add-publication/add-publication.component";
-import {Publication} from "../../../model/publication";
 import {Result} from "../../../model/result";
 import {Paging} from "../../../model/paging.model";
+import {NgIf} from "@angular/common";
+import {Publication} from "../../../model/Publication";
 
 @Component({
     selector: 'app-publications',
+    standalone: true,
     templateUrl: './publications.component.html',
+    imports: [
+        NgIf,
+        NgbPagination
+    ],
     styleUrls: ['./publications.component.css']
 })
 export class PublicationsComponent implements OnInit {

@@ -1,14 +1,24 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "../../../../service/http.service";
 import {Result} from "../../../../model/result";
 import {Host} from "../../../../model/host.model";
 import {Attribute} from "../../../../model/attribute.model";
 import {AttributeOption} from "../../../../model/attribute-option.model";
+import {FormsModule} from "@angular/forms";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-create-new-attribute-modal',
+    standalone: true,
     templateUrl: './create-new-attribute-modal.component.html',
+    imports: [
+        FormsModule,
+        NgForOf,
+        NgbTooltip,
+        NgClass,
+        NgIf
+    ],
     styleUrls: ['./create-new-attribute-modal.component.css']
 })
 export class CreateNewAttributeModalComponent implements OnInit {

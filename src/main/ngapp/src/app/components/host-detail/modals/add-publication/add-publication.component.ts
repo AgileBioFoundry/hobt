@@ -1,12 +1,20 @@
 import {Component, Input} from '@angular/core';
 import {HttpService} from "../../../../service/http.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Publication} from "../../../../model/publication";
 import {Host} from "../../../../model/host.model";
+import {Publication} from "../../../../model/Publication";
+import {NgClass, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-add-permission',
+    standalone: true,
     templateUrl: './add-publication.component.html',
+    imports: [
+        NgClass,
+        FormsModule,
+        NgIf
+    ],
     styleUrls: ['./add-publication.component.css']
 })
 export class AddPublicationComponent {

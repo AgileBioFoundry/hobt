@@ -1,9 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../../../service/http.service";
+import {FormsModule} from "@angular/forms";
+import {NgIf} from "@angular/common";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-api',
     templateUrl: './api.component.html',
+    standalone: true,
+    imports: [
+        FormsModule,
+        NgIf,
+        NgbTooltip
+    ],
     styleUrls: ['./api.component.css']
 })
 export class ApiComponent implements OnInit {

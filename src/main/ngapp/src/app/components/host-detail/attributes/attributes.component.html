@@ -1,29 +1,39 @@
-<div class="container pt-3">
+<div class="container pt-3" role="region" aria-labelledby="attributes-section-title">
+    <h2 id="attributes-section-title" class="visually-hidden">Attributes Section</h2>
     <div class="row pb-3">
         <div class="col">
             <div *ngIf="canEdit">
-                <button class="btn btn-sm btn-secondary float-end" (click)="showAttributeAddModal()">
+                <button class="btn btn-sm btn-secondary float-end" (click)="showAttributeAddModal()"
+                        aria-label="{{!attributes || !attributes.length ? 'Add' : 'Edit'}} Attributes">
                     <span *ngIf="!attributes || !attributes.length">Add</span> <span
                     *ngIf="attributes && attributes.length">Edit</span> Attributes
                 </button>
             </div>
 
-            <div class="text-muted fst-italic mt-2" *ngIf="!paging.processing && (!attributes || !attributes.length)">
+            <div class="text-muted fst-italic mt-2" *ngIf="!paging.processing && (!attributes || !attributes.length)"
+                 aria-live="polite">
                 No information available
             </div>
         </div>
     </div>
 
-    <div class="row pb-2" *ngFor="let attribute of attributes">
-        <div class="col-5">
-            <div class="text-muted float-end">{{attribute.label}}</div>
-        </div>
-        <div class="col d-flex">
-            <div *ngIf="attribute.value">{{ attribute.value }}</div>
-            <div *ngIf="!attribute.value" class="text-muted fst-italic">No value</div>
+    <div role="list" aria-label="Attribute list">
+        <div class="row pb-2" *ngFor="let attribute of attributes" role="listitem">
+            <div class="col-5">
+                <div class="text-muted float-end" id="label-{{attribute.id}}">{{ attribute.label }}</div>
+            </div>
+            <div class="col d-flex">
+                <div *ngIf="attribute.value" aria-labelledby="label-{{attribute.id}}">{{ attribute.value }}</div>
+                <div *ngIf="!attribute.value" class="text-muted fst-italic" aria-labelledby="label-{{attribute.id}}">No
+                    value
+                </div>
 
-            <i class="bi bi-trash ms-2 cursor-pointer" *ngIf="user && user.isAdmin"
-               (click)="deleteAttribute(attribute)"></i>
+                <button *ngIf="user && user.isAdmin" class="btn btn-link p-0 border-0 ms-2"
+                        (click)="deleteAttribute(attribute)"
+                        aria-label="Delete attribute {{attribute.label}}">
+                    <i class="bi bi-trash cursor-pointer" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>

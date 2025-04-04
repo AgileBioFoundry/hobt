@@ -2,10 +2,18 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {User} from "../../model/user.model";
 import {HttpService} from "../../service/http.service";
+import {FormsModule} from "@angular/forms";
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
+    standalone: true,
+    imports: [
+        FormsModule,
+        NgClass,
+        NgIf
+    ],
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {

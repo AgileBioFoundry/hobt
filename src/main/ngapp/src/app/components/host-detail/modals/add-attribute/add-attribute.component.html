@@ -1,38 +1,36 @@
 <div class="modal-header">
     <h5 class="modal-title" id="modal-title">Organism Attributes</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    <button type="button" class="btn-close" aria-label="Close modal" (click)="activeModal.dismiss()"></button>
 </div>
 
 <div class="modal-body" id="modal-body">
-    <!--    <div class="form-group">-->
-    <!--        <label for="link" class="fw-bold font-80 text-uppercase">Label</label>-->
-    <!--        <input type="email" class="form-control" id="link" ngbAutofocus>-->
-    <!--    </div>-->
-
-    <!--    <div class="form-group">-->
-    <!--        <label for="display" class="fw-bold font-80 text-uppercase">Type</label>-->
-    <!--        <input class="form-control" id="display">-->
-    <!--    </div>-->
-    <div class="p-3 fst-italic text-muted" *ngIf="attributes && !attributes.length">
+    <div class="p-3 fst-italic text-muted" *ngIf="attributes && !attributes.length" aria-live="polite">
         No pre-defined attributes available
     </div>
 
-    <div class="row mb-3" *ngFor="let attribute of attributes">
+    <div class="row mb-3" *ngFor="let attribute of attributes; let i = index">
         <div class="col-5">
-            <div class="float-end">
-                {{ attribute.label }} <span class="text-danger" *ngIf="attribute.required">*</span>
-            </div>
+            <label [for]="'attribute-input-' + i" class="float-end">
+                {{ attribute.label }} <span class="text-danger" *ngIf="attribute.required"
+                                            aria-label="Required">*</span>
+            </label>
         </div>
         <div class="col-7">
             <ng-container *ngIf="attribute.type === 'TEXT_INPUT'">
                 <div class="w-75">
-                    <input class="form-control form-control-sm" [(ngModel)]="attribute.value">
+                    <input [id]="'attribute-' + i" class="form-control form-control-sm"
+                           [(ngModel)]="attribute.value"
+                           [attr.aria-required]="attribute.required ? 'true' : 'false'"
+                           [attr.aria-label]="attribute.label + (attribute.required ? ' (Required)' : '')">
                 </div>
             </ng-container>
 
             <ng-container *ngIf="attribute.type === 'MULTI_CHOICE'">
                 <div class="w-75">
-                    <select class="form-select form-select-sm" [(ngModel)]="attribute.value">
+                    <select [id]="'attribute-' + i" class="form-select form-select-sm"
+                            [(ngModel)]="attribute.value"
+                            [attr.aria-required]="attribute.required ? 'true' : 'false'"
+                            [attr.aria-label]="attribute.label + (attribute.required ? ' (Required)' : '')">
                         <option [ngValue]="undefined">Select</option>
                         <option [ngValue]="option.value" *ngFor="let option of attribute.options">
                             {{ option.value }}
@@ -42,14 +40,19 @@
             </ng-container>
 
             <ng-container *ngIf="attribute.type === 'BOOLEAN'">
-                <div class="col">
-                    <input type="radio" class="form-check-input" id="radio-yes" name="radio-stacked"
-                           [value]="true" required [(ngModel)]="attribute.value">&nbsp;
-                    <label class="form-check-label" for="radio-yes"> Yes</label>
+                <div class="col" role="radiogroup" [attr.aria-labelledby]="'bool-group-label-' + i">
+                    <span id="bool-group-label-{{i}}" class="visually-hidden">{{ attribute.label }}</span>
+                    <input type="radio" class="form-check-input"
+                           [id]="'radio-yes-' + i" [name]="'radio-stacked-' + i"
+                           [value]="true" [required]="attribute.required" [(ngModel)]="attribute.value"
+                           [attr.aria-labelledby]="'bool-group-label-' + i + ' yes-label-' + i">&nbsp;
+                    <label class="form-check-label" [id]="'yes-label-' + i" [for]="'radio-yes-' + i"> Yes</label>
                     &nbsp;
-                    <input type="radio" class="form-check-input" id="radio-no" name="radio-stacked"
-                           [value]="false" required [(ngModel)]="attribute.value">&nbsp;
-                    <label class="form-check-label" for="radio-no">No</label>
+                    <input type="radio" class="form-check-input"
+                           [id]="'radio-no-' + i" [name]="'radio-stacked-' + i"
+                           [value]="false" [required]="attribute.required" [(ngModel)]="attribute.value"
+                           [attr.aria-labelledby]="'bool-group-label-' + i + ' no-label-' + i">&nbsp;
+                    <label class="form-check-label" [id]="'no-label-' + i" [for]="'radio-no-' + i">No</label>
                 </div>
             </ng-container>
         </div>
@@ -57,15 +60,17 @@
 </div>
 
 <div class="modal-footer justify-content-between">
-    <div>
-
-        <!--        <span class="red" *ngIf="errorSaving">-->
-        <!--            <i class="fa fa-exclamation-triangle"></i> Error saving part</span>-->
-
+    <div aria-live="assertive" role="alert">
+        <!-- This empty div will be used for error messages -->
     </div>
 
     <div class="pull-right">
-        <button class="btn btn-light btn-sm" (click)="activeModal.close()">Cancel</button>&nbsp;
-        <button class="btn btn-primary btn-sm" [disabled]="disableSave()" (click)="saveAttribute()">Save</button>
+        <button class="btn btn-light btn-sm" (click)="activeModal.close()" aria-label="Cancel and close modal">Cancel
+        </button>&nbsp;
+        <button class="btn btn-primary btn-sm" [disabled]="disableSave()"
+                (click)="saveAttribute()"
+                [attr.aria-disabled]="disableSave() ? 'true' : 'false'"
+                aria-label="Save attributes">Save
+        </button>
     </div>
 </div>

@@ -14,7 +14,7 @@ import {AdminAttributesComponent} from "./components/admin/attributes/admin-attr
 import {ApiComponent} from "./components/admin/api/api.component";
 import {RegisterComponent} from "./components/register/register.component";
 
-const routes: Routes = [
+export const routes: Routes = [
     {path: '', component: MainPageComponent},
     {path: 'login', component: LoginComponent},
     {

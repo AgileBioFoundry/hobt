@@ -1,39 +1,51 @@
-<div class="card-body p-1">
-    <ul class="list-groupModel list-groupModel-flush" *ngIf="tierCriteriaList.length">
+<div class="card-body p-1" role="region" aria-labelledby="tier-criteria-title">
+    <h3 id="tier-criteria-title" class="visually-hidden">Tier Criteria List</h3>
+
+    <ul class="list-groupModel list-groupModel-flush" *ngIf="tierCriteriaList.length" role="list"
+        aria-label="Tier completion status">
         <li class="list-groupModel-item p-0" [ngClass]="{'list-groupModel-item-success': option.available}"
-            *ngFor="let option of tierCriteriaList">
+            *ngFor="let option of tierCriteriaList; let i = index" role="listitem">
 
             <div class="d-flex justify-content-between pt-2 pb-2 ps-2">
-                {{option.label}}
+                <span id="criteria-label-{{i}}">{{ option.label }}</span>
 
                 <div ngbDropdown>
-                    <i class="fa fa-fw" ngbDropdownToggle></i>
-                    <div class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px">
-                        <a ngbDropdownItem (click)="option.status = 25">25%</a>
-                        <a ngbDropdownItem (click)="option.status = 50">50%</a>
-                        <a ngbDropdownItem (click)="option.status = 75">75%</a>
-                        <a ngbDropdownItem (click)="option.status = 100">100%</a>
+                    <button type="button" class="btn btn-link border-0 p-0" ngbDropdownToggle
+                            aria-label="Set completion percentage for {{option.label}}"
+                            aria-expanded="false" aria-controls="status-dropdown-{{i}}">
+                        <i class="fa fa-fw" aria-hidden="true"></i>
+                    </button>
+                    <div id="status-dropdown-{{i}}" class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px"
+                         aria-labelledby="criteria-label-{{i}}">
+                        <button ngbDropdownItem (click)="option.status = 25" aria-label="Set to 25 percent">25%</button>
+                        <button ngbDropdownItem (click)="option.status = 50" aria-label="Set to 50 percent">50%</button>
+                        <button ngbDropdownItem (click)="option.status = 75" aria-label="Set to 75 percent">75%</button>
+                        <button ngbDropdownItem (click)="option.status = 100" aria-label="Set to 100 percent">100%
+                        </button>
                     </div>
                 </div>
             </div>
 
             <ngb-progressbar *ngIf="option.status === 25" type="secondary" [value]="option.status"
-                             [showValue]="true"></ngb-progressbar>
+                             [showValue]="true" aria-labelledby="criteria-label-{{i}}"
+                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="25"
+                             aria-label="Progress for {{option.label}}: 25%"></ngb-progressbar>
             <ngb-progressbar *ngIf="option.status === 50" type="info" [value]="option.status"
-                             [showValue]="true"></ngb-progressbar>
+                             [showValue]="true" aria-labelledby="criteria-label-{{i}}"
+                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
+                             aria-label="Progress for {{option.label}}: 50%"></ngb-progressbar>
             <ngb-progressbar *ngIf="option.status === 75" type="primary" [value]="option.status"
-                             [showValue]="true"></ngb-progressbar>
+                             [showValue]="true" aria-labelledby="criteria-label-{{i}}"
+                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="75"
+                             aria-label="Progress for {{option.label}}: 75%"></ngb-progressbar>
             <ngb-progressbar *ngIf="option.status === 100" type="success" [value]="option.status"
-                             [showValue]="true"></ngb-progressbar>
-
-            <!--                        <i class="fa fa-fw font-12" (click)="setTierOptionAvailability(option)"-->
-            <!--                           [ngClass]="{'fa-check-circle opacity-hover': !option.available, 'fa-check': option.available}"></i>-->
+                             [showValue]="true" aria-labelledby="criteria-label-{{i}}"
+                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"
+                             aria-label="Progress for {{option.label}}: 100%"></ngb-progressbar>
         </li>
     </ul>
 
-    <ul class="list-groupModel list-groupModel-flush" *ngIf="!tierCriteriaList.length">
-        <li class="list-groupModel-item">&nbsp;</li>
-    </ul>
+    <div class="list-groupModel list-groupModel-flush" *ngIf="!tierCriteriaList.length" aria-live="polite">
+        <p class="list-groupModel-item">No tier criteria available</p>
+    </div>
 </div>
-
-

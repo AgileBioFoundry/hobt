@@ -1,36 +1,77 @@
-<app-header></app-header>
+<app-header role="banner"></app-header>
 
-<div class="container-fluid">
+<main class="container-fluid">
+    <h1 class="visually-hidden">Host Organisms</h1>
+
     <div class="row small p-2">
         <div class="col">
-
             <div class="float-end">
                 <div class="btn-group pe-3">
                     <small ngbDropdown>
-                        <span class="text-muted">Sort by:</span>&nbsp;
-                        <span ngbDropdownToggle class="cursor-pointer">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-up': params.asc, 'fa-long-arrow-down': !params.asc}"></i>
-                    <span *ngIf="params.sort === 'id'"> Last Updated</span>
-                    <span *ngIf="params.sort === 'taxonomy'"> Phylum</span>
-                    <span *ngIf="params.sort === 'name'"> Name</span>
-                    <span *ngIf="params.sort === 'tier'"> Tier</span>
+                        <label id="sortLabel" class="text-muted">Sort by:</label>&nbsp;
+                        <button type="button"
+                                ngbDropdownToggle
+                                class="cursor-pointer btn btn-link p-0"
+                                aria-labelledby="sortLabel"
+                                aria-haspopup="listbox"
+                                aria-expanded="false">
+                            <i class="fa"
+                               [ngClass]="{'fa-long-arrow-up': params.asc, 'fa-long-arrow-down': !params.asc}"
+                               aria-hidden="true"></i>
+                            <span *ngIf="params.sort === 'id'"> Last Updated</span>
+                            <span *ngIf="params.sort === 'taxonomy'"> Phylum</span>
+                            <span *ngIf="params.sort === 'name'"> Name</span>
+                            <span *ngIf="params.sort === 'tier'"> Tier</span>
+                        </button>
 
-                     <ul ngbDropdownMenu class="dropdown-menu p-1">
-                         <li ngbDropdownItem class="small ps-2 cursor-pointer" (click)="sort('name')">Name</li>
-                         <li ngbDropdownItem class="small ps-2 cursor-pointer" (click)="sort('taxonomy')">Phylum</li>
-                         <li ngbDropdownItem class="small ps-2 cursor-pointer" (click)="sort('id')">Last Update</li>
-                         <li ngbDropdownItem class="small ps-2 cursor-pointer" (click)="sort('tier')">Tier</li>
-                     </ul>
-                </span>
+                        <ul ngbDropdownMenu
+                            class="dropdown-menu p-1"
+                            aria-labelledby="sortLabel"
+                            role="listbox">
+                            <li ngbDropdownItem
+                                class="small ps-2 cursor-pointer"
+                                (click)="sort('name')"
+                                role="option"
+                                [attr.aria-selected]="params.sort === 'name'">Name
+                            </li>
+                            <li ngbDropdownItem
+                                class="small ps-2 cursor-pointer"
+                                (click)="sort('taxonomy')"
+                                role="option"
+                                [attr.aria-selected]="params.sort === 'taxonomy'">Phylum
+                            </li>
+                            <li ngbDropdownItem
+                                class="small ps-2 cursor-pointer"
+                                (click)="sort('id')"
+                                role="option"
+                                [attr.aria-selected]="params.sort === 'id'">Last Update
+                            </li>
+                            <li ngbDropdownItem
+                                class="small ps-2 cursor-pointer"
+                                (click)="sort('tier')"
+                                role="option"
+                                [attr.aria-selected]="params.sort === 'tier'">Tier
+                            </li>
+                        </ul>
                     </small>
                 </div>
 
-                <div class="btn-group" role="group" aria-label="Grid Display Control">
-                    <button class="btn btn-sm" [ngClass]="{'border bg-white': gridMode}" (click)="gridMode = true">
-                        <i class="fa fa-th"></i>
+                <div class="btn-group" role="group" aria-label="Toggle between grid and list view">
+                    <button class="btn btn-sm"
+                            [ngClass]="{'border bg-white': gridMode}"
+                            (click)="gridMode = true"
+                            aria-label="Grid view"
+                            [attr.aria-pressed]="gridMode">
+                        <i class="fa fa-th" aria-hidden="true"></i>
+                        <span class="visually-hidden">Grid view</span>
                     </button>
-                    <button class="btn btn-sm" [ngClass]="{'border bg-white': !gridMode}"
-                            (click)="gridMode = false"><i class="fa fa-bars"></i>
+                    <button class="btn btn-sm"
+                            [ngClass]="{'border bg-white': !gridMode}"
+                            (click)="gridMode = false"
+                            aria-label="List view"
+                            [attr.aria-pressed]="!gridMode">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        <span class="visually-hidden">List view</span>
                     </button>
                 </div>
             </div>
@@ -39,59 +80,86 @@
 
     <div class="row pt-3">
         <div class="col">
-
+            <!-- List view -->
             <div *ngIf="!gridMode">
-                <table class="table table-bordered table-hover table-responsive-lg bg-white">
+                <table class="table table-bordered table-hover table-responsive-lg bg-white"
+                       aria-label="Hosts list table">
+                    <caption class="visually-hidden">List of host organisms with their details</caption>
                     <thead>
                     <tr class="text-uppercase" style="font-size: 12px">
-                        <th>Host</th>
-                        <th>Taxonomy</th>
-                        <th>Tier</th>
-                        <th>Created</th>
-                        <th>Updated</th>
+                        <th scope="col">Host</th>
+                        <th scope="col">Taxonomy</th>
+                        <th scope="col">Tier</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Updated</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let host of hosts">
-                        <td><a [href]="'host/'+ host.id">{{ host.name }}</a></td>
+                        <th scope="row">
+                            <a [href]="'host/'+ host.id"
+                               [attr.aria-label]="'View details for ' + host.name">{{ host.name }}</a>
+                        </th>
                         <td class="fst-italic text-muted">{{ host.phylum }}</td>
                         <td>
-                            <span *ngIf="!host.tier" class="badge bg-gradient bg-light text-black-50">Tier 0</span>
-                            <span *ngIf="host.tier" class="badge bg-gradient" [ngClass]="{'bg-secondary': (host.tier.index === 0 || host.tier === undefined),
-                    'bg-primary': host.tier.index === 1, 'bg-info': host.tier.index === 2, 'bg-success': host.tier.index === 3}">{{ host.tier.label }}</span>
+                                <span *ngIf="!host.tier"
+                                      class="badge bg-gradient bg-light text-black-50"
+                                      aria-label="Tier 0">Tier 0</span>
+                            <span *ngIf="host.tier"
+                                  class="badge bg-gradient"
+                                  [ngClass]="{'bg-secondary': (host.tier.index === 0),
+                                      'bg-primary': host.tier.index === 1,
+                                      'bg-info': host.tier.index === 2,
+                                      'bg-success': host.tier.index === 3}"
+                                  [attr.aria-label]="host.tier.label">{{ host.tier.label }}</span>
                         </td>
                         <td>{{ host.created | date }}</td>
                         <td><span *ngIf="host.updated">{{ host.updated | date }}</span></td>
                     </tr>
                     </tbody>
                 </table>
-
-                <br>
-
             </div>
 
-            <div class="row mt-3" *ngIf="gridMode">
-
-                <div class="card ms-4 mb-4 shadow-sm opacity-hover" style="width: 28rem"
-                     (click)="showCreateOrganism()" *ngIf="!showCreateNewHost && canCreateNewHost()">
+            <!-- Grid view -->
+            <div class="row mt-3" *ngIf="gridMode" role="region" aria-label="Host organisms grid">
+                <!-- Add new organism card -->
+                <div class="card ms-4 mb-4 shadow-sm opacity-hover"
+                     style="width: 28rem"
+                     (click)="showCreateOrganism()"
+                     *ngIf="!showCreateNewHost && canCreateNewHost()"
+                     tabindex="0"
+                     role="button"
+                     aria-label="Add new organism"
+                     (keydown.enter)="showCreateOrganism()">
                     <div class="card-body pb-1 text-center pt-5">
-                        <i class="fa fa-fw fa-plus text-success" style="font-size: 120px"></i>
+                        <i class="fa fa-fw fa-plus text-success"
+                           style="font-size: 120px"
+                           aria-hidden="true"></i>
                         <br>
-                        <h5>Add new organism</h5>
+                        <h2 class="h5">Add new organism</h2>
                     </div>
                 </div>
 
-                <div class="card ms-4 mb-4 shadow-sm" style="width: 28rem" *ngIf="showCreateNewHost">
+                <!-- New organism form card -->
+                <div class="card ms-4 mb-4 shadow-sm"
+                     style="width: 28rem"
+                     *ngIf="showCreateNewHost"
+                     role="form"
+                     aria-labelledby="createOrganismHeading">
                     <div class="card-body pb-1">
                         <form (submit)="createOrganism()" id="createOrganismForm">
-                            <h5 class="border-bottom">Add new organism</h5>
+                            <h2 id="createOrganismHeading" class="h5 border-bottom">Add new organism</h2>
 
                             <div class="row mb-1">
                                 <div class="col-sm-5 offset-7">
-                            <span *ngIf="!availableTiers"
-                                  class="float-end badge p-2 pe-3 ps-3 bg-light text-black-50">Tier 0</span>
+                                    <span *ngIf="!availableTiers"
+                                          class="float-end badge p-2 pe-3 ps-3 bg-light text-black-50"
+                                          aria-label="Default tier level">Tier 0</span>
 
-                                    <select class="form-control float-end" id="tier" name="hostTierSelect"
+                                    <label for="tierSelect" class="visually-hidden">Select Tier Level</label>
+                                    <select class="form-control float-end"
+                                            id="tierSelect"
+                                            name="hostTierSelect"
                                             *ngIf="availableTiers && availableTiers.length"
                                             [(ngModel)]="newHost.tier">
                                         <option [ngValue]="undefined">Tier 0</option>
@@ -101,57 +169,124 @@
                                 </div>
                             </div>
 
-                            <input name="hostName" class="form-control" [(ngModel)]="newHost.name"
-                                   placeholder="Enter name">
-                            <input name="hostPhylum" class="form-control mt-1" [(ngModel)]="newHost.phylum"
-                                   placeholder="Enter phylum">
+                            <div class="mb-2">
+                                <label for="hostName" class="visually-hidden">Organism Name</label>
+                                <input id="hostName"
+                                       name="hostName"
+                                       class="form-control"
+                                       [(ngModel)]="newHost.name"
+                                       placeholder="Enter name"
+                                       required
+                                       aria-required="true">
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="hostPhylum" class="visually-hidden">Organism Phylum</label>
+                                <input id="hostPhylum"
+                                       name="hostPhylum"
+                                       class="form-control"
+                                       [(ngModel)]="newHost.phylum"
+                                       placeholder="Enter phylum"
+                                       required
+                                       aria-required="true">
+                            </div>
+
                             <div class="m-2 pull-end">
-                                <button class="btn btn-link" (click)="showCreateNewHost = false">Cancel</button>
-                                <button class="btn btn-sm btn-primary" type="submit"
-                                        [disabled]="!newHost.name || !newHost.phylum">Create
+                                <button class="btn btn-link"
+                                        type="button"
+                                        (click)="showCreateNewHost = false"
+                                        aria-label="Cancel creating new organism">Cancel
+                                </button>
+                                <button class="btn btn-sm btn-primary"
+                                        type="submit"
+                                        [disabled]="!newHost.name || !newHost.phylum"
+                                        aria-label="Create new organism">Create
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="card ms-4 mb-4 shadow-sm" style="width: 28rem" *ngFor="let host of hosts">
+                <!-- Host cards -->
+                <div class="card ms-4 mb-4 shadow-sm"
+                     style="width: 28rem"
+                     *ngFor="let host of hosts"
+                     [attr.aria-labelledby]="'hostCard-' + host.id">
                     <div class="card-body pb-1">
-                        <h5 class="card-title">
-                            <span class="cursor-pointer fst-italic" (click)="goToHost(host)">{{ host.name }}</span>
+                        <h2 class="card-title h5" [id]="'hostCard-' + host.id">
+                            <button class="cursor-pointer fst-italic btn btn-link p-0"
+                                    (click)="goToHost(host)"
+                                    [attr.aria-label]="'View details for ' + host.name">{{ host.name }}
+                            </button>
                             <span *ngIf="!host.tier"
-                                  class="pull-right badge p-2 bg-light text-black-50">Tier 0</span>
-                            <span *ngIf="host.tier" style="font-size: 12px" class="p-2 pull-right badge" [ngClass]="{'bg-secondary': host.tier.index === 0,
-                    'bg-primary': host.tier.index === 1, 'bg-info': host.tier.index === 2, 'bg-success': host.tier.index === 3}">{{ host.tier.label }}</span>
-                        </h5>
-                        <h6 class="card-subtitle mb-2 text-muted fst-italic">{{ host.phylum }}</h6>
-                        <p class="card-text pt-3 border-top">
-                            <b class="text-primary"
-                               *ngIf="host.statistics">{{ host.statistics.publicationCount || 0 }}</b>
-                            publications<br>
-                            <b class="text-primary" *ngIf="host.statistics">{{ host.statistics.partCount || 0 }}</b>
-                            associated
-                            part<span *ngIf="host.statistics && host.statistics.partCount !== 1">s</span><br>
-                            <b class="text-primary"
-                               *ngIf="host.statistics">{{ host.statistics.strainCount || 0 }}</b>
-                            associated
-                            strain<span *ngIf="host.statistics && host.statistics.strainCount !== 1">s</span><br>
-                            <b class="text-primary"
-                               *ngIf="host.statistics">{{ host.statistics.experimentCount || 0}}</b>
-                            experiment<span
-                            *ngIf="host.statistics && host.statistics.experimentCount !== 1">s</span><br>
-                            <b class="text-primary"
-                               *ngIf="host.statistics">{{ host.statistics.protocolCount || 0 }}</b>
-                            protocol<span
-                            *ngIf="host.statistics && host.statistics.protocolCount !== 1">s</span><br>
+                                  class="pull-right badge p-2 bg-light text-black-50"
+                                  aria-label="Tier 0">Tier 0</span>
+                            <span *ngIf="host.tier"
+                                  style="font-size: 12px"
+                                  class="p-2 pull-right badge"
+                                  [ngClass]="{'bg-secondary': host.tier.index === 0,
+                                  'bg-primary': host.tier.index === 1,
+                                  'bg-info': host.tier.index === 2,
+                                  'bg-success': host.tier.index === 3}"
+                                  [attr.aria-label]="'Tier level: ' + host.tier.label">{{ host.tier.label }}</span>
+                        </h2>
+                        <p class="card-subtitle mb-2 text-muted fst-italic">
+                            <span class="visually-hidden">Phylum: </span>{{ host.phylum }}
                         </p>
+                        <dl class="card-text pt-3 border-top">
+                            <div>
+                                <dt class="visually-hidden">Publications</dt>
+                                <dd>
+                                    <b class="text-primary"
+                                       *ngIf="host.statistics">{{ host.statistics.publicationCount || 0 }}</b>
+                                    publications
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="visually-hidden">Parts</dt>
+                                <dd>
+                                    <b class="text-primary"
+                                       *ngIf="host.statistics">{{ host.statistics.partCount || 0 }}</b>
+                                    associated part<span
+                                    *ngIf="host.statistics && host.statistics.partCount !== 1">s</span>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="visually-hidden">Strains</dt>
+                                <dd>
+                                    <b class="text-primary"
+                                       *ngIf="host.statistics">{{ host.statistics.strainCount || 0 }}</b>
+                                    associated strain<span *ngIf="host.statistics && host.statistics.strainCount !== 1">s</span>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="visually-hidden">Experiments</dt>
+                                <dd>
+                                    <b class="text-primary"
+                                       *ngIf="host.statistics">{{ host.statistics.experimentCount || 0 }}</b>
+                                    experiment<span
+                                    *ngIf="host.statistics && host.statistics.experimentCount !== 1">s</span>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="visually-hidden">Protocols</dt>
+                                <dd>
+                                    <b class="text-primary"
+                                       *ngIf="host.statistics">{{ host.statistics.protocolCount || 0 }}</b>
+                                    protocol<span
+                                    *ngIf="host.statistics && host.statistics.protocolCount !== 1">s</span>
+                                </dd>
+                            </div>
+                        </dl>
 
-                        <a routerLink="/host/{{ host.id }}" class="card-link float-end small">details &raquo;</a>
+                        <a routerLink="/host/{{ host.id }}"
+                           class="card-link float-end small"
+                           [attr.aria-label]="'View details for ' + host.name">details &raquo;</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 
-<app-footer></app-footer>
+<app-footer role="contentinfo"></app-footer>

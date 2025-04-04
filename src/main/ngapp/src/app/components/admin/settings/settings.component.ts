@@ -5,6 +5,7 @@ import {Location} from "@angular/common";
 
 @Component({
     selector: 'app-settings',
+    standalone: true,
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css']
 })

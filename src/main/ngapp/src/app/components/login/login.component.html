@@ -1,42 +1,81 @@
-<div id="login" class="container-fluid" style="margin: 110px auto; width: 330px">
-    <form id="loginForm">
+<div id="login" class="container-fluid" style="margin: 110px auto; width: 330px" role="main">
+    <h1 class="visually-hidden">Login to HObT</h1>
 
+    <form id="loginForm" aria-labelledby="loginHeading">
         <div id="fields" class="form-groupModel">
             <div class="d-flex justify-content-between">
-                <span class="form-label">User ID</span><br>
-                <a routerLink="/register" class="pe-0 font-80" *ngIf="canRegister">Register</a>
+                <label for="userId" class="form-label">User ID</label>
+                <a routerLink="/register" class="pe-0 font-80" *ngIf="canRegister"
+                   aria-label="Register for a new account">Register</a>
             </div>
-            <input type="text" placeholder="User ID" class="form-control" [(ngModel)]="loggedInUser.userId"
-                   name="userId" [ngClass]="{'is-invalid': !validation.validId}" required>
-
-            <br>
-            <div class="d-flex justify-content-between">
-                <span class="form-label">Password</span>
-                <a routerLink="/forgotPassword" class="font-80 pe-0">Forgot?</a>
+            <input type="text"
+                   id="userId"
+                   placeholder="User ID"
+                   class="form-control"
+                   [(ngModel)]="loggedInUser.userId"
+                   name="userId"
+                   [ngClass]="{'is-invalid': !validation.validId}"
+                   required
+                   aria-describedby="userIdError"
+                   [attr.aria-invalid]="!validation.validId">
+            <div id="userIdError" class="invalid-feedback" *ngIf="!validation.validId">
+                Please enter a valid user ID.
             </div>
 
-            <input type="password" placeholder="Password" class="form-control" [(ngModel)]="loggedInUser.password"
-                   name="password" [ngClass]="{'is-invalid': !validation.validPassword}" required>
+            <div class="d-flex justify-content-between mt-3">
+                <label for="password" class="form-label">Password</label>
+                <a routerLink="/forgotPassword" class="font-80 pe-0"
+                   aria-label="Forgot password? Reset it here">Forgot?</a>
+            </div>
+
+            <input type="password"
+                   id="password"
+                   placeholder="Password"
+                   class="form-control"
+                   [(ngModel)]="loggedInUser.password"
+                   name="password"
+                   [ngClass]="{'is-invalid': !validation.validPassword}"
+                   required
+                   aria-describedby="passwordError"
+                   [attr.aria-invalid]="!validation.validPassword">
+            <div id="passwordError" class="invalid-feedback" *ngIf="!validation.validPassword">
+                Please enter your password.
+            </div>
+
             <div class="mt-2">
-                <span class="text-secondary cursor-pointer" (click)="setRemember()">
+                <label class="text-secondary cursor-pointer" for="rememberMe">
+                    <input type="checkbox"
+                           id="rememberMe"
+                           class="visually-hidden"
+                           [checked]="remember"
+                           (change)="setRemember()"
+                           aria-label="Remember me">
                     <i class="fa fa-fw font-11 align-middle"
-                       [ngClass]="{'fa-square-o': !remember, 'fa-check-square-o': remember}"></i>
+                       [ngClass]="{'fa-square-o': !remember, 'fa-check-square-o': remember}"
+                       aria-hidden="true"></i>
                     <span class="font-90">Remember Me</span>
-                </span>
+                </label>
             </div>
 
-            <br>
-
-            <div class="alert alert-danger" role="alert" *ngIf="validation.invalidPassword">
-                <i class="fa fa-fw fa-exclamation-circle"></i> Invalid Login Credentials!
+            <div class="alert alert-danger mt-3" role="alert" *ngIf="validation.invalidPassword" aria-live="assertive">
+                <i class="fa fa-fw fa-exclamation-circle" aria-hidden="true"></i> Invalid Login Credentials!
             </div>
 
-            <button type="submit" [disabled]="processing"
-                    class="btn btn-primary mt-3 w-100" id="submit" (click)="loginUser()">
-                <i *ngIf="processing" class="fa fa-spinner fa-pulse fa-fw"></i>
-                Login to HObT
+            <button type="submit"
+                    [disabled]="processing"
+                    class="btn btn-primary mt-3 w-100"
+                    id="submit"
+                    (click)="loginUser()"
+                    [attr.aria-busy]="processing">
+                <i *ngIf="processing" class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>
+                <span>Login to HObT</span>
             </button>
-            <button class="btn btn-link w-100 mt-1" (click)="activeModal.close()">Cancel</button>
+
+            <button class="btn btn-link w-100 mt-1"
+                    type="button"
+                    (click)="activeModal.close()"
+                    aria-label="Cancel login">Cancel
+            </button>
         </div>
     </form>
 </div>

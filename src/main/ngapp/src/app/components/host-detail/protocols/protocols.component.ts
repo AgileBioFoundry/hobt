@@ -3,10 +3,20 @@ import {Host} from "../../../model/host.model";
 import {HttpService} from "../../../service/http.service";
 import {Result} from "../../../model/result";
 import {Paging} from "../../../model/paging.model";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-protocols',
+    standalone: true,
     templateUrl: './protocols.component.html',
+    imports: [
+        NgClass,
+        DatePipe,
+        NgIf,
+        NgForOf,
+        NgbPagination
+    ],
     styleUrls: ['./protocols.component.css']
 })
 export class ProtocolsComponent implements OnInit {

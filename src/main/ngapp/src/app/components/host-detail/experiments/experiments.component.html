@@ -1,18 +1,23 @@
-<div class="container-fluid font-90 pt-3">
+<div class="container-fluid font-90 pt-3" role="region" aria-labelledby="studies-section-title">
+    <h2 id="studies-section-title" class="visually-hidden">Experiments List</h2>
     <div class="row">
-        <div class="col" *ngIf="!processing && (!studies || !studies.length)">
-            <i class="text-muted">No information available</i>
+        <div class="col" *ngIf="!processing && (!studies || !studies.length)" aria-live="polite">
+            <p class="text-muted fst-italic">No information available</p>
         </div>
 
-        <div class="col" *ngIf="processing">
-            <i class="text-muted fst-italic"><img src="assets/loader.gif"> &nbsp;retrieving experiments</i>
+        <div class="col" *ngIf="processing" aria-live="polite">
+            <p class="text-muted fst-italic">
+                <img src="assets/loader.gif" alt="Loading indicator" aria-hidden="true">
+                <span>&nbsp;retrieving experiments</span>
+            </p>
         </div>
 
         <div class="col mb-2" *ngIf="!processing && studies">
-            <ol class="list-group list-group-numbered list-group-flush">
-                <li class="list-group-item" *ngFor="let study of studies">
-                    <a [href]="study.url">{{study.label}}</a> &nbsp;
-                    <small class="text-muted">added on {{study.created | date}}</small>
+            <ol class="list-group list-group-numbered list-group-flush" role="list" aria-label="List of experiments">
+                <li class="list-group-item" *ngFor="let study of studies" role="listitem">
+                    <a [href]="study.url" aria-label="Open experiment: {{study.label}}">{{ study.label }}</a> &nbsp;
+                    <small class="text-muted" aria-label="Date added: {{study.created | date}}">added
+                        on {{ study.created | date }}</small>
                 </li>
             </ol>
         </div>

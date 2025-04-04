@@ -1,9 +1,17 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
+import {NgClass} from "@angular/common";
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
+    standalone: true,
+    imports: [
+        NgClass,
+        RouterOutlet,
+        HeaderComponent
+    ],
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent  {

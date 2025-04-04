@@ -1,87 +1,135 @@
-<div *ngFor="let tier of tiers" class="pt-3 bg-light">
+<div *ngFor="let tier of tiers; let i = index" class="pt-3 bg-light" role="region"
+     aria-labelledby="tier-heading-{{i}}">
 
     <div class="card ms-3 me-3" [ngClass]="{'shadow-sm': tier.collapsed}">
 
         <div class="card-body">
             <div class="d-flex justify-content-between" [ngClass]="{'border-bottom': tier.collapsed}">
-                <h5 class="cursor-pointer pb-2 fw-bold" (click)="tier.collapsed = !tier.collapsed"><i
-                    class="fa fa-fw fa-caret-right" *ngIf="tier.collapsed"></i> <i
-                    class="fa fa-fw fa-caret-down" *ngIf="!tier.collapsed"></i>{{tier.label}}</h5>
+                <h5 id="tier-heading-{{i}}" class="cursor-pointer pb-2 fw-bold">
+                    <button [attr.aria-expanded]="!tier.collapsed"
+                            [attr.aria-controls]="'tier-content-' + i"
+                            (click)="tier.collapsed = !tier.collapsed"
+                            class="btn btn-link p-0 text-decoration-none text-reset">
+                        <i class="fa fa-fw fa-caret-right" *ngIf="tier.collapsed" aria-hidden="true"></i>
+                        <i class="fa fa-fw fa-caret-down" *ngIf="!tier.collapsed" aria-hidden="true"></i>
+                        {{ tier.label }}
+                    </button>
+                </h5>
 
                 <div *ngIf="!tier.completed">
-                    <div *ngIf="canEditTiers" (click)="markTierCompleted(tier)" class="opacity-4 opacity-hover">Complete
-                        <i class="fa fa-fw font-14 mt-1 fa-toggle-off"></i>
+                    <div *ngIf="canEditTiers" class="opacity-4 opacity-hover">
+                        <button class="btn btn-link p-0 text-decoration-none text-reset"
+                                (click)="markTierCompleted(tier)"
+                                aria-label="Mark tier {{tier.label}} as complete">
+                            Complete
+                            <i class="fa fa-fw font-14 mt-1 fa-toggle-off" aria-hidden="true"></i>
+                        </button>
                     </div>
 
-                    <div *ngIf="!canEditTiers" class="text-muted fst-italic fw-bold">
+                    <div *ngIf="!canEditTiers" class="text-muted fst-italic fw-bold" aria-live="polite">
                         In progress
                     </div>
                 </div>
 
-
                 <div *ngIf="tier.completed">
-                    <div *ngIf="canEditTiers">Tier Completed
-                        <i class="fa fa-fw font-14 fa-toggle-on green" (click)="revertTierComplete(tier)"></i>
+                    <div *ngIf="canEditTiers">
+                        <span aria-live="polite">Tier Completed</span>
+                        <button class="btn btn-link p-0 text-decoration-none text-reset"
+                                (click)="revertTierComplete(tier)"
+                                aria-label="Revert tier {{tier.label}} to incomplete">
+                            <i class="fa fa-fw font-14 fa-toggle-on green" aria-hidden="true"></i>
+                        </button>
                     </div>
 
                     <div *ngIf="!canEditTiers">
-                        <span class="text-success fst-italic fw-bold">
-                           <i class="fa fa-check"></i> Completed
+                        <span class="text-success fst-italic fw-bold" aria-live="polite">
+                           <i class="fa fa-check" aria-hidden="true"></i> Completed
                         </span>
                     </div>
                 </div>
-
             </div>
 
-
-            <div class="card-text">
-                <table class="table table-responsive-sm border-bottom font-90" *ngIf="!tier.collapsed">
+            <div id="tier-content-{{i}}" class="card-text" [attr.hidden]="tier.collapsed ? true : null">
+                <table class="table table-responsive-sm border-bottom font-90" *ngIf="!tier.collapsed"
+                       aria-label="Tier {{tier.label}} criteria and status">
                     <thead class="font-85 text-uppercase">
                     <tr>
-                        <th class="w-auto ps-5 text-dark">Target</th>
-                        <th class="w-50">Details</th>
-                        <th class="w-25">Status</th>
+                        <th class="w-auto ps-5 text-dark" scope="col">Target</th>
+                        <th class="w-50" scope="col">Details</th>
+                        <th class="w-25" scope="col">Status</th>
                     </tr>
                     </thead>
 
                     <tbody *ngIf="!tier.criteria.length">
                     <tr>
-                        <td colspan="3" class="text-muted fst-italic">No target created for this tier</td>
+                        <td colspan="3" class="text-muted fst-italic" aria-live="polite">No target created for this
+                            tier
+                        </td>
                     </tr>
                     </tbody>
 
                     <tbody *ngIf="tier.criteria.length">
-                    <tr *ngFor="let criteria of sortBy(tier.criteria, 'id')">
-                        <td class="ps-5">{{criteria.label}}</td>
-                        <td class="text-muted font-95">{{criteria.description}}</td>
+                    <tr *ngFor="let criteria of sortBy(tier.criteria, 'id'); let j = index">
+                        <td class="ps-5" id="criteria-label-{{i}}-{{j}}">{{ criteria.label }}</td>
+                        <td class="text-muted font-95" id="criteria-desc-{{i}}-{{j}}">{{ criteria.description }}</td>
                         <td class="p-2">
-
                             <div ngbDropdown class="float-end" *ngIf="canEditTiers">
-                                <i class="fa fa-fw" ngbDropdownToggle></i>
-                                <div class="dropdown-menu font-80" ngbDropdownMenu style="width: 80px">
-                                    <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, -1)">N/A</a>
-                                    <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 25)">25%</a>
-                                    <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 50)">50%</a>
-                                    <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 75)">75%</a>
-                                    <a ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 100)">100%</a>
+                                <button type="button" class="btn btn-link p-0 border-0" ngbDropdownToggle
+                                        aria-label="Set completion percentage for {{criteria.label}}"
+                                        aria-expanded="false" aria-controls="status-dropdown-{{i}}-{{j}}">
+                                    <i class="fa fa-fw" aria-hidden="true"></i>
+                                </button>
+                                <div id="status-dropdown-{{i}}-{{j}}" class="dropdown-menu font-80" ngbDropdownMenu
+                                     style="width: 80px">
+                                    <button ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, -1)"
+                                            aria-label="Set as not applicable">N/A
+                                    </button>
+                                    <button ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 25)"
+                                            aria-label="Set to 25 percent">25%
+                                    </button>
+                                    <button ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 50)"
+                                            aria-label="Set to 50 percent">50%
+                                    </button>
+                                    <button ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 75)"
+                                            aria-label="Set to 75 percent">75%
+                                    </button>
+                                    <button ngbDropdownItem (click)="setTierCriteriaStatus(tier, criteria, 100)"
+                                            aria-label="Set to 100 percent">100%
+                                    </button>
                                 </div>
                             </div>
 
                             <ngb-progressbar *ngIf="criteria.status === -1" [value]="100" type="secondary"
-                                             [striped]="true" [height]="'20px'"
-                                             [showValue]="false">Not Applicable
+                                             [striped]="true" [height]="'20px'" [showValue]="false"
+                                             aria-labelledby="criteria-label-{{i}}-{{j}}"
+                                             aria-valuetext="Not Applicable" aria-valuenow="100"
+                                             aria-valuemin="0" aria-valuemax="100">Not Applicable
                             </ngb-progressbar>
-                            <ngb-progressbar *ngIf="!criteria.status" type="secondary" [value]="0" [height]="'20px'">
+                            <ngb-progressbar *ngIf="!criteria.status" type="secondary" [value]="0" [height]="'20px'"
+                                             aria-labelledby="criteria-label-{{i}}-{{j}}"
+                                             aria-valuetext="0% complete" aria-valuenow="0"
+                                             aria-valuemin="0" aria-valuemax="100">
                             </ngb-progressbar>
                             <ngb-progressbar *ngIf="criteria.status === 25" type="secondary" [value]="criteria.status"
-                                             [height]="'20px'" [showValue]="true"></ngb-progressbar>
+                                             [height]="'20px'" [showValue]="true"
+                                             aria-labelledby="criteria-label-{{i}}-{{j}}"
+                                             aria-valuetext="25% complete" aria-valuenow="25"
+                                             aria-valuemin="0" aria-valuemax="100"></ngb-progressbar>
                             <ngb-progressbar *ngIf="criteria.status === 50" type="info" [value]="criteria.status"
-                                             [height]="'20px'" [showValue]="true"></ngb-progressbar>
+                                             [height]="'20px'" [showValue]="true"
+                                             aria-labelledby="criteria-label-{{i}}-{{j}}"
+                                             aria-valuetext="50% complete" aria-valuenow="50"
+                                             aria-valuemin="0" aria-valuemax="100"></ngb-progressbar>
                             <ngb-progressbar *ngIf="criteria.status === 75" type="primary" [value]="criteria.status"
-                                             [height]="'20px'" [showValue]="true"></ngb-progressbar>
+                                             [height]="'20px'" [showValue]="true"
+                                             aria-labelledby="criteria-label-{{i}}-{{j}}"
+                                             aria-valuetext="75% complete" aria-valuenow="75"
+                                             aria-valuemin="0" aria-valuemax="100"></ngb-progressbar>
                             <ngb-progressbar *ngIf="criteria.status === 100" type="success" [value]="criteria.status"
-                                             [height]="'20px'" [showValue]="true"></ngb-progressbar>
-
+                                             [height]="'20px'" [showValue]="true"
+                                             aria-labelledby="criteria-label-{{i}}-{{j}}"
+                                             aria-valuetext="100% complete" aria-valuenow="100"
+                                             aria-valuemin="0" aria-valuemax="100"></ngb-progressbar>
                         </td>
                     </tr>
                     </tbody>
@@ -90,4 +138,3 @@
         </div>
     </div>
 </div>
-

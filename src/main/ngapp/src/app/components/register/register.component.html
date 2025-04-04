@@ -1,17 +1,13 @@
 <div id="login" class="container-fluid">
     <div class="modal-body">
+        <h1 class="h2 fw-bold">Register New Account</h1>
 
-        <!--                <div class="text-center">-->
-        <!--                    <img src="assets/img/img.png" alt="logo" style="height: 60px">-->
-        <!--                </div>-->
-        <div class="fw-bold">Register New Account</div>
-
-        <hr class="border-top">
+        <hr class="border-top" aria-hidden="true">
 
         <div class="pt-3" *ngIf="accountCreated">
-            <div class="alert alert-success">
-                Account successfully created. Please check your email for
-                login details<br><br>
+            <div class="alert alert-success" role="alert">
+                <p>Account successfully created. Please check your email for
+                    login details</p>
                 <a class="icon-link icon-link-hover" href="/login">
                     Go to Login <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
                 </a>
@@ -19,99 +15,111 @@
         </div>
 
         <div class="pt-3" *ngIf="serverError">
-            <div class="alert alert-danger">
-                <i class="bi bi-exclamation-triangle"></i> There was an error creating the account. If the user id
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle" aria-hidden="true"></i> There was an error creating the account.
+                If the user id
                 already exists, please use the forgot password feature
             </div>
         </div>
 
         <div class="pt-3" *ngIf="!accountCreated">
+            <form novalidate (ngSubmit)="registerNewUser()">
+                <div class="alert alert-danger p-2" *ngIf="validationError" role="alert">
+                    <i class="bi bi-exclamation-triangle" aria-hidden="true"></i> All fields required. Please try again.
+                </div>
 
-            <div class="alert alert-danger p-2" *ngIf="validationError"><i
-                class="bi bi-exclamation-triangle"></i> &nbsp; All fields required. Please try again.
-            </div>
+                <fieldset class="mb-4">
+                    <legend class="mb-2">Name</legend>
 
-            <div class="mb-2">Name</div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-2 flex-grow-1">
+                            <label for="firstName" class="form-label visually-hidden">First Name</label>
+                            <input type="text" class="form-control form-control-sm" id="firstName"
+                                   [(ngModel)]="newUser.firstName"
+                                   name="firstName" [ngClass]="{'is-invalid': !newUser.firstNameValid}"
+                                   aria-required="true" placeholder="First Name">
+                            <div id="firstName-error" class="invalid-feedback" *ngIf="!newUser.firstNameValid">
+                                First name is required
+                            </div>
+                        </div>
 
-            <div class="d-flex align-items-center">
-                <input type="email" class="form-control form-control-sm" id="firstName"
-                       [(ngModel)]="newUser.firstName"
-                       name="userId" [ngClass]="{'is-invalid': !newUser.firstNameValid}" required>
-                &nbsp;
-                <input type="email" class="form-control form-control-sm" id="lastName"
-                       [(ngModel)]="newUser.lastName"
-                       name="userId" [ngClass]="{'is-invalid': !newUser.lastNameValid}" required>
-            </div>
+                        <div class="flex-grow-1">
+                            <label for="lastName" class="form-label visually-hidden">Last Name</label>
+                            <input type="text" class="form-control form-control-sm" id="lastName"
+                                   [(ngModel)]="newUser.lastName"
+                                   name="lastName" [ngClass]="{'is-invalid': !newUser.lastNameValid}"
+                                   aria-required="true" placeholder="Last Name">
+                            <div id="lastName-error" class="invalid-feedback" *ngIf="!newUser.lastNameValid">
+                                Last name is required
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
 
-            <div class="d-flex justify-content-around mb-4 small text-muted">
-                <div>First Name</div>
-                <div>Last Name</div>
-            </div>
+                <div class="mb-4">
+                    <label for="userId" class="form-label">Email address</label>
+                    <input type="email" class="form-control form-control-sm" id="userId" name="userId"
+                           [ngClass]="{'is-invalid': !newUser.userIdValid}" [(ngModel)]="newUser.email"
+                           aria-required="true" aria-describedby="email-help">
+                    <div id="email-help" class="form-text">This will be your login username</div>
+                    <div id="email-error" class="invalid-feedback" *ngIf="!newUser.userIdValid">
+                        Please enter a valid email address
+                    </div>
+                </div>
 
-            <div class="mb-4">
-                <label for="userId" class="form-label">Email address</label>
-                <input type="email" class="form-control form-control-sm" id="userId" name="userId"
-                       [ngClass]="{'is-invalid': !newUser.userIdValid}" [(ngModel)]="newUser.email"
-                       required>
-            </div>
+                <div class="mb-4">
+                    <label class="form-label" for="institution">Professional Affiliation</label>
+                    <span class="small text-muted" id="institution-help">(e.g. Institution)</span>
+                    <input type="text" class="form-control form-control-sm" id="institution" name="institution"
+                           aria-required="true" aria-describedby="institution-help"
+                           [ngClass]="{'is-invalid': !newUser.institutionValid}"
+                           [(ngModel)]="newUser.institution">
+                    <div id="institution-error" class="invalid-feedback" *ngIf="!newUser.institutionValid">
+                        Professional affiliation is required
+                    </div>
+                </div>
 
-            <div class="mb-4">
-                <div><label class="form-label" for="institution">Professional Affiliation <span
-                    class="small text-muted">(e.g.Institution)</span></label></div>
-                <input type="text" class="form-control form-control-sm" id="institution" name="institution" required
-                       [ngClass]="{'is-invalid': !newUser.institutionValid}"
-                       [(ngModel)]="newUser.institution">
-            </div>
-
-            <div class="mb-4">
-                <fieldset class="form-group">
-                    <legend class="font-95">Account Type</legend>
+                <fieldset class="mb-4">
+                    <legend class="form-label">Account Type</legend>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" name="accountType" id="commercialAccount"
+                               value="commercial" [(ngModel)]="newUser.type">
+                        <label class="form-check-label" for="commercialAccount">
                             Commercial
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                               checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" name="accountType" id="nonCommercialAccount"
+                               value="noncommercial" [(ngModel)]="newUser.type" checked>
+                        <label class="form-check-label" for="nonCommercialAccount">
                             Non-commercial
                         </label>
                     </div>
-                    <!--                    <label class="col-md-12 form-label">-->
-                    <!--                        <app-radio-button childId="personal" name="userType" formControlName="userType" value="personal" aria-describedby="account-type-description">-->
-                    <!--                        </app-radio-button>-->
-                    <!--                        Non-commercial-->
-                    <!--                    </label>-->
-                    <!--                    <label class="col-md-12 form-label">-->
-                    <!--                        <app-radio-button childId="commercial" name="userType" formControlName="userType" value="commercial"-->
-                    <!--                                          aria-describedby="account-type-description">-->
-                    <!--                        </app-radio-button>-->
-                    <!--                        Commercial-->
-                    <!--                    </label>-->
                 </fieldset>
-            </div>
 
+                <div class="mb-4">
+                    <label class="form-label" for="description">About you</label>
+                    <textarea class="form-control form-control-sm" id="description" name="description"
+                              aria-required="true" rows="3"
+                              [ngClass]="{'is-invalid': !newUser.descriptionValid}"
+                              [(ngModel)]="newUser.description"></textarea>
+                    <div id="description-error" class="invalid-feedback" *ngIf="!newUser.descriptionValid">
+                        Please tell us about yourself
+                    </div>
+                </div>
 
-            <div class="mb-2">
-                <div><label class="form-label" for="description">About you</label></div>
-                <textarea class="form-control form-control-sm" id="description" name="description" required
-                          [ngClass]="{'is-invalid': !newUser.descriptionValid}"
-                          [(ngModel)]="newUser.description">
-                        </textarea>
-            </div>
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="activeModal.close()"
+                            aria-label="Cancel registration">Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="submit" [disabled]="processing"
+                            aria-busy="{{processing ? 'true' : 'false'}}">
+                        <span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"
+                              *ngIf="processing"></span>
+                        <span>Register</span>
+                    </button>
+                </div>
+            </form>
         </div>
-    </div>
-
-    <div class="modal-footer">
-        <button [disabled]="processing" class="btn btn-primary btn-sm" id="submit" (click)="registerNewUser()">
-            <div *ngIf="processing" class="spinner-border spinner-border-sm text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            Register
-        </button>
-
-        <button class="btn btn-secondary btn-sm" (click)="activeModal.close()">Cancel</button>
     </div>
 </div>

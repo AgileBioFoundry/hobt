@@ -1,48 +1,67 @@
-<div class="container-fluid font-90 pt-3">
+<div class="container-fluid font-90 pt-3" role="region" aria-labelledby="protocols-section-title">
+    <h2 id="protocols-section-title" class="visually-hidden">Protocols List</h2>
+
     <div class="row" *ngIf="!protocols">
         <div class="col">
-            <div *ngIf="paging.processing">
-                <img src="assets/loader.gif"> &nbsp; <i class="text-muted">retrieving data from protocols.io...</i>
+            <div *ngIf="paging.processing" role="status">
+                <img src="assets/loader.gif" alt="" aria-hidden="true">
+                <span class="text-muted">&nbsp; retrieving data from protocols.io...</span>
+            </div>
+            <div *ngIf="!paging.processing">
             </div>
         </div>
     </div>
-    <!--    <i class="text-muted">No information available</i>-->
 
-    <div class="row" *ngIf="protocols" [ngClass]="{'opacity-25': paging.processing}">
+    <div class="row" *ngIf="protocols" [ngClass]="{'opacity-25': paging.processing}"
+         [attr.aria-busy]="paging.processing">
         <div class="col" *ngIf="protocols.length">
-            <ol class="list-group list-group-flush list-group-numbered border-bottom">
+            <ol id="protocols-list-content" class="list-group list-group-flush list-group-numbered border-bottom"
+                aria-label="List of protocols">
                 <li class="list-group-item d-flex justify-content-between align-items-start"
-                    *ngFor="let protocol of protocols">
+                    *ngFor="let protocol of protocols; let i = index">
                     <div class="ms-2 me-auto">
-                        <a [href]="protocol.url" target="_blank">{{protocol.title}}</a>
-                        <div class="small"><i class="fa fa-user text-muted"></i> {{protocol.creator.name}}</div>
+                        <a [href]="protocol.url" target="_blank"
+                           aria-label="Open protocol: {{protocol.title}} (opens in new tab)">{{ protocol.title }}</a>
+                        <div class="small">
+                            <i class="fa fa-user text-muted" aria-hidden="true"></i>
+                            <span>Creator: {{ protocol.creator.name }}</span>
+                        </div>
                         <div class="small text-muted">
-                            {{(protocol.created_on * 1000) | date}}
+                            <span>Created on: {{ (protocol.created_on * 1000) | date }}</span>
                         </div>
                         <div class="mt-2">
-                            {{protocol.description}}
+                            {{ protocol.description }}
                         </div>
                     </div>
                     <div *ngIf="protocol.image">
-                        <img [src]="protocol.image.source">
+                        <img [src]="protocol.image.source"
+                             alt="Protocol image for {{protocol.title}}">
                     </div>
                 </li>
             </ol>
 
             <div class="row pb-2 mt-2">
                 <div class="col">
-                    <ngb-pagination [collectionSize]="paging.available" [boundaryLinks]="true" [maxSize]="5"
-                                    [(page)]="paging.currentPage" [pageSize]="paging.limit" size="sm"
-                                    (pageChange)="pageProtocols($event)"></ngb-pagination>
+                    <ngb-pagination
+                        [collectionSize]="paging.available"
+                        [boundaryLinks]="true"
+                        [maxSize]="5"
+                        [(page)]="paging.currentPage"
+                        [pageSize]="paging.limit"
+                        size="sm"
+                        (pageChange)="pageProtocols($event)"
+                        aria-label="Protocols pagination"
+                        aria-controls="protocols-list-content"></ngb-pagination>
                 </div>
 
-                <div class="col"><strong>{{pageCounts()}}</strong></div>
+                <div class="col" role="status" aria-live="polite">
+                    <strong id="protocols-page-count">{{ pageCounts() }}</strong>
+                </div>
             </div>
         </div>
 
-        <div class="col" *ngIf="!protocols.length">
-            <i class="text-muted">No information available</i>
+        <div class="col" *ngIf="!protocols.length" role="status" aria-live="polite">
+            <p class="text-muted">No information available</p>
         </div>
-
     </div>
 </div>
